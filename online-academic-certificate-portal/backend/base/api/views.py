@@ -5,11 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .permissions import isChairmanUser, isStudentUser
-from .serializers import (
-    UserSerializer,
-    chairmanSignupSerializer,
-    studentSignupSerializer,
-)
+from .serializers import (UserSerializer, chairmanSignupSerializer,
+                          studentSignupSerializer)
 
 
 class chairmanSignupView(generics.GenericAPIView):
@@ -63,7 +60,7 @@ class customAuthToken(ObtainAuthToken):
                 # ).data,
                 "token": token.key,
                 "user_id": user.pk,
-                "is_student": user.is_student,
+                "is_chairman": user.is_chairman,
             }
         )
 
