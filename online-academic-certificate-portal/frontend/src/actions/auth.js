@@ -54,7 +54,7 @@ export const create_student_user = ({ username, email, password, password2 }) =>
 export const login = ({ username, password }) => (dispatch) => {
     const config = {
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         }
     }
     const body = JSON.stringify({ username, password })

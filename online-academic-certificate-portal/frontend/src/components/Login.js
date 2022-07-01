@@ -1,10 +1,25 @@
+import axios from 'axios'
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { login } from "../actions/auth"
+function Login({ login, isAuthenticated, isChairman, token }) {
 
-function Login({ login, isAuthenticated, isChairman }) {
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/chairman/dashboard/', {
+            headers: {
+                'Authorization': `token ${token}`
+            }
+        })
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [token])
+
     const [user, setUser] = useState({
         username: "",
         password: ""
@@ -61,7 +76,8 @@ Login.propTypes = {
 
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
-    isChairman: state.auth.isChairman
+    isChairman: state.auth.isChairman,
+    token: state.auth.token
 })
 
 export default connect(mapStateToProps, { login })(Login)
