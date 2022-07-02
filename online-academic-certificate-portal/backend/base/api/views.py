@@ -1,3 +1,8 @@
+from base.models import User, chairman
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+from jwt import ExpiredSignatureError, decode, encode, exceptions
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -5,8 +10,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .permissions import isChairmanUser, isStudentUser
-from .serializers import (UserSerializer, chairmanSignupSerializer,
-                          studentSignupSerializer)
+from .serializers import (LoginSerializer, UserSerializer,
+                          chairmanSignupSerializer, studentSignupSerializer)
+from .utils import Util
 
 
 class chairmanSignupView(generics.GenericAPIView):
@@ -16,12 +22,28 @@ class chairmanSignupView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
+        user_data = User.objects.get(email=serializer.data['email'])
+
+        token = encode({'id': user_data.id},
+                       settings.SECRET_KEY, algorithm='HS256')
+        current_site = get_current_site(request).domain
+        relative_link = reverse('email-verify')
+        absurl = 'http://' + current_site + \
+            relative_link + "?token=" + str(token)
+
+        email_body = 'Hi ' + user_data.fullname + \
+            ' User the link bellow to verify your email: \n' + absurl
+        data = {'to_email': user_data.email,
+                'email_subject': 'Verify your email', 'email_body': email_body}
+        Util.send_email(data)
+
         return Response(
             {
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": Token.objects.get(user=user).key,
+                # "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
@@ -34,35 +56,69 @@ class studentSignupView(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
+        user_data = User.objects.get(email=serializer.data['email'])
+
+        token = encode({'id': user_data.id},
+                       settings.SECRET_KEY, algorithm='HS256')
+        current_site = get_current_site(request).domain
+        relative_link = reverse('email-verify')
+        absurl = 'http://' + current_site + \
+            relative_link + "?token=" + str(token)
+
+        email_body = 'Hi ' + user_data.fullname + \
+            ' User the link bellow to verify your email: \n' + absurl
+        data = {'to_email': user_data.email,
+                'email_subject': 'Verify your email', 'email_body': email_body}
+        Util.send_email(data)
+
         return Response(
             {
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": Token.objects.get(user=user).key,
+                # "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
 
 
-class customAuthToken(ObtainAuthToken):
+class VerifyEmail(generics.GenericAPIView):
+
+    @staticmethod
+    def get(request):
+        token = request.GET.get('token')
+        try:
+            payload = decode(token, settings.SECRET_KEY, algorithms='HS256')
+            user = User.objects.get(id=payload['id'])
+            if user.email_validation is False:
+                user.email_validation = True
+                user.save()
+            return Response({'message': 'Successfully activated'}, status=status.HTTP_200_OK)
+        except ExpiredSignatureError:
+            return Response({'message': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except exceptions.DecodeError:
+            return Response({'message': 'Invalid Token'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class customAuthToken(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+    permission_classes = [permissions.AllowAny, ]
+
     def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(
-            data=request.data, context={"request": request}
-        )
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
+        user = serializer.validated_data
         token, created = Token.objects.get_or_create(user=user)
-        return Response(
-            {
-                # "user": UserSerializer(
-                #     user, context=self.get_serializer_context()
-                # ).data,
-                "token": token.key,
-                "user_id": user.pk,
-                "is_chairman": user.is_chairman,
-            }
-        )
+        if user.email_validation is False:
+            return Response({
+                "message": "Your username has not been activated"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({
+                "user": UserSerializer(user, context=self.get_serializer_context()).data,
+                "token": token.key
+            })
 
 
 class LogoutView(APIView):
