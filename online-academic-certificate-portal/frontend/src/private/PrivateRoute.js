@@ -1,33 +1,20 @@
 import { useSelector } from "react-redux";
-import { Navigate, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const CPrivateRoute = ({ redirectPath = '/login', children }) => {
     const state = useSelector(state => state.auth);
-    // return <Route path={path} {...rest} render={props => {
-    //     if (state.isLoading) {
-    //         return <h3>Loading...</h3>
-    //     } else if (!state.isAuthenticated && !state.isChairman) {
-    //         return <Navigate to="/login" />
-    //     } else {
-    //         return <Component {...props} />
-    //     }
-    // }} />
-    if (!state.isAuthenticated && !state.isChairman) {
-        return <Navigate to={redirectPath} replace />
+    if (state.isAuthenticated && state.user.is_chairman
+        && state.user.email_validation) {
+        return children;
     }
-    return children;
+    return <Navigate to={redirectPath} replace />;
 }
 
-export const SPrivateRoute = ({ component: Component, path, ...rest }) => {
+export const SPrivateRoute = ({ redirectPath = '/login', children }) => {
     const state = useSelector(state => state.auth);
-    return <Route path={path} {...rest} render={props => {
-        if (state.isLoading) {
-            return <h3>Loading...</h3>
-        } else if (!state.isAuthenticated && !state.isChairman) {
-            return <Navigate to="/login" />
-        } else {
-            console.log('state', state)
-            return <Component {...props} />
-        }
-    }} />
+    if (state.isAuthenticated && state.user.is_student
+        && state.user.email_validation) {
+        return children;
+    }
+    return <Navigate to={redirectPath} replace />;
 }

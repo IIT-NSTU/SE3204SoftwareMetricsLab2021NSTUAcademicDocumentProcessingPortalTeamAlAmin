@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import ChairmanDashboard from "./components/ChairmanDashboard";
 import ChairmanSignup from './components/ChairmanSignup';
 import Homepage from './components/Homepage';
-import Login from "./components/Login";
+import Login from "./components/Login/Login";
 import StudentDashboard from "./components/StudentDashboard";
 import StudentSignup from "./components/StudentSignup";
 import { CPrivateRoute, SPrivateRoute } from './private/PrivateRoute';
@@ -20,7 +20,10 @@ function App() {
           </CPrivateRoute>
         } />
         <Route exact path='/student/dashboard' element={
-          <SPrivateRoute exact path='/student/dashboard' component={StudentDashboard} />} />
+          <SPrivateRoute>
+            <StudentDashboard />
+          </SPrivateRoute>
+        } />
       </Routes>
 
 

@@ -3,7 +3,6 @@ import * as actionTypes from '../actions/types'
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
-    isChairman: null,
     isLoading: false,
     user: null
 }
@@ -17,7 +16,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
-                isChairman: action.payload.user.is_chairman,
+                user: action.payload.user,
                 isLoading: false
             }
         case actionTypes.LOGIN_SUCCESS:
@@ -27,8 +26,7 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
-                isChairman: action.payload.is_chairman,
-
+                user: action.payload.user,
             }
 
         case actionTypes.REGISTER_STUDENT_USER_FAILED:
@@ -38,8 +36,8 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 token: null,
                 isAuthenticated: false,
-                isChairman: null,
-                isLoading: false
+                isLoading: false,
+                user: null
             }
 
         default:
