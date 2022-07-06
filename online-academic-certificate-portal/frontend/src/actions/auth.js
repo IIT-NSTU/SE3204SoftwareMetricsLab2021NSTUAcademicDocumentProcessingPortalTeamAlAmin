@@ -32,8 +32,8 @@ export const create_student_user = ({ fullname, email, password, password2 }) =>
         }
     }
     const body = JSON.stringify({ fullname, email, password, password2 })
-
-    axios.post('signup/student/', body, config)
+    console.log('inside')
+    axios.post('http://localhost:8000/api/signup/student/', body, config)
         .then(res => {
             dispatch({
                 type: actionTypes.REGISTER_STUDENT_USER_SUCCESS,
@@ -57,8 +57,8 @@ export const login = ({ email, password }) => (dispatch) => {
         }
     }
     const body = JSON.stringify({ email, password })
-
-    axios.post('http://127.0.0.1:8000/api/login/', body, config)
+    console.log(body)
+    axios.post('http://localhost:8000/api/login/', body, config)
         .then(response => {
             dispatch({
                 type: actionTypes.LOGIN_SUCCESS,
@@ -70,4 +70,28 @@ export const login = ({ email, password }) => (dispatch) => {
             })
         })
 
+}
+
+export const check_continuous_auth = () => (dispatch) => {
+    const token = localStorage.getItem("token")
+    if (!token) {
+        dispatch({ type: actionTypes.AUTH_LOGOUT })
+    }
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
+    }
+    axios.get('http://localhost:8000/api/checkauth/', config)
+        .then(response => {
+            dispatch({
+                type: actionTypes.CONTINUOUS_USER_AUTH_SUCCESS,
+                payload: response.data
+            })
+        }).catch(err => {
+            dispatch({
+                type: actionTypes.CONTINUOUS_USER_AUTH_FAILED
+            })
+        })
 }

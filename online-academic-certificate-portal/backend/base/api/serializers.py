@@ -1,6 +1,7 @@
 import email
-from django.contrib.auth import authenticate
+
 from base.models import User, chairman, student
+from django.contrib.auth import authenticate
 from rest_framework import serializers
 
 
@@ -9,6 +10,12 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ["id", "fullname", "email", "is_student",
                   "is_chairman", "email_validation"]
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = student
+        fields = ["id", "roll", "user"]
 
 
 class chairmanSignupSerializer(serializers.ModelSerializer):

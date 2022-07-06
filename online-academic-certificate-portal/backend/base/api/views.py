@@ -1,6 +1,9 @@
-from base.models import User, chairman
+from calendar import c
+
+from base.models import User, chairman, student
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.shortcuts import redirect
 from django.urls import reverse
 from jwt import ExpiredSignatureError, decode, encode, exceptions
 from rest_framework import generics, permissions, status
@@ -10,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .permissions import isChairmanUser, isStudentUser
-from .serializers import (LoginSerializer, UserSerializer,
+from .serializers import (LoginSerializer, StudentSerializer, UserSerializer,
                           chairmanSignupSerializer, studentSignupSerializer)
 from .utils import Util
 
@@ -43,7 +46,7 @@ class chairmanSignupView(generics.GenericAPIView):
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                # "token": Token.objects.get(user=user).key,
+                "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
@@ -77,7 +80,7 @@ class studentSignupView(generics.GenericAPIView):
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                # "token": Token.objects.get(user=user).key,
+                "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
@@ -94,7 +97,8 @@ class VerifyEmail(generics.GenericAPIView):
             if user.email_validation is False:
                 user.email_validation = True
                 user.save()
-            return Response({'message': 'Successfully activated'}, status=status.HTTP_200_OK)
+            # return Response({'message': 'Successfully activated'}, status=status.HTTP_200_OK)
+            return redirect("http://localhost:3000/login")
         except ExpiredSignatureError:
             return Response({'message': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
         except exceptions.DecodeError:
@@ -110,15 +114,15 @@ class customAuthToken(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
         token, created = Token.objects.get_or_create(user=user)
-        if user.email_validation is False:
-            return Response({
-                "message": "Your username has not been activated"
-            }, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({
-                "user": UserSerializer(user, context=self.get_serializer_context()).data,
-                "token": token.key
-            })
+        # if user.email_validation is False:
+        #     return Response({
+        #         "message": "Your username has not been activated"
+        #     }, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": token.key
+        })
 
 
 class LogoutView(APIView):
@@ -141,3 +145,23 @@ class chairmanOnlyView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class continuousVerificationView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
+class checkVerificationView(generics.RetrieveAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # a_serialzer_data = UserSerializer
+        b_serialzer_data = StudentSerializer(student.objects.all(), many=True)
+        return Response({
+            # "A": a_serialzer_data.data,
+            "B": b_serialzer_data.data
+        })

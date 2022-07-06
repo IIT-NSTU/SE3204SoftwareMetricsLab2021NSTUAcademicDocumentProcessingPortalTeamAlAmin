@@ -12,26 +12,36 @@ export const authReducer = (state = initialState, action) => {
         case actionTypes.REGISTER_STUDENT_USER_SUCCESS:
         case actionTypes.REGISTER_CHAIRMAN_USER_SUCCESS:
             localStorage.setItem('token', action.payload.token)
-            return {
-                ...state,
-                ...action.payload,
-                isAuthenticated: true,
-                user: action.payload.user,
-                isLoading: false
-            }
-        case actionTypes.LOGIN_SUCCESS:
-            localStorage.setItem('token', action.payload.token)
+
             return {
                 ...state,
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload.user,
+                user: action.payload.user
+            }
+        case actionTypes.LOGIN_SUCCESS:
+            localStorage.setItem('token', action.payload.token)
+
+            return {
+                ...state,
+                ...action.payload,
+                isAuthenticated: true,
+                isLoading: false,
+                user: action.payload.user
+            }
+        case actionTypes.CONTINUOUS_USER_AUTH_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: true,
+                isLoading: false,
+                user: action.payload
             }
 
         case actionTypes.REGISTER_STUDENT_USER_FAILED:
         case actionTypes.REGISTER_CHAIRMAN_USER_FAILED:
         case actionTypes.LOGIN_FAILED:
+        case actionTypes.CONTINUOUS_USER_AUTH_FAILED:
             return {
                 ...state,
                 token: null,
@@ -39,7 +49,15 @@ export const authReducer = (state = initialState, action) => {
                 isLoading: false,
                 user: null
             }
-
+        case actionTypes.AUTH_LOGOUT:
+            localStorage.removeItem("token")
+            return {
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                isLoading: false,
+                user: null
+            }
         default:
             return state;
     }

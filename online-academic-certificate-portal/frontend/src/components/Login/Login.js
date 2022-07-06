@@ -5,7 +5,6 @@ import { Navigate } from "react-router-dom"
 import { login } from '../../actions/auth'
 import './Login.css'
 const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
-
     const [userFormDetails, setUserFormDetails] = useState({
         email: "",
         password: ""
@@ -23,11 +22,15 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
 
         login({ email, password })
     }
-    if (isAuthenticated && user.isChairman) {
+    if (isAuthenticated && user.is_chairman && user.email_validation) {
         return <Navigate to="/chairman/dashboard" />
-    } else if (isAuthenticated && !user.isChairman) {
+    } else if (isAuthenticated && user.is_student && user.email_validation) {
         return <Navigate to="/student/dashboard" />
-    } else {
+    }
+    else if (isAuthenticated && (user.is_student || user.is_chairman) && !user.email_validation) {
+        return <p>please confirm your email</p>
+    }
+    else {
         return (
             <div className="form-container">
                 <div className="avatar"></div>

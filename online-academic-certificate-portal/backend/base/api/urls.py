@@ -1,8 +1,9 @@
 from django.urls import path
 
 from .views import (LogoutView, VerifyEmail, chairmanOnlyView,
-                    chairmanSignupView, customAuthToken, studentOnlyView,
-                    studentSignupView)
+                    chairmanSignupView, checkVerificationView,
+                    continuousVerificationView, customAuthToken,
+                    studentOnlyView, studentSignupView)
 
 urlpatterns = [
     path("signup/chairman/", chairmanSignupView.as_view(), name="chairman"),
@@ -12,4 +13,8 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(), name="logout"),
     path("student/dashboard/", studentOnlyView.as_view(), name="student-only"),
     path("chairman/dashboard/", chairmanOnlyView.as_view(), name="chairman-only"),
+    path("checkauth/", continuousVerificationView.as_view(),
+         name="continuous-verification"),
+    path("hulocheck/", checkVerificationView.as_view(),
+         name="hulo-verification"),
 ]
