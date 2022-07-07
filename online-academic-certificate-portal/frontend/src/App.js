@@ -9,34 +9,37 @@ import Homepage from './components/Homepage';
 import Login from "./components/Login/Login";
 import StudentRegistration from './components/Registration/StudentRegistration/StudentRegistration';
 import StudentDashboard from "./components/StudentDashboard";
+import Layout from './hoc/Layout/Layout';
 import { CPrivateRoute, SPrivateRoute } from './private/PrivateRoute';
-
 const App = ({ check_continuous_auth, isAuthenticated, token }) => {
   useEffect(() => {
     check_continuous_auth();
-    console.log(token)
-  }, [check_continuous_auth, token])
+
+  }, [check_continuous_auth])
 
 
   return (
-    <div className="App">
-      <Routes>
-        <Route exact path='/chairman/dashboard' element={
-          <CPrivateRoute>
-            <ChairmanDashboard />
-          </CPrivateRoute>
-        } />
-        <Route exact path='/student/dashboard' element={
-          <SPrivateRoute>
-            <StudentDashboard />
-          </SPrivateRoute>
-        } />
-        <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
-        <Route exact path='/student/signup' element={<StudentRegistration />} />
-        <Route exact path='/login' element={<Login />} />
-        <Route exact path='/' element={<Homepage />} />
-      </Routes>
-    </div>
+    <Layout>
+      <div className="App">
+        <Routes>
+          <Route exact path='/chairman/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanDashboard />
+            </CPrivateRoute>
+          } />
+          <Route exact path='/student/dashboard' element={
+            <SPrivateRoute>
+              <StudentDashboard />
+            </SPrivateRoute>
+          } />
+          <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
+          <Route exact path='/student/signup' element={<StudentRegistration />} />
+          <Route exact path='/login' element={<Login />} />
+          <Route exact path='/' element={<Homepage />} />
+        </Routes>
+
+      </div>
+    </Layout>
   );
 
 }

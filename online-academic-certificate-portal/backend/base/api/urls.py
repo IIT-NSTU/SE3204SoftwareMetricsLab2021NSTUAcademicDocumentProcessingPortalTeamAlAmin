@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import include, path
 
 from .views import (LogoutView, VerifyEmail, chairmanOnlyView,
                     chairmanSignupView, checkVerificationView,
@@ -17,4 +17,6 @@ urlpatterns = [
          name="continuous-verification"),
     path("hulocheck/", checkVerificationView.as_view(),
          name="hulo-verification"),
+    path('password_reset/',
+         include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]

@@ -3,10 +3,14 @@ from email.policy import default
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django_rest_passwordreset.signals import reset_password_token_created
+# password reset
 from rest_framework.authtoken.models import Token
 
 # Create your models here.
@@ -77,3 +81,21 @@ class chairman(models.Model):
 
     def __str__(self):
         return self.user.email
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = "{}?token={}".format(
+        reverse('password_reset:reset-password-request'), reset_password_token.key)
+
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="Some website title"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "souravdebnath97@gmail.com",
+        # to:
+        [reset_password_token.user.email]
+    )

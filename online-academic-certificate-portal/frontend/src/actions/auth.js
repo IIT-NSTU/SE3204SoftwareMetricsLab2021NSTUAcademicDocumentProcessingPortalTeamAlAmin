@@ -75,7 +75,7 @@ export const login = ({ email, password }) => (dispatch) => {
 export const check_continuous_auth = () => (dispatch) => {
     const token = localStorage.getItem("token")
     if (!token) {
-        dispatch({ type: actionTypes.AUTH_LOGOUT })
+        dispatch(logout)
     }
     const config = {
         headers: {
@@ -94,4 +94,9 @@ export const check_continuous_auth = () => (dispatch) => {
                 type: actionTypes.CONTINUOUS_USER_AUTH_FAILED
             })
         })
+}
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem("token")
+    dispatch({ type: actionTypes.AUTH_LOGOUT })
 }
