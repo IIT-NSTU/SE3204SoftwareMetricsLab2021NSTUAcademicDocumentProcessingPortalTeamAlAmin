@@ -3,19 +3,37 @@ import email
 from base.models import User, chairman, student
 from django.contrib.auth import authenticate
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "fullname", "email", "is_student",
-                  "is_chairman", "email_validation"]
+                  "is_chairman", "email_validation", "new_email_validation"]
 
 
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = student
         fields = ["id", "roll", "user"]
+
+
+class emailChangeSerializer(serializers.ModelSerializer):
+    oldEmail = serializers.EmailField()
+    newEmail = serializers.EmailField()
+
+    class Meta:
+        model = User
+        fields = ["oldEmail", "newEmail"]
+
+    def save(self, **kwargs):
+        user = User.objects.get(email=self.validated_data['oldEmail'])
+        print(user, "in user")
+        user.new_email = self.validated_data["newEmail"]
+        user.new_email_validation = False
+        user.save()
+        return user
 
 
 class chairmanSignupSerializer(serializers.ModelSerializer):
@@ -42,6 +60,7 @@ class chairmanSignupSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.is_chairman = True
         user.save()
+
         chairman.objects.create(user=user)
         return user
 

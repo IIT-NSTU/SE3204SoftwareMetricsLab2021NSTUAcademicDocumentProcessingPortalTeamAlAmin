@@ -14,7 +14,8 @@ from rest_framework.views import APIView
 
 from .permissions import isChairmanUser, isStudentUser
 from .serializers import (LoginSerializer, StudentSerializer, UserSerializer,
-                          chairmanSignupSerializer, studentSignupSerializer)
+                          chairmanSignupSerializer, emailChangeSerializer,
+                          studentSignupSerializer)
 from .utils import Util
 
 
@@ -155,13 +156,54 @@ class continuousVerificationView(generics.RetrieveAPIView):
         return self.request.user
 
 
-class checkVerificationView(generics.RetrieveAPIView):
+class emailChangeView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = emailChangeSerializer
 
-    def get(self, request, *args, **kwargs):
-        # a_serialzer_data = UserSerializer
-        b_serialzer_data = StudentSerializer(student.objects.all(), many=True)
-        return Response({
-            # "A": a_serialzer_data.data,
-            "B": b_serialzer_data.data
-        })
+    def post(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+
+            user_data = User.objects.get(email=serializer.data['oldEmail'])
+
+            token = encode({'id': user_data.id},
+                           settings.SECRET_KEY, algorithm='HS256')
+
+            current_site = get_current_site(request).domain
+            relative_link = reverse('emailchange-verify')
+            absurl = 'http://' + current_site + \
+                relative_link + "?token=" + str(token)
+            print(user_data.new_email, "user hukka data", absurl)
+            email_body = 'Hi ' + user_data.fullname + \
+                ' User the link bellow to verify your email: \n' + absurl
+            data = {'to_email': user_data.new_email,
+                    'email_subject': 'Verify your email', 'email_body': email_body}
+            Util.send_email(data)
+
+            return Response({'message': 'done', "user": UserSerializer(user, context=self.get_serializer_context()).data, }, status=status.HTTP_200_OK)
+        except:
+            return Response({
+                "message": "Your username has not there"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class emailChangeVerifyView(generics.GenericAPIView):
+
+    @staticmethod
+    def get(request):
+        token = request.GET.get('token')
+        try:
+            payload = decode(token, settings.SECRET_KEY, algorithms='HS256')
+            user = User.objects.get(id=payload['id'])
+            user.email = user.new_email
+            if user.new_email_validation is False:
+                user.new_email_validation = True
+                user.save()
+            # return Response({'message': 'Successfully activated'}, status=status.HTTP_200_OK)
+            return redirect("http://localhost:3000/login")
+        except ExpiredSignatureError:
+            return Response({'message': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except exceptions.DecodeError:
+            return Response({'message': 'Invalid Token'}, status=status.HTTP_400_BAD_REQUEST)

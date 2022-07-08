@@ -1,8 +1,8 @@
 from django.urls import include, path
 
 from .views import (LogoutView, VerifyEmail, chairmanOnlyView,
-                    chairmanSignupView, checkVerificationView,
-                    continuousVerificationView, customAuthToken,
+                    chairmanSignupView, continuousVerificationView,
+                    customAuthToken, emailChangeVerifyView, emailChangeView,
                     studentOnlyView, studentSignupView)
 
 urlpatterns = [
@@ -15,8 +15,10 @@ urlpatterns = [
     path("chairman/dashboard/", chairmanOnlyView.as_view(), name="chairman-only"),
     path("checkauth/", continuousVerificationView.as_view(),
          name="continuous-verification"),
-    path("hulocheck/", checkVerificationView.as_view(),
-         name="hulo-verification"),
+    path("emailchange/", emailChangeView.as_view(),
+         name="email-change"),
+    path("emailchange-verify/", emailChangeVerifyView.as_view(),
+         name="emailchange-verify"),
     path('password_reset/',
          include('django_rest_passwordreset.urls', namespace='password_reset')),
 ]

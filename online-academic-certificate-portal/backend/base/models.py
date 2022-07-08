@@ -46,14 +46,16 @@ class CustomUserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
     is_student = models.BooleanField(default=False)
     is_chairman = models.BooleanField(default=False)
     email_validation = models.BooleanField(default=False)
-    fullname = models.CharField(max_length=150, default='test user')
+    fullname = models.CharField(
+        max_length=150, default='test user', unique=True)
+    new_email = models.EmailField(null=True, unique=True)
+    new_email_validation = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
