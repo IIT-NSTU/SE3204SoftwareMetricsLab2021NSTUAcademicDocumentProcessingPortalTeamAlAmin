@@ -1,6 +1,6 @@
 import axios from "axios";
+import { toast } from 'react-toastify';
 import * as actionTypes from './types';
-
 export const create_chairman_user = ({ fullname, email, password, password2 }) => (dispatch) => {
     const config = {
         headers: {
@@ -47,6 +47,56 @@ export const create_student_user = ({ fullname, email, password, password2 }) =>
             console.log(err.response.data)
         })
 
+}
+
+export const forget_password = ({ email }) => (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    const body = JSON.stringify({ email })
+    axios.post('http://localhost:8000/api/password_reset/', body, config)
+        .then(response => {
+            dispatch({
+                type: actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS,
+                payload: response.data
+            })
+
+            toast.success("enter the code sent to your email")
+
+        }).catch(err => {
+
+            dispatch({
+                type: actionTypes.PASSWORD_CHANGE_REQUEST_FAILED
+            })
+            toast.error("please enter correct email address")
+        })
+}
+
+export const forget_password_confirm = ({ token, password }) => (dispatch) => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }
+    const body = JSON.stringify({ token, password })
+    axios.post('http://localhost:8000/api/password_reset/confirm/', body, config)
+        .then(response => {
+            dispatch({
+                type: actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_SUCCESS,
+                payload: response.data
+            })
+
+            toast.success("successfully changed the password")
+
+        }).catch(err => {
+
+            dispatch({
+                type: actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_FAILED
+            })
+            toast.error("Token is not correct")
+        })
 }
 
 

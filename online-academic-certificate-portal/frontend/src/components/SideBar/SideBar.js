@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { logout } from '../../actions/auth';
 
+import testImage from '../../assets/images/iit.jfif';
+
 import './SideBar.css';
 const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) => {
 
@@ -97,10 +99,10 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
 
                             <li class="profile">
                                 <div class="profile-details">
-                                    {/* <!--<img src="profile.jpg" alt="profileImg">--> */}
+                                    <img src={testImage} alt="profileImg" />
                                     <div class="name_job">
                                         <div class="name">{user.fullname}</div>
-                                        <div class="job">{user.email.substr(0, 4) + '************' + user.email.substr(user.email.length - 6)}</div>
+                                        <div class="job">{user.email.substr(0, 4) + '*********' + user.email.substr(user.email.length - 6)}</div>
                                     </div>
                                 </div>
                                 <i class='bx bx-log-out' id="log_out" onClick={(e) => handleLogout(e)} ></i>
@@ -137,7 +139,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
     )
 }
 SideBar.propTypes = {
-    login: PropTypes.func.isRequired,
+    logout: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     token: PropTypes.string,
     user: PropTypes.object

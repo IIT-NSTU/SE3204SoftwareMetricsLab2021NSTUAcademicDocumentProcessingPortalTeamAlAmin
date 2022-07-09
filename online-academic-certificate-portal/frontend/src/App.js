@@ -1,16 +1,29 @@
+import "react-toastify/dist/ReactToastify.css";
+
+
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import { check_continuous_auth } from './actions/auth';
-import ChairmanDashboard from "./components/ChairmanDashboard";
-import ChairmanSignup from './components/ChairmanSignup';
+import { CPrivateRoute, SPrivateRoute } from './private/PrivateRoute';
+
 import Homepage from './components/Homepage';
 import Login from "./components/Login/Login";
+import Layout from './hoc/Layout/Layout';
+
+import ChairmanDashboard from "./components/ChairmanDashboard";
+import ChairmanSignup from './components/ChairmanSignup';
+
 import StudentRegistration from './components/Registration/StudentRegistration/StudentRegistration';
 import StudentDashboard from "./components/StudentDashboard";
-import Layout from './hoc/Layout/Layout';
-import { CPrivateRoute, SPrivateRoute } from './private/PrivateRoute';
+
+import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
+import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
+
+
+
 const App = ({ check_continuous_auth, isAuthenticated, token }) => {
   useEffect(() => {
     check_continuous_auth();
@@ -35,9 +48,21 @@ const App = ({ check_continuous_auth, isAuthenticated, token }) => {
           <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
           <Route exact path='/login' element={<Login />} />
+          <Route exact path='/forget-password/confirm' element={<ForgetPasswordConfirm />} />
+          <Route exact path='/forget-password' element={<ForgetPasswordStart />} />
           <Route exact path='/' element={<Homepage />} />
         </Routes>
-
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
     </Layout>
   );

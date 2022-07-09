@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { connect } from "react-redux"
-import { Navigate } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
 import { login } from '../../actions/auth'
-import './Login.css'
+import '../../assets/css/NeumorphismForm.css'
 const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
     const [userFormDetails, setUserFormDetails] = useState({
         email: "",
@@ -58,8 +58,10 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
                         />
                     </div>
                     <input type="submit" value="Login" className="submit-input" />
-                    <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Don't have an account?</p>
-                    <a className="btn" href="#open-modal"> <input type="button" value="Registration" id="submit-registration" /></a>
+                    <Link to="/forget-password">
+                        <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Forgotten Password?</p>
+                    </Link>
+                    <a className="btn" href="#open-modal"> <input type="button" value="Create Account" id="submit-registration" /></a>
                     <div id="open-modal" className="modal-window">
                         <div>
                             <a href="#/" title="Close" className="modal-close">Close</a>

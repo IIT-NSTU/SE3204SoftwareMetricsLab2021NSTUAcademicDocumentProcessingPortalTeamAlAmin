@@ -223,7 +223,7 @@
     height: 45px;
     width: 45px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 50%;
     margin-right: 10px;
 }
 
@@ -252,12 +252,18 @@
     transition: all 0.5s ease;
 }
 
+.sidebar .profile #log_out:hover {
+    cursor: pointer;
+}
+
 .sidebar.open .profile #log_out {
     width: 50px;
     background: none;
 }
 
 .home-section {
+    margin-right: 20px;
+    margin-top: 10px;
     position: relative;
     min-height: 100vh;
     top: 0;

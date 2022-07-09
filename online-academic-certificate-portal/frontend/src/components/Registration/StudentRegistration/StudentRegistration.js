@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { create_student_user } from '../../../actions/auth'
-import '../../Login/Login.css'
+import '../../../assets/css/NeumorphismForm.css'
 
 const StudentRegistration = ({ create_student_user, isAuthenticated, isLoading, token, user }) => {
     const [student, setStudent] = useState({

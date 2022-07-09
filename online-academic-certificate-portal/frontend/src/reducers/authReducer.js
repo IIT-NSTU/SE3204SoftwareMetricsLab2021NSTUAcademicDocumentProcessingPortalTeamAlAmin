@@ -1,8 +1,11 @@
+
 import * as actionTypes from '../actions/types'
+
 
 const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
+    passwordResetRequest: "",
     isLoading: false,
     user: null
 }
@@ -18,7 +21,8 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload.user
+                user: action.payload.user,
+                passwordResetRequest: ""
             }
         case actionTypes.LOGIN_SUCCESS:
             localStorage.setItem('token', action.payload.token)
@@ -28,14 +32,16 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload.user
+                user: action.payload.user,
+                passwordResetRequest: ""
             }
         case actionTypes.CONTINUOUS_USER_AUTH_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: action.payload,
+                passwordResetRequest: ""
             }
 
         case actionTypes.REGISTER_STUDENT_USER_FAILED:
@@ -57,6 +63,25 @@ export const authReducer = (state = initialState, action) => {
                 isAuthenticated: false,
                 isLoading: false,
                 user: null
+            }
+        case actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS:
+            return {
+                ...state,
+                passwordResetRequest: "email found"
+            }
+        case actionTypes.PASSWORD_CHANGE_REQUEST_FAILED:
+            return {
+                ...state,
+                passwordResetRequest: "email not found"
+            }
+        case actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_SUCCESS:
+            return {
+                ...state,
+                passwordResetRequest: "reset done"
+            }
+        case actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_FAILED:
+            return {
+                ...state
             }
         default:
             return state;
