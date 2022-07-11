@@ -1,11 +1,11 @@
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 import PropTypes from 'prop-types';
 import { useEffect } from 'react';
 import { connect } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+
 import { check_continuous_auth } from './actions/auth';
 import { CPrivateRoute, SPrivateRoute } from './private/PrivateRoute';
 
@@ -21,10 +21,11 @@ import StudentDashboard from "./components/StudentDashboard";
 
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
+import Registration from "./components/Registration/Registration";
 
 
 
-const App = ({ check_continuous_auth, isAuthenticated, token }) => {
+const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
   useEffect(() => {
     check_continuous_auth();
 
@@ -50,6 +51,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token }) => {
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/forget-password/confirm' element={<ForgetPasswordConfirm />} />
           <Route exact path='/forget-password' element={<ForgetPasswordStart />} />
+          <Route exact path='/registration' element={<Registration />} />
           <Route exact path='/' element={<Homepage />} />
         </Routes>
         <ToastContainer

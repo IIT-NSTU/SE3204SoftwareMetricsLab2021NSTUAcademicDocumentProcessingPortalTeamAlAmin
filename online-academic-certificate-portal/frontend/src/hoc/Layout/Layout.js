@@ -1,9 +1,11 @@
-import SideBar from '../../components/SideBar/SideBar'
+
+import SideBar from '../../components/SideBar/SideBar';
 
 const Layout = ({ children }) => {
     return (
         <SideBar >
             {children}
+
         </SideBar>
     )
 }

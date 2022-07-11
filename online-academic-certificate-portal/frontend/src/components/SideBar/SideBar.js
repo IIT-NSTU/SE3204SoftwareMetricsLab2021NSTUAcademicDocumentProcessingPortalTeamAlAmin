@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
+import HashLoader from 'react-spinners/HashLoader';
 import { logout } from '../../actions/auth';
 
 import testImage from '../../assets/images/iit.jfif';
@@ -38,7 +39,15 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
         e.preventDefault();
         logout();
     }
-
+    let dashboardLink = ""
+    if (user) {
+        if (user.is_student) {
+            dashboardLink = "/student/dashboard"
+        }
+        else if (user.is_chairman) {
+            dashboardLink = "/chairman/dashboard"
+        }
+    }
     return (
         <div>
             <div class="sidebar">
@@ -56,11 +65,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                 </div>
 
                 <ul class="nav-list">
-                    {/* <li>
-                        <i class='bx bx-search' onClick={menuBtnChange} ></i>
-                        <input type="text" placeholder="Search..." />
-                        <span class="tooltip">Search</span>
-                    </li> */}
+
                     <li>
                         <Link to="/">
                             <i class='bx bx-home'></i>
@@ -79,10 +84,10 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                                 <span class="tooltip">Log in</span>
                             </li>
                             <li>
-                                <a href="#open-modal">
+                                <Link to="/registration">
                                     <i class='bx bxs-user-plus' ></i>
                                     <span class="links_name" onClick={closeModal}>Registration</span>
-                                </a>
+                                </Link>
                                 <span class="tooltip">Registration</span>
                             </li>
                         </>
@@ -90,10 +95,10 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                     {token && isAuthenticated && user.email_validation ?
                         <>
                             <li>
-                                <a href="#">
+                                <Link to={dashboardLink}>
                                     <i class='bx bx-grid-alt'></i>
                                     <span class="links_name">Dashboard</span>
-                                </a>
+                                </Link>
                                 <span class="tooltip">Dashboard</span>
                             </li>
 
@@ -112,29 +117,8 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                 </ul>
             </div>
             <section class="home-section" onClick={closeModal}>
-                {/* <div class="text">
-                    {children}
-                </div> */}
-                {children}
-            </section> <div id="open-modal" className="modal-window">
-                <div>
-                    <a href="#/" title="Close" className="modal-close">Close</a>
-                    <Link to="/student/signup">
-                        <input type="button" value="registration as student" id="type-registration" />
-                    </Link>
-                    <Link to="/chairman/signup">
-                        <input type="button" value="registration as director" id="type-registration" />
-                    </Link>
-
-                    <Link to="/librarian/signup">
-                        <input type="button" value="registration as librarian" id="type-registration" />
-                    </Link>
-                    <Link to="/provost/signup">
-                        <input type="button" value="registration as hall provost" id="type-registration" />
-                    </Link>
-                </div>
-            </div>
-
+                {isLoading ? <HashLoader speedMultiplier={1.5} color={'#262626'} style={{ marginLeft: "50%" }} size={100} /> : children}
+            </section>
         </div >
     )
 }

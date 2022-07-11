@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
-import { toast } from 'react-toastify'
+
 
 
 import { forget_password } from '../../../actions/auth'

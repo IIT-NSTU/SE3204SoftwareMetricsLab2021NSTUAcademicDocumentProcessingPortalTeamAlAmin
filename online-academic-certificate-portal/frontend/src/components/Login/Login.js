@@ -30,8 +30,10 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
     else if (isAuthenticated && (user.is_student || user.is_chairman) && !user.email_validation) {
         return <p>please confirm your email</p>
     }
+
     else {
         return (
+
             <div className="form-container">
                 <div className="avatar"></div>
                 <div className="title">IIT Certificate</div>
@@ -80,9 +82,10 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
                             </a>
                         </div>
                     </div>
-                </form>
 
+                </form>
             </div>
+
 
         )
     }

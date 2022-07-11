@@ -12,6 +12,12 @@ const initialState = {
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.LOADING_START:
+            return {
+                ...state,
+                isLoading: true,
+            }
+
         case actionTypes.REGISTER_STUDENT_USER_SUCCESS:
         case actionTypes.REGISTER_CHAIRMAN_USER_SUCCESS:
             localStorage.setItem('token', action.payload.token)
@@ -67,21 +73,25 @@ export const authReducer = (state = initialState, action) => {
         case actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS:
             return {
                 ...state,
+                isLoading: false,
                 passwordResetRequest: "email found"
             }
         case actionTypes.PASSWORD_CHANGE_REQUEST_FAILED:
             return {
                 ...state,
+                isLoading: false,
                 passwordResetRequest: "email not found"
             }
         case actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_SUCCESS:
             return {
                 ...state,
+                isLoading: false,
                 passwordResetRequest: "reset done"
             }
         case actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_FAILED:
             return {
-                ...state
+                ...state,
+                isLoading: false
             }
         default:
             return state;

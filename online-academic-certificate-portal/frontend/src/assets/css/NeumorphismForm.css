@@ -109,11 +109,12 @@ input[type="submit"] {
     box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #fff;
     transition: hover 1s ease-out;
     color: #fff;
-    opacity: 0.7;
+    border: none;
 }
 
 input[type="submit"]:hover {
-    opacity: 1;
+    background: rgb(54, 215, 183);
+    cursor: pointer;
 }
 
 input[type="submit"]:disabled {
