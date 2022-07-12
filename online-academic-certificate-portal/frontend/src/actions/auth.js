@@ -61,6 +61,7 @@ export const forget_password = ({ email }) => (dispatch) => {
     const body = JSON.stringify({ email })
     axios.post('http://localhost:8000/api/password_reset/', body, config)
         .then(response => {
+
             dispatch({
                 type: actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS,
                 payload: response.data

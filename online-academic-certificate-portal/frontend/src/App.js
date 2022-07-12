@@ -19,6 +19,7 @@ import ChairmanSignup from './components/ChairmanSignup';
 import StudentRegistration from './components/Registration/StudentRegistration/StudentRegistration';
 import StudentDashboard from "./components/StudentDashboard";
 
+import CertificateType from "./components/CertificateType/CertificateType";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
@@ -28,7 +29,6 @@ import Registration from "./components/Registration/Registration";
 const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
   useEffect(() => {
     check_continuous_auth();
-
   }, [check_continuous_auth])
 
 
@@ -44,6 +44,11 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/student/dashboard' element={
             <SPrivateRoute>
               <StudentDashboard />
+            </SPrivateRoute>
+          } />
+          <Route exact path='/student/certificate-type' element={
+            <SPrivateRoute>
+              <CertificateType />
             </SPrivateRoute>
           } />
           <Route exact path='/chairman/signup' element={<ChairmanSignup />} />

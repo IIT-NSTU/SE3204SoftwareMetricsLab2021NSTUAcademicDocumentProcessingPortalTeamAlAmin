@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
@@ -74,6 +75,7 @@ TEMPLATES = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'http://192.168.0.106:3000/ '
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
