@@ -23,6 +23,7 @@ import CertificateType from "./components/CertificateType/CertificateType";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
+import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
 
 
 
@@ -53,6 +54,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           } />
           <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
+          <Route exact path='/user/email-confirm' element={<UserEmailConfirm />} />
           <Route exact path='/login' element={<Login />} />
           <Route exact path='/forget-password/confirm' element={<ForgetPasswordConfirm />} />
           <Route exact path='/forget-password' element={<ForgetPasswordStart />} />

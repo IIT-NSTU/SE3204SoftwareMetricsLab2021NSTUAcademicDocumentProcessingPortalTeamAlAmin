@@ -53,7 +53,7 @@ class User(AbstractUser):
     is_chairman = models.BooleanField(default=False)
     email_validation = models.BooleanField(default=False)
     fullname = models.CharField(
-        max_length=150, default='test user', unique=True)
+        max_length=150, default='test user')
     new_email = models.EmailField(null=True, unique=True)
     new_email_validation = models.BooleanField(default=False)
 

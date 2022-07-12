@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
 import * as actionTypes from './types';
+
 export const create_chairman_user = ({ fullname, email, password, password2 }) => (dispatch) => {
     dispatch({ type: actionTypes.LOADING_START })
     const config = {
@@ -16,12 +17,12 @@ export const create_chairman_user = ({ fullname, email, password, password2 }) =
                 type: actionTypes.REGISTER_CHAIRMAN_USER_SUCCESS,
                 payload: res.data
             })
-            console.log(res.data)
+            toast.success("please confirm from your email")
         }).catch(err => {
             dispatch({
                 type: actionTypes.REGISTER_CHAIRMAN_USER_FAILED
             })
-            console.log(err.response.data)
+            toast.error("something went wrong. please try agin")
         })
 
 }

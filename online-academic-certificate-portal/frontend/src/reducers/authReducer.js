@@ -25,7 +25,7 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
-                isAuthenticated: true,
+                isAuthenticated: false,
                 isLoading: false,
                 user: action.payload.user,
                 passwordResetRequest: ""

@@ -63,25 +63,9 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
                     <Link to="/forget-password">
                         <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Forgotten Password?</p>
                     </Link>
-                    <a className="btn" href="#open-modal"> <input type="button" value="Create Account" id="submit-registration" /></a>
-                    <div id="open-modal" className="modal-window">
-                        <div>
-                            <a href="#/" title="Close" className="modal-close">Close</a>
-                            <a href="/student/signup">
-                                <input type="button" value="registration as student" id="type-registration" />
-                            </a>
-                            <a href="/chairman/signup">
-                                <input type="button" value="registration as director" id="type-registration" />
-                            </a>
-
-                            <a href="/librarian/signup">
-                                <input type="button" value="registration as librarian" id="type-registration" />
-                            </a>
-                            <a href="/provost/signup">
-                                <input type="button" value="registration as hall provost" id="type-registration" />
-                            </a>
-                        </div>
-                    </div>
+                    <Link to="/registration">
+                        <input type="submit" value="Create Account" id="submit-registration" />
+                    </Link>
 
                 </form>
             </div>
