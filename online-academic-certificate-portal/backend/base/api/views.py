@@ -47,7 +47,6 @@ class chairmanSignupView(generics.GenericAPIView):
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
@@ -81,7 +80,7 @@ class studentSignupView(generics.GenericAPIView):
                 "user": UserSerializer(
                     user, context=self.get_serializer_context()
                 ).data,
-                "token": Token.objects.get(user=user).key,
+                # "token": Token.objects.get(user=user).key,
                 "message": "account created successfully",
             }
         )
