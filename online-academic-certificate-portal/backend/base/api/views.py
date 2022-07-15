@@ -3,8 +3,11 @@ from calendar import c
 from base.models import User, chairman, student
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.urls import reverse
+from django.utils.html import strip_tags
 from jwt import ExpiredSignatureError, decode, encode, exceptions
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
@@ -16,7 +19,8 @@ from .permissions import isChairmanUser, isStudentUser
 from .serializers import (LoginSerializer, StudentSerializer, UserSerializer,
                           chairmanSignupSerializer, emailChangeSerializer,
                           studentSignupSerializer)
-from .utils import Util
+
+# from .utils import Util
 
 
 class chairmanSignupView(generics.GenericAPIView):
@@ -36,11 +40,24 @@ class chairmanSignupView(generics.GenericAPIView):
         absurl = 'http://' + current_site + \
             relative_link + "?token=" + str(token)
 
-        email_body = 'Hi ' + user_data.fullname + \
-            ' User the link bellow to verify your email: \n' + absurl
-        data = {'to_email': user_data.email,
-                'email_subject': 'Verify your email', 'email_body': email_body}
-        Util.send_email(data)
+        html_message = render_to_string('registration_confirm.html', {
+            'fullname': user_data.fullname,
+            'confirmationUrl': absurl
+        })
+        plain_message = strip_tags(html_message)
+        send_mail(
+            "email confirmation for NSTU ODPP",
+            plain_message,
+            "souravdebnath97@gmail.com",
+            [user_data.email],
+            html_message=html_message
+        )
+
+        # email_body = 'Hi ' + user_data.fullname + \
+        #     ' User the link bellow to verify your email: \n' + absurl
+        # data = {'to_email': user_data.email,
+        #         'email_subject': 'Verify your email', 'email_body': email_body}
+        # # Util.send_email(data)
 
         return Response(
             {
@@ -69,11 +86,23 @@ class studentSignupView(generics.GenericAPIView):
         absurl = 'http://' + current_site + \
             relative_link + "?token=" + str(token)
 
-        email_body = 'Hi ' + user_data.fullname + \
-            ' User the link bellow to verify your email: \n' + absurl
-        data = {'to_email': user_data.email,
-                'email_subject': 'Verify your email', 'email_body': email_body}
-        Util.send_email(data)
+        html_message = render_to_string('registration_confirm.html', {
+            'fullname': user_data.fullname,
+            'confirmationUrl': absurl
+        })
+        plain_message = strip_tags(html_message)
+        send_mail(
+            "email confirmation for NSTU ODPP",
+            plain_message,
+            "souravdebnath97@gmail.com",
+            [user_data.email],
+            html_message=html_message
+        )
+        # email_body = 'Hi ' + user_data.fullname + \
+        #     ' User the link bellow to verify your email: \n' + absurl
+        # data = {'to_email': user_data.email,
+        #         'email_subject': 'Verify your email', 'email_body': email_body}
+        # Util.send_email(data)
 
         return Response(
             {
@@ -174,7 +203,7 @@ class emailChangeView(generics.GenericAPIView):
             relative_link = reverse('emailchange-verify')
             absurl = 'http://' + current_site + \
                 relative_link + "?token=" + str(token)
-            print(user_data.new_email, "user hukka data", absurl)
+
             email_body = 'Hi ' + user_data.fullname + \
                 ' User the link bellow to verify your email: \n' + absurl
             data = {'to_email': user_data.new_email,

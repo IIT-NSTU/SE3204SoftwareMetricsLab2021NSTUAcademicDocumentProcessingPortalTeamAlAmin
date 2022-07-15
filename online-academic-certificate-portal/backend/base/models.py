@@ -1,5 +1,4 @@
 from email.policy import default
-from re import template
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
@@ -8,8 +7,7 @@ from django.core.mail import send_mail
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.template.loader import get_template, render_to_string
-from django.urls import reverse
+from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django_rest_passwordreset.signals import reset_password_token_created
@@ -98,7 +96,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     plain_message = strip_tags(html_message)
     send_mail(
         # title:
-        "Password Reset for {title}".format(title="Some website title"),
+        "Password Reset for {title}".format(title="NSTU ODPP"),
         # message:
         plain_message,
         # from:
