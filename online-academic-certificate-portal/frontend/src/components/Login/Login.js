@@ -28,7 +28,7 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
         return <Navigate to="/student/dashboard" />
     }
     else if (isAuthenticated && (user.is_student || user.is_chairman) && !user.email_validation) {
-        return <p>please confirm your email</p>
+        return <Navigate to="/user/email-confirm" />
     }
 
     else {

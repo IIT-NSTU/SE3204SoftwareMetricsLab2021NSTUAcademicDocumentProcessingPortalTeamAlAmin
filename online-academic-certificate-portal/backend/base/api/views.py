@@ -204,11 +204,18 @@ class emailChangeView(generics.GenericAPIView):
             absurl = 'http://' + current_site + \
                 relative_link + "?token=" + str(token)
 
-            email_body = 'Hi ' + user_data.fullname + \
-                ' User the link bellow to verify your email: \n' + absurl
-            data = {'to_email': user_data.new_email,
-                    'email_subject': 'Verify your email', 'email_body': email_body}
-            Util.send_email(data)
+            html_message = render_to_string('registration_confirm.html', {
+                'fullname': user_data.fullname,
+                'confirmationUrl': absurl
+            })
+            plain_message = strip_tags(html_message)
+            send_mail(
+                "email confirmation for NSTU ODPP",
+                plain_message,
+                "souravdebnath97@gmail.com",
+                [user_data.new_email],
+                html_message=html_message
+            )
 
             return Response({'message': 'done', "user": UserSerializer(user, context=self.get_serializer_context()).data, }, status=status.HTTP_200_OK)
         except:

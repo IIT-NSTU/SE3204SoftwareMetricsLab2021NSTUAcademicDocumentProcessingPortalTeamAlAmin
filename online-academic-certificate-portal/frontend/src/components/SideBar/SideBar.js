@@ -92,7 +92,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                             </li>
                         </>
                         : null}
-                    {token && isAuthenticated && user.email_validation ?
+                    {token && isAuthenticated && (user.is_student || user.is_chairman) ?
                         <>
                             <li>
                                 <Link to={dashboardLink}>
