@@ -47,11 +47,19 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <StudentDashboard />
             </SPrivateRoute>
           } />
+
           <Route exact path='/student/certificate-type' element={
             <SPrivateRoute>
               <CertificateType />
             </SPrivateRoute>
           } />
+          <Route exact path='/student/email-change' element={
+            <SPrivateRoute>
+              <CertificateType />
+            </SPrivateRoute>
+          } />
+
+
           <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
           <Route exact path='/user/email-confirm' element={<UserEmailConfirm />} />
