@@ -103,6 +103,31 @@ export const forget_password_confirm = ({ token, password }) => (dispatch) => {
         })
 }
 
+export const email_change = ({ oldEmail, newEmail }) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    const token = localStorage.getItem("token")
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`
+        }
+    }
+    const body = JSON.stringify({ 'oldEmail': oldEmail, 'newEmail': newEmail })
+    axios.post('http://localhost:8000/api/emailchange/', body, config)
+        .then(response => {
+            dispatch({
+                type: actionTypes.EMAIL_CHANGE_REQUEST_SUCCESS
+            })
+            toast.success("please confirm from your new email address")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.EMAIL_CHANGE_REQUEST_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
 
 export const login = ({ email, password }) => (dispatch) => {
     dispatch({ type: actionTypes.LOADING_START })

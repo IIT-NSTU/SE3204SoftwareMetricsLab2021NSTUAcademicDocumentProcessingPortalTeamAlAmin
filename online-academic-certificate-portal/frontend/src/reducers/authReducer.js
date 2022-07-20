@@ -6,6 +6,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     passwordResetRequest: "",
+    emailChangeRequest: "",
     isLoading: false,
     user: null
 }
@@ -27,7 +28,8 @@ export const authReducer = (state = initialState, action) => {
                 isAuthenticated: false,
                 isLoading: false,
                 user: action.payload.user,
-                passwordResetRequest: ""
+                passwordResetRequest: "",
+                emailChangeRequest: ""
             }
         case actionTypes.LOGIN_SUCCESS:
             localStorage.setItem('token', action.payload.token)
@@ -38,7 +40,8 @@ export const authReducer = (state = initialState, action) => {
                 isAuthenticated: true,
                 isLoading: false,
                 user: action.payload.user,
-                passwordResetRequest: ""
+                passwordResetRequest: "",
+                emailChangeRequest: "",
             }
         case actionTypes.CONTINUOUS_USER_AUTH_SUCCESS:
             return {
@@ -67,7 +70,9 @@ export const authReducer = (state = initialState, action) => {
                 token: null,
                 isAuthenticated: false,
                 isLoading: false,
-                user: null
+                user: null,
+                passwordResetRequest: "",
+                emailChangeRequest: "",
             }
         case actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS:
             return {
@@ -92,6 +97,21 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false
             }
+
+        case actionTypes.EMAIL_CHANGE_REQUEST_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                emailChangeRequest: "email change requested"
+            }
+
+        case actionTypes.EMAIL_CHANGE_REQUEST_FAILED:
+            return {
+                ...state,
+                isLoading: false,
+                emailChangeRequest: ""
+            }
+
         default:
             return state;
     }

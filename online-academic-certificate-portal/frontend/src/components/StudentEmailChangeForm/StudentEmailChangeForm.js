@@ -1,14 +1,17 @@
-import React from 'react'
-import './StudentEmailChangeForm.css'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
+import { connect } from "react-redux"
+import { Navigate } from "react-router-dom"
+import { email_change } from '../../actions/auth'
+import '../../assets/css/NeumorphismForm.css'
 
-const StudentEmailChangeForm = ({ login, isAuthenticated, isLoading, token, user }) => {
+const StudentEmailChangeForm = ({ email_change, isAuthenticated, isLoading, token, emailChangeRequest, user }) => {
 
     const [userFormDetails, setUserFormDetails] = useState({
-        email: "",
-        password: ""
+        newEmail: ""
     })
-    const { email, password } = userFormDetails
-
+    const { newEmail } = userFormDetails
+    const oldEmail = user.email
     const loginChange = (e) => {
         setUserFormDetails({
             ...userFormDetails,
@@ -18,17 +21,11 @@ const StudentEmailChangeForm = ({ login, isAuthenticated, isLoading, token, user
     const handleLoginSubmit = (e) => {
         e.preventDefault();
 
-        login({ email, password })
+        email_change({ oldEmail, newEmail })
     }
-    if (isAuthenticated && user.is_chairman && user.email_validation) {
-        return <Navigate to="/chairman/dashboard" />
-    } else if (isAuthenticated && user.is_student && user.email_validation) {
-        return <Navigate to="/student/dashboard" />
-    }
-    else if (isAuthenticated && (user.is_student || user.is_chairman) && !user.email_validation) {
+    if (isAuthenticated && user.is_student && (emailChangeRequest === "email change requested")) {
         return <Navigate to="/user/email-confirm" />
     }
-
     return (
         <div className="form-container">
             <div className="avatar"></div>
@@ -39,45 +36,41 @@ const StudentEmailChangeForm = ({ login, isAuthenticated, isLoading, token, user
                     <i className="fa fa-envelope"></i>
                     <input type="text"
                         className="name-input"
-                        onChange={e => loginChange(e)}
-                        placeholder="E-mail"
+                        placeholder={oldEmail}
                         name="email"
-                        value={email}
+                        // value={oldEmail}
+                        disabled
                     />
                 </div>
-                <div className="password">
-                    <i className="fa fa-key"></i>
-                    <input
-                        className="password-input"
-                        type="text"
+                <div className="username">
+                    <i className="fa fa-envelope"></i>
+                    <input type="text"
+                        className="name-input"
                         onChange={e => loginChange(e)}
-                        placeholder="Password"
-                        name="password" value={password}
+                        placeholder="enter your new email"
+                        name="newEmail"
+                        value={newEmail}
                     />
                 </div>
                 <input type="submit" value="Login" className="submit-input" />
-                <Link to="/forget-password">
-                    <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Forgotten Password?</p>
-                </Link>
-                <Link to="/registration">
-                    <input type="submit" value="Create Account" id="submit-registration" />
-                </Link>
 
             </form>
         </div>
     )
 }
-Login.propTypes = {
-    login: PropTypes.func.isRequired,
+StudentEmailChangeForm.propTypes = {
+    email_change: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     token: PropTypes.string,
+    emailChangeRequest: PropTypes.string,
     user: PropTypes.object
 }
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated,
     isLoading: state.auth.isLoading,
     token: state.auth.token,
+    emailChangeRequest: state.auth.emailChangeRequest,
     user: state.auth.user
 })
 
-export default connect(mapStateToProps, { login })(StudentEmailChangeForm)
+export default connect(mapStateToProps, { email_change })(StudentEmailChangeForm)

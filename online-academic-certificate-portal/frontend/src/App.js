@@ -23,6 +23,7 @@ import CertificateType from "./components/CertificateType/CertificateType";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
+import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentEmailChangeForm";
 import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
 
 
@@ -53,9 +54,10 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <CertificateType />
             </SPrivateRoute>
           } />
+
           <Route exact path='/student/email-change' element={
             <SPrivateRoute>
-              <CertificateType />
+              <StudentEmailChangeForm />
             </SPrivateRoute>
           } />
 
