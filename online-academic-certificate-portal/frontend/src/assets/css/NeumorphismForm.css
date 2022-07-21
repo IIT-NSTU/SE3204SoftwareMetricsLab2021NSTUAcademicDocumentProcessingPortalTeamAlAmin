@@ -30,7 +30,7 @@ body {
 .form-container {
     width: 430px;
     height: 730px;
-    margin: 20px auto;
+    margin: auto;
     padding: 10px 35px 35px 35px;
     border-radius: 40px;
     background: #ecf0f3;

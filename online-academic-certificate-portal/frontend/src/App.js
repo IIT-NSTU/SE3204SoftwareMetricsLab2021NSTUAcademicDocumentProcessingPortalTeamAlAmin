@@ -14,17 +14,18 @@ import Login from "./components/Login/Login";
 import Layout from './hoc/Layout/Layout';
 
 import ChairmanDashboard from "./components/ChairmanDashboard";
-import ChairmanSignup from './components/ChairmanSignup';
+import ChairmanRegistration from "./components/Registration/ChairmanRegistration/ChairmanRegistration";
 
 import StudentRegistration from './components/Registration/StudentRegistration/StudentRegistration';
 import StudentDashboard from "./components/StudentDashboard";
+import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentEmailChangeForm";
 
 import CertificateType from "./components/CertificateType/CertificateType";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
-import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentEmailChangeForm";
 import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
+
 
 
 
@@ -62,7 +63,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           } />
 
 
-          <Route exact path='/chairman/signup' element={<ChairmanSignup />} />
+          <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
           <Route exact path='/user/email-confirm' element={<UserEmailConfirm />} />
           <Route exact path='/login' element={<Login />} />

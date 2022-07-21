@@ -11,7 +11,7 @@ export const create_chairman_user = ({ fullname, email, password, password2 }) =
     }
     const body = JSON.stringify({ fullname, email, password, password2 })
 
-    axios.post('signup/chairman/', body, config)
+    axios.post('http://localhost:8000/api/signup/chairman/', body, config)
         .then(res => {
             dispatch({
                 type: actionTypes.REGISTER_CHAIRMAN_USER_SUCCESS,

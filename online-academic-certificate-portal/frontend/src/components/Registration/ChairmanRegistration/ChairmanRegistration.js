@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import { connect } from "react-redux"
 import { Link, Navigate } from "react-router-dom"
-import { create_student_user } from '../../../actions/auth'
+import { create_chairman_user } from '../../../actions/auth'
 import '../../../assets/css/NeumorphismForm.css'
 
-const StudentRegistration = ({ create_student_user, isAuthenticated, isLoading, token, user }) => {
+const StudentRegistration = ({ create_chairman_user, isAuthenticated, isLoading, token, user }) => {
     const [student, setStudent] = useState({
         fullname: '',
         email: '',
@@ -19,14 +19,14 @@ const StudentRegistration = ({ create_student_user, isAuthenticated, isLoading, 
     const { fullname, email, password, password2 } = student
     const handleSubmit = (e) => {
         e.preventDefault();
-        create_student_user({ fullname, email, password, password2 })
+        create_chairman_user({ fullname, email, password, password2 })
     }
     if (user) {
-        if (!isAuthenticated && user.is_student && !user.email_validation) {
+        if (!isAuthenticated && user.is_chairman && !user.email_validation) {
             return <Navigate to="/user/email-confirm" />
         }
-        else if (isAuthenticated && user.is_student && user.email_validation) {
-            return <Navigate to="/student/dashboard" />
+        else if (isAuthenticated && user.is_chairman && user.email_validation) {
+            return <Navigate to="/chairman/dashboard" />
         }
     }
     else {
@@ -35,7 +35,7 @@ const StudentRegistration = ({ create_student_user, isAuthenticated, isLoading, 
                 <p style={{ height: '20px' }}></p>
                 <div class="form-container">
 
-                    <div class="title">Student Registration</div>
+                    <div class="title">Chairman Registration</div>
 
                     <form onSubmit={e => handleSubmit(e)}>
                         <div class="username">
@@ -85,7 +85,7 @@ const StudentRegistration = ({ create_student_user, isAuthenticated, isLoading, 
     }
 }
 StudentRegistration.propTypes = {
-    create_student_user: PropTypes.func.isRequired,
+    create_chairman_user: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     token: PropTypes.string,
     user: PropTypes.object
@@ -96,4 +96,4 @@ const mapStateToProps = state => ({
     token: state.auth.token,
     user: state.auth.user
 })
-export default connect(mapStateToProps, { create_student_user })(StudentRegistration)
+export default connect(mapStateToProps, { create_chairman_user })(StudentRegistration)
