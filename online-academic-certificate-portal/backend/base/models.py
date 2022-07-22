@@ -86,6 +86,20 @@ class chairman(models.Model):
         return self.user.email
 
 
+class provost(models.Model):
+    user = models.OneToOneField(
+        User, related_name="provost", on_delete=models.CASCADE)
+
+    provost_id = models.CharField(max_length=50)
+
+
+class librarian(models.Model):
+    user = models.OneToOneField(
+        User, related_name="librarian", on_delete=models.CASCADE)
+
+    librarian_id = models.CharField(max_length=50)
+
+
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     password_reset_key = reset_password_token.key
