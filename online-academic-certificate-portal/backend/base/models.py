@@ -11,10 +11,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 from django_rest_passwordreset.signals import reset_password_token_created
-# password reset
 from rest_framework.authtoken.models import Token
-
-# Create your models here.
 
 
 class CustomUserManager(BaseUserManager):
@@ -103,19 +100,13 @@ class librarian(models.Model):
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     password_reset_key = reset_password_token.key
-    # email_plaintext_message = "The token for your password change for NSTU ODPP is: {}".format(
-    #     )
     html_message = render_to_string(
         'password_reset_template.html', {'context': password_reset_key})
     plain_message = strip_tags(html_message)
     send_mail(
-        # title:
         "Password Reset for {title}".format(title="NSTU ODPP"),
-        # message:
         plain_message,
-        # from:
         "souravdebnath97@gmail.com",
-        # to:
         [reset_password_token.user.email],
         html_message=html_message
     )
