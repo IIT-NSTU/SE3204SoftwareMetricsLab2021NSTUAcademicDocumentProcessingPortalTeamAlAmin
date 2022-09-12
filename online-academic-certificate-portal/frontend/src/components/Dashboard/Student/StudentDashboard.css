@@ -1,0 +1,19 @@
+.certificate-type {
+    height: 50px;
+    width: 350px;
+    background: #ececec;
+    border-radius: 20px;
+}
+
+.certificate-type-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.shadow-box {
+    box-shadow: -5px -5px 9px rgba(255, 255, 255, 0.45), 5px 5px 9px rgba(94, 104, 121, 0.3);
+}

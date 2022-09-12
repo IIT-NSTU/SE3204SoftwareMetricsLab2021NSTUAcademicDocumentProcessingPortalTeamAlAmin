@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { connect } from "react-redux"
 import { Navigate } from "react-router-dom"
 
@@ -37,29 +37,31 @@ const ForgetPasswordStart = ({ forget_password, isAuthenticated, isLoading, toke
     else {
 
         return (
-            <div className="form-container">
-                <div className="avatar"></div>
-                <div className="title">IIT Certificate</div>
-                <div className="sub-title">CR3W</div>
-                <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
-                    <div className="username">
-                        <i className="fa fa-envelope"></i>
-                        <input type="text"
-                            className="name-input"
-                            onChange={e => loginChange(e)}
-                            placeholder="E-mail"
-                            name="email"
-                            value={email}
-                        />
-                    </div>
-                    <input type="submit" value="submit" className="submit-input" />
+            <React.Fragment>
+                <p style={{ height: '50px' }}></p>
+                <div className="form-container" style={{ height: '500px' }}>
+                    <div className="avatar"></div>
+                    <div className="title">IIT Certificate</div>
+                    <div className="sub-title">CR3W</div>
+                    <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
+                        <div className="username">
+                            <i className="fa fa-envelope"></i>
+                            <input type="text"
+                                className="name-input"
+                                onChange={e => loginChange(e)}
+                                placeholder="E-mail"
+                                name="email"
+                                value={email}
+                            />
+                        </div>
+                        <input type="submit" value="submit" className="submit-input" />
 
-                </form>
+                    </form>
 
 
-                {/* {!isAuthenticated && passwordResetRequest === "email not found" ?  : null} */}
-            </div>
-
+                    {/* {!isAuthenticated && passwordResetRequest === "email not found" ?  : null} */}
+                </div>
+            </React.Fragment>
         )
     }
 }

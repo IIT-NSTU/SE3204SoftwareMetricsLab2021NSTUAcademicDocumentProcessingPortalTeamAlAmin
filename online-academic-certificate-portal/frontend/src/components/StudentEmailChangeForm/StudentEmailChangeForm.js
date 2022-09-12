@@ -27,7 +27,7 @@ const StudentEmailChangeForm = ({ email_change, isAuthenticated, isLoading, toke
         return <Navigate to="/user/email-confirm" />
     }
     return (
-        <div className="form-container">
+        <div className="form-container" style={{ height: '600px' }}>
             <div className="avatar"></div>
             <div className="title">IIT Certificate</div>
             <div className="sub-title">CR3W</div>

@@ -45,7 +45,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
             dashboardLink = "/student/dashboard"
         }
         else if (user.is_chairman) {
-            dashboardLink = "/chairman/dashboard"
+            dashboardLink = "/chairman/requested/dashboard"
         }
     }
     return (
@@ -92,6 +92,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                             </li>
                         </>
                         : null}
+
                     {token && isAuthenticated && (user.is_student || user.is_chairman) ?
                         <>
                             <li>
@@ -113,6 +114,19 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                                 <i class='bx bx-log-out' id="log_out" onClick={(e) => handleLogout(e)} ></i>
                             </li>
                         </> : null
+                    }
+                    {
+                        token && isAuthenticated && user.is_chairman ?
+                            <>
+                                <li>
+                                    <Link to="/chairman/rejeted/dashboard">
+                                        <i class='bx bxs-no-entry'></i>
+                                        <span class="links_name" onClick={closeModal}>Rejected Student</span>
+                                    </Link>
+                                    <span class="tooltip">Rejected Student</span>
+                                </li>
+
+                            </> : null
                     }
                 </ul>
             </div>

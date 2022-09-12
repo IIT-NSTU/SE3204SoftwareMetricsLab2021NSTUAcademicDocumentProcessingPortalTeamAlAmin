@@ -13,11 +13,12 @@ import Homepage from './components/Homepage';
 import Login from "./components/Login/Login";
 import Layout from './hoc/Layout/Layout';
 
-import ChairmanDashboard from "./components/ChairmanDashboard";
+import ChairmanRejectedDashboard from "./components/Dashboard/Chairman/Rejected/ChairmanRejectedDashboard";
+import ChairmanRequestedDashboard from "./components/Dashboard/Chairman/Requested/ChairmanRequestedDashboard";
 import ChairmanRegistration from "./components/Registration/ChairmanRegistration/ChairmanRegistration";
 
+import StudentDashboard from "./components/Dashboard/Student/StudentDashboard";
 import StudentRegistration from './components/Registration/StudentRegistration/StudentRegistration';
-import StudentDashboard from "./components/StudentDashboard";
 import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentEmailChangeForm";
 
 import CertificateType from "./components/CertificateType/CertificateType";
@@ -25,8 +26,6 @@ import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordCon
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
 import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
-
-
 
 
 const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
@@ -39,9 +38,14 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
     <Layout>
       <div className="App">
         <Routes>
-          <Route exact path='/chairman/dashboard' element={
+          <Route exact path='/chairman/requested/dashboard' element={
             <CPrivateRoute>
-              <ChairmanDashboard />
+              <ChairmanRequestedDashboard />
+            </CPrivateRoute>
+          } />
+          <Route exact path='/chairman/rejeted/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanRejectedDashboard />
             </CPrivateRoute>
           } />
           <Route exact path='/student/dashboard' element={
