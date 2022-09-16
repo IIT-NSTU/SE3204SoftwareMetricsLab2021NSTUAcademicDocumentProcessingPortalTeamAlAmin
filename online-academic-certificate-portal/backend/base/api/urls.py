@@ -1,9 +1,30 @@
 from django.urls import include, path
 
-from .views import (LogoutView, VerifyEmail, chairmanOnlyView,
-                    chairmanSignupView, continuousVerificationView,
-                    customAuthToken, emailChangeVerifyView, emailChangeView,
-                    studentOnlyView, studentSignupView)
+from .views import (LogoutView, VerifyEmail, applyProvisional,
+                    chairmanAcceptProvisional, chairmanOnlyView,
+                    chairmanRejectProvisional, chairmanSignupView,
+                    continuousVerificationView, customAuthToken,
+                    emailChangeVerifyView, emailChangeView,
+                    examControllerAcceptProvisional,
+                    examControllerRejectProvisional,
+                    getProvisionalAcceptedListbyChairman,
+                    getProvisionalAcceptedListbyExamController,
+                    getProvisionalAcceptedListbyLibrarian,
+                    getProvisionalAcceptedListbyProvost,
+                    getProvisionalAppliedListforChairman,
+                    getProvisionalAppliedListforExamController,
+                    getProvisionalAppliedListforLibrarian,
+                    getProvisionalAppliedListforProvost,
+                    getProvisionalCertificateAppliedDetails,
+                    getProvisionalCertificateAppliedList,
+                    getProvisionalRejectedListbyChairman,
+                    getProvisionalRejectedListbyExamController,
+                    getProvisionalRejectedListbyLibrarian,
+                    getProvisionalRejectedListbyProvost,
+                    librarianAcceptProvisional, librarianRejectProvisional,
+                    payProvisional, provostAcceptProvisional,
+                    provostRejectProvisional, studentOnlyView,
+                    studentSignupView, testApi)
 
 urlpatterns = [
     path("signup/chairman/", chairmanSignupView.as_view(), name="chairman"),
@@ -25,4 +46,84 @@ urlpatterns = [
 
     path('password_reset/',
          include('django_rest_passwordreset.urls', namespace='password_reset')),
+    # <---- provisional certificate url ---->
+    path('student-provisional-applied-list/',
+         getProvisionalCertificateAppliedList, name="student_applied_list"),
+    path('student-provisional-applied-details/<slug:roll>/',
+         getProvisionalCertificateAppliedDetails, name="student_each_details"),
+    # <---- Student actions for provisional certificate ---->
+    path('student-provisional-apply/', applyProvisional,
+         name='student_apply_provisional'),
+    path('student-provisional-pay/', payProvisional,
+         name='student_apply_provisional'),
+    # <---- Chairman actions for provisional certificate ---->
+    path("provisional-applied-list-for-chairman/", getProvisionalAppliedListforChairman,
+         name="provisional_applied_list_for_chairman"),
+
+    path("provisional-accepted-list-by-chairman/", getProvisionalAcceptedListbyChairman,
+         name="provisional_accepted_list_by_chairman"),
+
+    path("provisional-rejected-list-by-chairman/", getProvisionalRejectedListbyChairman,
+         name="provisional_rejected_list_by_chairman"),
+
+    path("chairman-accept-provisional/", chairmanAcceptProvisional,
+         name="chairman_accept_provisional"),
+
+    path("chairman-reject-provisional/", chairmanRejectProvisional,
+         name="chairman_reject_provisional"),
+
+    # <---- provost actions for provisional certificate ---->
+
+    path("provisional-applied-list-for-provost/", getProvisionalAppliedListforProvost,
+         name="provisional_applied_list_for_provost"),
+
+    path("provisional-accepted-list-by-provost/", getProvisionalAcceptedListbyProvost,
+         name="provisional_accepted_list_by_provost"),
+
+    path("provisional-rejected-list-by-provost/", getProvisionalRejectedListbyProvost,
+         name="provisional_rejected_list_by_provost"),
+
+    path("provost-accept-provisional/", provostAcceptProvisional,
+         name="provost_accept_provisional"),
+
+    path("provost-reject-provisional/", provostRejectProvisional,
+         name="provost_reject_provisional"),
+
+    # <---- Librarian actions for provisional certificate ---->
+
+    path("provisional-applied-list-for-librarian/", getProvisionalAppliedListforLibrarian,
+         name="provisional_applied_list_for_librarian"),
+
+    path("provisional-accepted-list-by-librarian/", getProvisionalAcceptedListbyLibrarian,
+         name="provisional_accepted_list_by_librarian"),
+
+    path("provisional-rejected-list-by-librarian/", getProvisionalRejectedListbyLibrarian,
+         name="provisional_rejected_list_by_librarian"),
+
+    path("librarian-accept-provisional/", librarianAcceptProvisional,
+         name="librarian_accept_provisional"),
+
+    path("librarian-reject-provisional/", librarianRejectProvisional,
+         name="librarian_reject_provisional"),
+
+    # <---- ExamController actions for provisional certificate ---->
+
+    path("provisional-applied-list-for-examController/", getProvisionalAppliedListforExamController,
+         name="provisional_applied_list_for_examController"),
+
+    path("provisional-accepted-list-by-examController/", getProvisionalAcceptedListbyExamController,
+         name="provisional_accepted_list_by_examController"),
+
+    path("provisional-rejected-list-by-examController/", getProvisionalRejectedListbyExamController,
+         name="provisional_rejected_list_by_examController"),
+
+    path("examController-accept-provisional/", examControllerAcceptProvisional,
+         name="examController_accept_provisional"),
+
+    path("examController-reject-provisional/", examControllerRejectProvisional,
+         name="examController_reject_provisional"),
+
+    # <---- test api ---->
+
+    path('test/<int:pk>/', testApi, name='test')
 ]

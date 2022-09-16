@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
 import ChairmanHeader from '../ChairmanHeader/ChairmanHeader';
-import './ChairmanRequestedDashboard.css';
+// import './ChairmanRequestedDashboard.css';
 
-const ChairmanRequestedDashboard = () => {
+const ChairmanApprovedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-applied-list-for-chairman/')
+        axios.get('http://localhost:8000/api/provisional-accepted-list-by-chairman/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -65,8 +65,9 @@ const ChairmanRequestedDashboard = () => {
             <div>
                 <ChairmanHeader />
 
-                <MaterialTable title="Applicant list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
+                <MaterialTable title="Approved list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
+
                         sorting: true, search: true,
                         searchFieldAlignment: "right", searchAutoFocus: true, searchFieldVariant: "standard",
                         filtering: true, paging: true, pageSizeOptions: [2, 5, 10, 20], pageSize: 5,
@@ -121,4 +122,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ChairmanRequestedDashboard)
+export default connect(mapStateToProps, {})(ChairmanApprovedDashboard)

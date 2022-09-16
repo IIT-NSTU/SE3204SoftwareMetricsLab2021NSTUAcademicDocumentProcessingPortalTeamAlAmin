@@ -8,7 +8,8 @@ const initialState = {
     passwordResetRequest: "",
     emailChangeRequest: "",
     isLoading: false,
-    user: null
+    user: null,
+    provisional: null
 }
 
 export const authReducer = (state = initialState, action) => {
@@ -111,6 +112,31 @@ export const authReducer = (state = initialState, action) => {
                 isLoading: false,
                 emailChangeRequest: ""
             }
+
+        // provisional action
+
+        case actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false
+            }
+        case actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED:
+            return {
+                ...state,
+                isLoading: false
+            }
+
+        case actionTypes.PROVISIONAL_REJECT_CHAIRMAN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false
+            }
+        case actionTypes.PROVISIONAL_REJECT_CHAIRMAN_FAILED:
+            return {
+                ...state,
+                isLoading: false
+            }
+
 
         default:
             return state;

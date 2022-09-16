@@ -1,7 +1,9 @@
 import email
 
-from base.models import User, chairman, student
+from base.models import (ProvisionalCertificate, Student, StudentResult, User,
+                         chairman, testTable)
 from django.contrib.auth import authenticate
+from pyexpat import model
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
@@ -9,18 +11,11 @@ from rest_framework.validators import UniqueValidator
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "fullname", "email", "is_student",
+        fields = ["id", "email", "is_student",
                   "is_chairman", "email_validation", "new_email_validation"]
 
 
-class StudentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = student
-        fields = ["id", "roll", "user"]
-
-
 class emailChangeSerializer(serializers.ModelSerializer):
-    oldEmail = serializers.EmailField()
     newEmail = serializers.EmailField()
 
     class Meta:
@@ -89,7 +84,7 @@ class studentSignupSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.is_student = True
         user.save()
-        student.objects.create(user=user)
+        Student.objects.create(user=user)
         return user
 
 
@@ -103,3 +98,18 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+# <---- Provisional certifiate model serialize ---->
+
+class ProvisionalCertificateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProvisionalCertificate
+        fields = "__all__"
+        depth = 1
+
+
+class testSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = testTable
+        fields = "__all__"

@@ -1,4 +1,5 @@
 from email.policy import default
+from operator import mod
 
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
@@ -50,28 +51,75 @@ class User(AbstractUser):
     is_student = models.BooleanField(default=False)
     is_chairman = models.BooleanField(default=False)
     email_validation = models.BooleanField(default=False)
-    fullname = models.CharField(
-        max_length=150, default='test user')
-    new_email = models.EmailField(null=True, unique=True)
+    new_email = models.EmailField(null=True, blank=True, unique=True)
     new_email_validation = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
-
-
-class student(models.Model):
+class Student(models.Model):
     user = models.OneToOneField(
-        User, related_name="student", on_delete=models.CASCADE)
-    roll = models.CharField(max_length=50)
+        User, related_name="student_info", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    email = models.CharField(
+        max_length=20, unique=True)
+    father_name = models.CharField(max_length=50)
+    mother_name = models.CharField(max_length=50)
+    date_of_birth = models.DateField()
+    department = models.CharField(max_length=50)
+    roll = models.CharField(max_length=20, unique=True)
+    hall = models.CharField(max_length=20)
+    phone = models.CharField(max_length=20)
+    passing_year = models.CharField(max_length=20, null=True, blank=True)
+    session = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
-        return self.user.email
+        return self.roll
+
+
+class StudentResult(models.Model):
+    student_details = models.OneToOneField(
+        Student, related_name="student_result", on_delete=models.CASCADE)
+    roll = models.CharField(max_length=20)
+    first_semester = models.CharField(max_length=5)
+    second_semester = models.CharField(max_length=5)
+    third_semester = models.CharField(max_length=5)
+    fourth_semester = models.CharField(max_length=5)
+    fifth_semester = models.CharField(max_length=5)
+    sixth_semester = models.CharField(max_length=5)
+    seventh_semester = models.CharField(max_length=5)
+    eighth_semester = models.CharField(max_length=5)
+    total_credit_completed = models.CharField(max_length=5)
+    cgpa = models.CharField(max_length=5)
+
+    def __str__(self):
+        return self.roll
+
+
+class ProvisionalCertificate(models.Model):
+    student_details = models.OneToOneField(
+        Student, related_name="student_info_global", on_delete=models.CASCADE)
+    result = models.OneToOneField(
+        StudentResult, related_name="student_result_certificate", on_delete=models.CASCADE)
+    is_applied = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
+    chairman_status = models.CharField(max_length=20, null=True, blank=True)
+    chairman_action_date = models.DateField(null=True, blank=True)
+    provost_status = models.CharField(max_length=20, null=True, blank=True)
+    provost_action_date = models.DateField(null=True, blank=True)
+    librarian_status = models.CharField(max_length=20, null=True, blank=True)
+    librarian_action_date = models.DateField(null=True, blank=True)
+    examController_status = models.CharField(
+        max_length=20, null=True, blank=True)
+    examController_action_date = models.DateField(null=True, blank=True)
+    checkedBy = models.CharField(max_length=50, null=True, blank=True)
+    serial_number = models.CharField(max_length=50, null=True, blank=True)
+    issued_date = models.DateField(null=True, blank=True)
+    takeBy = models.CharField(max_length=10, null=True, blank=True)
+
+    def __str__(self):
+        return self.student_details.user.email
 
 
 class chairman(models.Model):
@@ -95,6 +143,21 @@ class librarian(models.Model):
         User, related_name="librarian", on_delete=models.CASCADE)
 
     librarian_id = models.CharField(max_length=50)
+
+
+class testTable(models.Model):
+    name = models.CharField(max_length=20)
+    roll = models.CharField(max_length=20)
+    subject = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 @receiver(reset_password_token_created)

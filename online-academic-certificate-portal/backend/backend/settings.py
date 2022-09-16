@@ -75,7 +75,7 @@ TEMPLATES = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    'http://localhost:30014',
+    'http://localhost:3001',
     'http://192.168.0.106:3000/ '
 
 ]
@@ -125,7 +125,7 @@ ACCOUNT_UNIQUE_EMAIL = True
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Asia/Dhaka"
 
 USE_I18N = True
 

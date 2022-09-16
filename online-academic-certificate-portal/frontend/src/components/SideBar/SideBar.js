@@ -120,10 +120,17 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                             <>
                                 <li>
                                     <Link to="/chairman/rejeted/dashboard">
-                                        <i class='bx bxs-no-entry'></i>
+                                        <i class='bx bx-no-entry'></i>
                                         <span class="links_name" onClick={closeModal}>Rejected Student</span>
                                     </Link>
                                     <span class="tooltip">Rejected Student</span>
+                                </li>
+                                <li>
+                                    <Link to="/chairman/approved/dashboard">
+                                        <i class='bx bx-check-circle'></i>
+                                        <span class="links_name" onClick={closeModal}>Approved Student</span>
+                                    </Link>
+                                    <span class="tooltip">Approved Student</span>
                                 </li>
 
                             </> : null

@@ -22,9 +22,12 @@ import StudentRegistration from './components/Registration/StudentRegistration/S
 import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentEmailChangeForm";
 
 import CertificateType from "./components/CertificateType/CertificateType";
+import ChairmanApprovedDashboard from "./components/Dashboard/Chairman/Approved/ChairmanApprovedDashboard";
+import ProvisionalReject from "./components/Dashboard/Chairman/ProvisionalReject/ProvisionalReject";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
+import StudentDetails from "./components/StudentDetails/StudentDetails";
 import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
 
 
@@ -48,6 +51,11 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <ChairmanRejectedDashboard />
             </CPrivateRoute>
           } />
+          <Route exact path='/chairman/approved/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanApprovedDashboard />
+            </CPrivateRoute>
+          } />
           <Route exact path='/student/dashboard' element={
             <SPrivateRoute>
               <StudentDashboard />
@@ -66,7 +74,8 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
             </SPrivateRoute>
           } />
 
-
+          <Route exact path='/student-details/:roll' element={<StudentDetails />} />
+          <Route exact path='/chairman/:roll/reject' element={<ProvisionalReject />} />
           <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
           <Route exact path='/user/email-confirm' element={<UserEmailConfirm />} />

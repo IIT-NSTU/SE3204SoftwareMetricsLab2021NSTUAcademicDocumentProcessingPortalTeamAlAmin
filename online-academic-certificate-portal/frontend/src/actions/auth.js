@@ -184,3 +184,55 @@ export const logout = () => (dispatch) => {
     dispatch({ type: actionTypes.AUTH_LOGOUT })
     toast.success("logout success")
 }
+
+// provisional certificates actions
+
+export const chairman_accept_provisional = (email) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email })
+    console.log(body)
+    axios.post('http://localhost:8000/api/chairman-accept-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully accepted")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+export const chairman_reject_provisional = (email, message) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email, 'message': message })
+    console.log(body)
+    axios.post('http://localhost:8000/api/chairman-reject-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully rejected")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
