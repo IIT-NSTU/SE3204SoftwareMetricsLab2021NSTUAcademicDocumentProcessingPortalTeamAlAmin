@@ -214,6 +214,8 @@ export const student_upload_ssc = (body) => (dispatch) => {
         })
 }
 
+// chairman action for provisional
+
 export const chairman_accept_provisional = (email) => (dispatch) => {
     dispatch({ type: actionTypes.LOADING_START })
     console.log(email, 'email')
@@ -250,6 +252,165 @@ export const chairman_reject_provisional = (email, message) => (dispatch) => {
     const body = JSON.stringify({ 'student_email': email, 'message': message })
     console.log(body)
     axios.post('http://localhost:8000/api/chairman-reject-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully rejected")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+// provost action for provisional
+
+
+export const provost_accept_provisional = (email) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email })
+    console.log(body)
+    axios.post('http://localhost:8000/api/provost-accept-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully accepted")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+export const provost_reject_provisional = (email, message) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email, 'message': message })
+    console.log(body)
+    axios.post('http://localhost:8000/api/provost-reject-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully rejected")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+// librarian action for provisional
+
+
+export const librarian_accept_provisional = (email) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email })
+    console.log(body)
+    axios.post('http://localhost:8000/api/librarian-accept-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully accepted")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+export const librarian_reject_provisional = (email, message) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email, 'message': message })
+    console.log(body)
+    axios.post('http://localhost:8000/api/librarian-reject-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully rejected")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+// examController action for provisional
+
+
+export const examController_accept_provisional = (email, checkedBy, issued_Date) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email, 'checkedBy': checkedBy, 'issued_date': issued_Date })
+    console.log(body)
+    axios.post('http://localhost:8000/api/examController-accept-provisional/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully accepted")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
+export const examController_reject_provisional = (email, message) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'student_email': email, 'message': message })
+    console.log(body)
+    axios.post('http://localhost:8000/api/examController-reject-provisional/', body, config)
         .then(res => {
             dispatch({
                 type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS

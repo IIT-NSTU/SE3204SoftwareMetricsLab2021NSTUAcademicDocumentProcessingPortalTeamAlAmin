@@ -77,7 +77,7 @@ TEMPLATES = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://localhost:3001',
-    'http://192.168.0.106:3000/ '
+    'http://192.168.0.106:3000/'
 
 ]
 
@@ -145,7 +145,6 @@ STATICFILES_DIR = {
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-print(MEDIA_ROOT)
 MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

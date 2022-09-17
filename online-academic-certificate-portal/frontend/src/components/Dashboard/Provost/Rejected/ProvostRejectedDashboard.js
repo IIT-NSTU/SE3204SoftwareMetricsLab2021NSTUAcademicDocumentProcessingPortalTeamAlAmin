@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
-import ChairmanHeader from '../ChairmanHeader/ChairmanHeader';
+import ProvostHeader from '../Header/ProvostHeader';
 // import './ChairmanRequestedDashboard.css';
 
-const ChairmanRejectedDashboard = () => {
+const ProvostRejectedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-rejected-list-by-chairman/')
+        axios.get('http://localhost:8000/api/provisional-rejected-list-by-provost/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -57,13 +57,13 @@ const ChairmanRejectedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/chairman/student-details/${data.roll}`)
+        navigate(`/provost/student-details/${data.roll}`)
     }
 
     return (
         <React.Fragment>
             <div>
-                <ChairmanHeader />
+                <ProvostHeader />
 
                 <MaterialTable title="Rejected list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
@@ -121,4 +121,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ChairmanRejectedDashboard)
+export default connect(mapStateToProps, {})(ProvostRejectedDashboard)

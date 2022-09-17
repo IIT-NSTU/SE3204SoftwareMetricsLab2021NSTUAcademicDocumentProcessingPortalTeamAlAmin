@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
-import ChairmanHeader from '../ChairmanHeader/ChairmanHeader';
+import LibrarianHeader from '../Header/LibrarianHeader';
 // import './ChairmanRequestedDashboard.css';
 
-const ChairmanRejectedDashboard = () => {
+const LibrarianRequestedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-rejected-list-by-chairman/')
+        axios.get('http://localhost:8000/api/provisional-applied-list-for-librarian/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -57,15 +57,15 @@ const ChairmanRejectedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/chairman/student-details/${data.roll}`)
+        navigate(`/librarian/student-details/${data.roll}`)
     }
 
     return (
         <React.Fragment>
             <div>
-                <ChairmanHeader />
+                <LibrarianHeader />
 
-                <MaterialTable title="Rejected list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
+                <MaterialTable title="Applicant list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
                         sorting: true, search: true,
                         searchFieldAlignment: "right", searchAutoFocus: true, searchFieldVariant: "standard",
@@ -109,7 +109,10 @@ const ChairmanRejectedDashboard = () => {
 
                 />
 
+
+
                 <p style={{ height: '20px' }}></p>
+
             </div>
         </React.Fragment >
     )
@@ -121,4 +124,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ChairmanRejectedDashboard)
+export default connect(mapStateToProps, {})(LibrarianRequestedDashboard)

@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { chairman_reject_provisional } from "../../../../actions/auth";
+import { librarian_reject_provisional } from "../../../../actions/auth";
 
-const ProvisionalReject = () => {
+const ProvisionalRejectLibrarian = () => {
     const data = useParams()
     let navigate = useNavigate();
     const dispatch = useDispatch()
@@ -29,9 +29,9 @@ const ProvisionalReject = () => {
 
 
 
-    const rejectChairman = (email, message) => {
-        dispatch(chairman_reject_provisional(email, message))
-        navigate(`/student-details/${data.roll}`)
+    const rejectLibrarian = (email, message) => {
+        dispatch(librarian_reject_provisional(email, message))
+        navigate(`/librarian/student-details/${data.roll}`)
 
     }
     const messageChange = (e) => {
@@ -115,9 +115,9 @@ const ProvisionalReject = () => {
                             <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
                                 <input type="submit" value="Reject" id="reject"
-                                    onClick={() => rejectChairman(certificateData.student_details.email, message)}
+                                    onClick={() => rejectLibrarian(certificateData.student_details.email, message)}
                                     style={{ width: '60%', marginLeft: '60px' }}
-                                    disabled={certificateData.chairman_status === "rejected"}
+                                    disabled={certificateData.librarian_status === "rejected"}
                                 />
 
                             </div>
@@ -131,4 +131,4 @@ const ProvisionalReject = () => {
     )
 }
 
-export default ProvisionalReject
+export default ProvisionalRejectLibrarian

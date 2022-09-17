@@ -23,12 +23,22 @@ import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentE
 
 import CertificateType from "./components/CertificateType/CertificateType";
 import ChairmanApprovedDashboard from "./components/Dashboard/Chairman/Approved/ChairmanApprovedDashboard";
-import ProvisionalReject from "./components/Dashboard/Chairman/ProvisionalReject/ProvisionalReject";
+import ProvisionalRejectChairman from "./components/Dashboard/Chairman/ProvisionalReject/ProvisionalRejectChairman";
+import StudentDetailsforChairman from "./components/Dashboard/Chairman/StudentDetails/StudentDetailsforChairman";
+import LibrarianApprovedDashboard from "./components/Dashboard/Librarian/Approved/LibrarianApprovedDashboard";
+import ProvisionalRejectLibrarian from "./components/Dashboard/Librarian/ProvisionalReject/ProvisionalRejectLibrarian";
+import LibrarianRejectedDashboard from "./components/Dashboard/Librarian/Rejected/LibrarianRejectedDashboard";
+import LibrarianRequestedDashboard from "./components/Dashboard/Librarian/Requested/LibrarianRequestedDashboard";
+import StudentDetailsforLibrarian from "./components/Dashboard/Librarian/StudentDetails/StudentDetailsforLibrarian";
+import ProvostApprovedDashboard from "./components/Dashboard/Provost/Approved/ProvostApprovedDashboard";
+import ProvisionalRejectProvost from "./components/Dashboard/Provost/ProvisionalReject/ProvisionalRejectProvost";
+import ProvostRejectedDashboard from "./components/Dashboard/Provost/Rejected/ProvostRejectedDashboard";
+import ProvostRequestedDashboard from "./components/Dashboard/Provost/Requested/ProvostRequestedDashboard";
+import StudentDetailsforProvost from "./components/Dashboard/Provost/StudentDetails/StudentDetailsforProvost";
 import UploadImage from "./components/Dashboard/Student/UploadImage/UploadImage";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
-import StudentDetails from "./components/StudentDetails/StudentDetails";
 import UserEmailConfirm from "./components/UserEmailConfirm/UserEmailConfirm";
 
 
@@ -75,8 +85,26 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
             </SPrivateRoute>
           } />
           <Route exact path='/student/upload/ssc' element={<UploadImage />} />
-          <Route exact path='/student-details/:roll' element={<StudentDetails />} />
-          <Route exact path='/chairman/:roll/reject' element={<ProvisionalReject />} />
+          <Route exact path='/chairman/student-details/:roll' element={<StudentDetailsforChairman />} />
+          <Route exact path='/chairman/:roll/reject' element={<ProvisionalRejectChairman />} />
+
+          {/* provost url start */}
+          <Route exact path='/provost/requested/dashboard' element={<ProvostRequestedDashboard />} />
+          <Route exact path='/provost/approved/dashboard' element={<ProvostApprovedDashboard />} />
+          <Route exact path='/provost/rejected/dashboard' element={<ProvostRejectedDashboard />} />
+          <Route exact path='/provost/student-details/:roll' element={<StudentDetailsforProvost />} />
+          <Route exact path='/provost/:roll/reject' element={<ProvisionalRejectProvost />} />
+          {/* provost url end */}
+
+
+          {/* librarian url start */}
+          <Route exact path='/librarian/requested/dashboard' element={<LibrarianRequestedDashboard />} />
+          <Route exact path='/librarian/approved/dashboard' element={<LibrarianApprovedDashboard />} />
+          <Route exact path='/librarian/rejected/dashboard' element={<LibrarianRejectedDashboard />} />
+          <Route exact path='/librarian/student-details/:roll' element={<StudentDetailsforLibrarian />} />
+          <Route exact path='/librarian/:roll/reject' element={<ProvisionalRejectLibrarian />} />
+          {/* librarian url end */}
+
           <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />
           <Route exact path='/user/email-confirm' element={<UserEmailConfirm />} />

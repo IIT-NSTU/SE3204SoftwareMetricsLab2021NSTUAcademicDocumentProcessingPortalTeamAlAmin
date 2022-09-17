@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
-import ChairmanHeader from '../ChairmanHeader/ChairmanHeader';
+import LibrarianHeader from '../Header/LibrarianHeader';
 // import './ChairmanRequestedDashboard.css';
 
-const ChairmanRejectedDashboard = () => {
+const LibrarianApprovedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-rejected-list-by-chairman/')
+        axios.get('http://localhost:8000/api/provisional-accepted-list-by-librarian/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -29,15 +29,6 @@ const ChairmanRejectedDashboard = () => {
     useEffect(() => {
         getData()
     }, [])
-
-
-    // const visualTable = (certificateDetails) => {
-    //     let newArr = []
-    //     provisional ? provisional.map((v, i) => (
-    //         newArr.push(provisional[i].student_details)
-    //     )) : console.log('nothing')
-    //     console.log('new', newArr)
-    // }
 
 
     const columns = [
@@ -57,16 +48,17 @@ const ChairmanRejectedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/chairman/student-details/${data.roll}`)
+        navigate(`/librarian/student-details/${data.roll}`)
     }
 
     return (
         <React.Fragment>
             <div>
-                <ChairmanHeader />
+                <LibrarianHeader />
 
-                <MaterialTable title="Rejected list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
+                <MaterialTable title="Approved list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
+
                         sorting: true, search: true,
                         searchFieldAlignment: "right", searchAutoFocus: true, searchFieldVariant: "standard",
                         filtering: true, paging: true, pageSizeOptions: [2, 5, 10, 20], pageSize: 5,
@@ -121,4 +113,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ChairmanRejectedDashboard)
+export default connect(mapStateToProps, {})(LibrarianApprovedDashboard)

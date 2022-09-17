@@ -41,12 +41,33 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
         navigate('/login')
     }
     let dashboardLink = ""
+    let approvedDashboardLink = ""
+    let rejectedDashboardLink = ""
     if (user) {
         if (user.is_student) {
             dashboardLink = "/student/dashboard"
         }
         else if (user.is_chairman) {
             dashboardLink = "/chairman/requested/dashboard"
+            approvedDashboardLink = "/chairman/approved/dashboard"
+            rejectedDashboardLink = "/chairman/rejected/dashboard"
+        }
+        else if (user.is_provost) {
+            dashboardLink = "/provost/requested/dashboard"
+            approvedDashboardLink = "/provost/approved/dashboard"
+            rejectedDashboardLink = "/provost/rejected/dashboard"
+
+        }
+        else if (user.is_librarian) {
+            dashboardLink = "/librarian/requested/dashboard"
+            approvedDashboardLink = "/librarian/approved/dashboard"
+            rejectedDashboardLink = "/librarian/rejected/dashboard"
+        }
+        else if (user.is_examController) {
+            dashboardLink = "/exam-controller/requested/dashboard"
+            approvedDashboardLink = "/exam-controller/approved/dashboard"
+            rejectedDashboardLink = "/exam-controller/rejected/dashboard"
+
         }
     }
     return (
@@ -94,7 +115,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                         </>
                         : null}
 
-                    {token && isAuthenticated && (user.is_student || user.is_chairman) ?
+                    {token && isAuthenticated && (user.is_student || user.is_chairman || user.is_provost || user.is_librarian || user.is_examController) ?
                         <>
                             <li>
                                 <Link to={dashboardLink}>
@@ -113,21 +134,22 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                                     </div>
                                 </div>
                                 <i class='bx bx-log-out' id="log_out" onClick={(e) => handleLogout(e)} ></i>
+
                             </li>
                         </> : null
                     }
                     {
-                        token && isAuthenticated && user.is_chairman ?
+                        token && isAuthenticated && (user.is_chairman || user.is_provost || user.is_librarian || user.is_examController) ?
                             <>
                                 <li>
-                                    <Link to="/chairman/rejeted/dashboard">
+                                    <Link to={rejectedDashboardLink}>
                                         <i class='bx bx-no-entry'></i>
                                         <span class="links_name" onClick={closeModal}>Rejected Student</span>
                                     </Link>
                                     <span class="tooltip">Rejected Student</span>
                                 </li>
                                 <li>
-                                    <Link to="/chairman/approved/dashboard">
+                                    <Link to={approvedDashboardLink}>
                                         <i class='bx bx-check-circle'></i>
                                         <span class="links_name" onClick={closeModal}>Approved Student</span>
                                     </Link>

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { chairman_accept_provisional } from "../../actions/auth";
+import { chairman_accept_provisional } from "../../../../actions/auth";
 import './StudentDetails.css';
 
-const StudentDetails = () => {
+const StudentDetailsforChairman = () => {
     const data = useParams()
     let navigate = useNavigate();
     const disptach = useDispatch()
@@ -193,4 +193,4 @@ const StudentDetails = () => {
     )
 }
 
-export default StudentDetails
+export default StudentDetailsforChairman

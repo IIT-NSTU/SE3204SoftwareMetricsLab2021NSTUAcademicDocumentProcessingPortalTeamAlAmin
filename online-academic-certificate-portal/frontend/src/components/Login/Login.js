@@ -27,6 +27,15 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
     } else if (isAuthenticated && user.is_student && user.email_validation) {
         return <Navigate to="/student/dashboard" />
     }
+    else if (isAuthenticated && user.is_provost && user.email_validation) {
+        return <Navigate to="/provost/requested/dashboard" />
+    }
+    else if (isAuthenticated && user.is_librarian && user.email_validation) {
+        return <Navigate to="/librarian/requested/dashboard" />
+    }
+    else if (isAuthenticated && user.is_examController && user.email_validation) {
+        return <Navigate to="/exam-controller/requested/dashboard" />
+    }
     else if (isAuthenticated && (user.is_student || user.is_chairman) && !user.email_validation) {
         return <Navigate to="/user/email-confirm" />
     }

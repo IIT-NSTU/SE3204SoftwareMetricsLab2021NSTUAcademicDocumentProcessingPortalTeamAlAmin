@@ -57,7 +57,7 @@ const ChairmanRequestedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/student-details/${data.roll}`)
+        navigate(`/chairman/student-details/${data.roll}`)
     }
 
     return (
