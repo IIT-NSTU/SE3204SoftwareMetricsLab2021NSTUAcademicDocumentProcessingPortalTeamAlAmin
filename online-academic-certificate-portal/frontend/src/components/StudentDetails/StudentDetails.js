@@ -15,6 +15,7 @@ const StudentDetails = () => {
         axios.get(`http://localhost:8000/api/student-provisional-applied-details/${data.roll}/`)
             .then(res => {
                 setCertificateData(res.data)
+                console.log(res.data)
             })
             .catch(err => {
                 toast.error("something went wrong")
@@ -33,6 +34,9 @@ const StudentDetails = () => {
         if (certificateData.student_details) {
             navigate(`/chairman/${data.roll}/reject`)
         }
+    }
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     return (
@@ -79,6 +83,16 @@ const StudentDetails = () => {
                                             <span class="details">Total Credits Completed</span>
                                             <input type="text" placeholder={certificateData.result.total_credit_completed} disabled />
                                         </div>
+                                        {certificateData.ssc_certificate &&
+                                            <div class="input-box" style={{ textAlign: 'center' }}>
+                                                <span class="details">SSC certificate</span>
+                                                <button type="submit" value="Reject" id="sscButton"
+
+                                                    style={{ "width": "60%", "height": "45px", "outline": "none", "background": "rgb(6, 28, 46)", "borderRadius": "30px", "fontSize": "20px", "fontWeight": "700p", "boxShadow": "3px 3px 8px #b1b1b1, -3px -3px 8px #fff", "transition": "hover 1s ease-out", "color": "#fff", "border": "none" }}
+                                                    onClick={() => openInNewTab(`http://127.0.0.1:8000${certificateData.ssc_certificate}`)}
+                                                >check</button>
+                                            </div>
+                                        }
                                     </div>
 
                                 </form>
@@ -151,6 +165,11 @@ const StudentDetails = () => {
 
                         </div>
                     </div>
+                    {/* {certificateData.ssc_certificate && <div className="certificate_container">
+                        <img src={`http://localhost:8000${certificateData.ssc_certificate}`} alt="" />
+                    </div>
+                    } */}
+
                     <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
                         <input type="submit" value="Accept" id="accept" onClick={() => acceptChairman(certificateData.student_details.email)}

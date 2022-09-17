@@ -137,6 +137,16 @@ export const authReducer = (state = initialState, action) => {
                 isLoading: false
             }
 
+        case actionTypes.STUDENT_UPLOAD_SSC_SUCCESS:
+            return {
+                ...state,
+                isLoading: false
+            }
+        case actionTypes.STUDENT_UPLOAD_SSC_FAILED:
+            return {
+                ...state,
+                isLoading: false
+            }
 
         default:
             return state;

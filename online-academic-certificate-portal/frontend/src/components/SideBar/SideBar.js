@@ -1,14 +1,14 @@
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import HashLoader from 'react-spinners/HashLoader';
 import { logout } from '../../actions/auth';
-
 import testImage from '../../assets/images/iit.jfif';
 
 import './SideBar.css';
 const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) => {
 
+    const navigate = useNavigate();
     // following are the code to change sidebar button(optional)
     function menuBtnChange() {
         let sidebar = document.querySelector(".sidebar");
@@ -38,6 +38,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
     const handleLogout = (e) => {
         e.preventDefault();
         logout();
+        navigate('/login')
     }
     let dashboardLink = ""
     if (user) {

@@ -1,3 +1,4 @@
+from distutils.command import upload
 from email.policy import default
 from operator import mod
 
@@ -97,6 +98,10 @@ class StudentResult(models.Model):
         return self.roll
 
 
+def upload_path(instance, filename):
+    return '/'.join(['ssc', filename])
+
+
 class ProvisionalCertificate(models.Model):
     student_details = models.OneToOneField(
         Student, related_name="student_info_global", on_delete=models.CASCADE)
@@ -117,6 +122,10 @@ class ProvisionalCertificate(models.Model):
     serial_number = models.CharField(max_length=50, null=True, blank=True)
     issued_date = models.DateField(null=True, blank=True)
     takeBy = models.CharField(max_length=10, null=True, blank=True)
+    ssc_certificate = models.ImageField(
+        blank=True, null=True, upload_to=upload_path)
+    provisional_certificate_url = models.CharField(
+        max_length=250, null=True, blank=True)
 
     def __str__(self):
         return self.student_details.user.email
@@ -149,6 +158,10 @@ class testTable(models.Model):
     name = models.CharField(max_length=20)
     roll = models.CharField(max_length=20)
     subject = models.CharField(max_length=20)
+    arialfont = models.FileField(blank=True, null=True, upload_to="assets")
+    italicFont = models.FileField(blank=True, null=True, upload_to="assets")
+    scriptFont = models.FileField(blank=True, null=True, upload_to="assets")
+    image = models.ImageField(blank=True, null=True, upload_to="assets")
 
     def __str__(self):
         return self.name

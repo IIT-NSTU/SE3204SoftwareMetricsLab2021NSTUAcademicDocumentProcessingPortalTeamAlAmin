@@ -55,7 +55,7 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
                             <i className="fa fa-key"></i>
                             <input
                                 className="password-input"
-                                type="text"
+                                type="password"
                                 onChange={e => loginChange(e)}
                                 placeholder="Password"
                                 name="password" value={password}

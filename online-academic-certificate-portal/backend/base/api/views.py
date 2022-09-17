@@ -1,8 +1,4 @@
-import email
-import json
-from calendar import c
 from datetime import date
-from tkinter.tix import Tree
 
 import requests
 from base.models import (ProvisionalCertificate, Student, StudentResult, User,
@@ -22,6 +18,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from .helpers import save_pdf
 from .permissions import isChairmanUser, isStudentUser
 from .serializers import (LoginSerializer, ProvisionalCertificateSerializer,
                           UserSerializer, chairmanSignupSerializer,
@@ -296,9 +293,26 @@ def payProvisional(request):
 
     else:
         return Response({'message': 'already paid'}, status=status.HTTP_400_BAD_REQUEST)
+# <---- Student uploading image for Provisional certifiate ---->
+
+
+@api_view(["GET"])
+def uploadSscCertificate(request):
+    try:
+        applied_email = request.data['email']
+        ssc_certificate = request.data['ssc_certificate']
+        student = Student.objects.get(email=applied_email)
+        provisionalCertificateDetails = ProvisionalCertificate.objects.get(
+            student_details=student)
+        provisionalCertificateDetails.ssc_certificate = ssc_certificate
+        provisionalCertificateDetails.save()
+        return Response({'message': 'successfully uploaded'}, status=status.HTTP_200_OK)
+    except:
+        return Response({'message': 'something went wrong'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # <---- Provisional certifiate applied all list for chairman ---->
+
 
 @api_view(["GET"])
 def getProvisionalAppliedListforChairman(request):
@@ -635,7 +649,29 @@ def examControllerRejectProvisional(request):
         return Response({'message': 'already rejected this student'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# <---- pdf test api ---->
+class GeneratePdf(APIView):
+    def post(self, request):
+        student_email = request.data['student_email']
+
+        student = Student.objects.get(email=student_email)
+
+        provisionalCertificateDetails = ProvisionalCertificate.objects.get(
+            student_details=student)
+        params = {
+            'hello': 'hello'
+        }
+        file_name, status = save_pdf(params)
+        if not status:
+            return Response({'status': 400})
+        url = "127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
+
+        provisionalCertificateDetails.provisional_certificate_url = url
+        provisionalCertificateDetails.save()
+
+        return Response({'status': 200, 'path': f'/media/certificate/{file_name}.pdf'})
 # <---- test api ---->
+
 
 @api_view(["POST"])
 def testApi(request, pk):

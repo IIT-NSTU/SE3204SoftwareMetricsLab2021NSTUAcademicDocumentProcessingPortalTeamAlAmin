@@ -24,6 +24,7 @@ import StudentEmailChangeForm from "./components/StudentEmailChangeForm/StudentE
 import CertificateType from "./components/CertificateType/CertificateType";
 import ChairmanApprovedDashboard from "./components/Dashboard/Chairman/Approved/ChairmanApprovedDashboard";
 import ProvisionalReject from "./components/Dashboard/Chairman/ProvisionalReject/ProvisionalReject";
+import UploadImage from "./components/Dashboard/Student/UploadImage/UploadImage";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
 import Registration from "./components/Registration/Registration";
@@ -73,7 +74,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <StudentEmailChangeForm />
             </SPrivateRoute>
           } />
-
+          <Route exact path='/student/upload/ssc' element={<UploadImage />} />
           <Route exact path='/student-details/:roll' element={<StudentDetails />} />
           <Route exact path='/chairman/:roll/reject' element={<ProvisionalReject />} />
           <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />

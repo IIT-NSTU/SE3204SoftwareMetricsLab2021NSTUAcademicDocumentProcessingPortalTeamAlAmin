@@ -1,6 +1,7 @@
-from django.urls import include, path
+from django.urls import include, path, re_path
+from wkhtmltopdf.views import PDFTemplateView
 
-from .views import (LogoutView, VerifyEmail, applyProvisional,
+from .views import (GeneratePdf, LogoutView, VerifyEmail, applyProvisional,
                     chairmanAcceptProvisional, chairmanOnlyView,
                     chairmanRejectProvisional, chairmanSignupView,
                     continuousVerificationView, customAuthToken,
@@ -24,7 +25,7 @@ from .views import (LogoutView, VerifyEmail, applyProvisional,
                     librarianAcceptProvisional, librarianRejectProvisional,
                     payProvisional, provostAcceptProvisional,
                     provostRejectProvisional, studentOnlyView,
-                    studentSignupView, testApi)
+                    studentSignupView, testApi, uploadSscCertificate)
 
 urlpatterns = [
     path("signup/chairman/", chairmanSignupView.as_view(), name="chairman"),
@@ -56,6 +57,8 @@ urlpatterns = [
          name='student_apply_provisional'),
     path('student-provisional-pay/', payProvisional,
          name='student_apply_provisional'),
+    path('student-provisional-sscCertificate/', uploadSscCertificate,
+         name='student_upload_ssscCertificate'),
     # <---- Chairman actions for provisional certificate ---->
     path("provisional-applied-list-for-chairman/", getProvisionalAppliedListforChairman,
          name="provisional_applied_list_for_chairman"),
@@ -124,6 +127,7 @@ urlpatterns = [
          name="examController_reject_provisional"),
 
     # <---- test api ---->
+    path("pdf/", GeneratePdf.as_view(), name='pdf'),
 
     path('test/<int:pk>/', testApi, name='test')
 ]

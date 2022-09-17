@@ -187,6 +187,33 @@ export const logout = () => (dispatch) => {
 
 // provisional certificates actions
 
+export const student_upload_ssc = (body) => (dispatch) => {
+
+    dispatch({ type: actionTypes.LOADING_START })
+
+    const config = {
+        headers: {
+            'accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Content-Type': `multipart/form-data; boundary=${body._boundary}`,
+        }
+    }
+    console.log(body)
+    axios.post('http://localhost:8000/api/student-provisional-sscCertificate/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.STUDENT_UPLOAD_SSC_SUCCESS
+            })
+            toast.success("successfully uploaded your certificate")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.STUDENT_UPLOAD_SSC_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
 export const chairman_accept_provisional = (email) => (dispatch) => {
     dispatch({ type: actionTypes.LOADING_START })
     console.log(email, 'email')

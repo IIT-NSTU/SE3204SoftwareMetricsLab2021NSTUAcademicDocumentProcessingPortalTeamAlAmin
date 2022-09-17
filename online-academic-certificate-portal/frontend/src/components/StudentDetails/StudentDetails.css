@@ -207,3 +207,8 @@ tbody tr:nth-child(odd) {
 #reject:hover {
     background: rgb(152, 6, 6);
 }
+
+#sscButton:hover {
+    background: #71b7e6 !important;
+    cursor: pointer;
+}
