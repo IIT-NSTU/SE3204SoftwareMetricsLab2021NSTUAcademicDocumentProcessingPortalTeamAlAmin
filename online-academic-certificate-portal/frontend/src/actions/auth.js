@@ -185,7 +185,32 @@ export const logout = () => (dispatch) => {
     toast.success("logout success")
 }
 
-// provisional certificates actions
+// provisional certificates actions by student
+
+export const student_apply_provisional = (email) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'email': email })
+    console.log(body)
+    axios.post('http://localhost:8000/api/student-provisional-apply/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully applied")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
 
 export const student_upload_ssc = (body) => (dispatch) => {
 
@@ -198,7 +223,7 @@ export const student_upload_ssc = (body) => (dispatch) => {
             'Content-Type': `multipart/form-data; boundary=${body._boundary}`,
         }
     }
-    console.log(body)
+    console.log('from student upload', body)
     axios.post('http://localhost:8000/api/student-provisional-sscCertificate/', body, config)
         .then(res => {
             dispatch({
@@ -213,6 +238,31 @@ export const student_upload_ssc = (body) => (dispatch) => {
             toast.error("something went wrong")
         })
 }
+export const student_pay_provisional = (email) => (dispatch) => {
+    dispatch({ type: actionTypes.LOADING_START })
+    console.log(email, 'email')
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    const body = JSON.stringify({ 'email': email })
+    console.log(body)
+    axios.post('http://localhost:8000/api/student-provisional-pay/', body, config)
+        .then(res => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_SUCCESS
+            })
+            toast.success("successfully paid for provisional")
+        })
+        .catch(err => {
+            dispatch({
+                type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
+            })
+            toast.error("something went wrong")
+        })
+}
+
 
 // chairman action for provisional
 
@@ -396,6 +446,7 @@ export const examController_accept_provisional = (email, checkedBy, issued_Date)
             dispatch({
                 type: actionTypes.PROVISIONAL_CONFIRM_CHAIRMAN_FAILED
             })
+            console.log('from action', err)
             toast.error("something went wrong")
         })
 }

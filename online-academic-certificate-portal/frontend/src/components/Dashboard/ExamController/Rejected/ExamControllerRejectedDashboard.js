@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
-import ProvostHeader from '../Header/ExamControllerHeader';
+import ExamControllerHeader from '../Header/ExamControllerHeader';
 // import './ChairmanRequestedDashboard.css';
 
-const ProvostRequestedDashboard = () => {
+const ExamControllerRejectedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-applied-list-for-provost/')
+        axios.get('http://localhost:8000/api/provisional-rejected-list-by-examController/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -57,15 +57,15 @@ const ProvostRequestedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/provost/student-details/${data.roll}`)
+        navigate(`/exam-controller/student-details/${data.roll}`)
     }
 
     return (
         <React.Fragment>
             <div>
-                <ProvostHeader />
+                <ExamControllerHeader />
 
-                <MaterialTable title="Applicant list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
+                <MaterialTable title="Rejected list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
                         sorting: true, search: true,
                         searchFieldAlignment: "right", searchAutoFocus: true, searchFieldVariant: "standard",
@@ -121,4 +121,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ProvostRequestedDashboard)
+export default connect(mapStateToProps, {})(ExamControllerRejectedDashboard)

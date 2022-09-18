@@ -1,15 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { provost_accept_provisional } from "../../../../actions/auth";
 import './StudentDetails.css';
 
-const StudentDetailsforProvost = () => {
+const StudentDetailsforExamController = () => {
     const data = useParams()
     let navigate = useNavigate();
-    const disptach = useDispatch()
+
     const [certificateData, setCertificateData] = useState({})
     const getData = React.useCallback(async () => {
         axios.get(`http://localhost:8000/api/student-provisional-applied-details/${data.roll}/`)
@@ -25,14 +23,15 @@ const StudentDetailsforProvost = () => {
         getData()
     }, [getData])
 
-    const acceptProvost = (email) => {
-        console.log(email)
-        disptach(provost_accept_provisional(email))
+    const acceptProvost = () => {
+        if (certificateData.student_details) {
+            navigate(`/exam-controller/${data.roll}/final-accept`)
+        }
     }
 
     const rejectChairman = () => {
         if (certificateData.student_details) {
-            navigate(`/provost/${data.roll}/reject`)
+            navigate(`/exam-controller/${data.roll}/reject`)
         }
     }
     const openInNewTab = url => {
@@ -172,17 +171,15 @@ const StudentDetailsforProvost = () => {
 
                     <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
-                        <input type="submit" value="Accept" id="accept" onClick={() => acceptProvost(certificateData.student_details.email)}
+                        <input type="submit" value="Accept" id="accept" onClick={() => acceptProvost()}
                             style={{ width: '15%', marginLeft: 'auto' }}
-                            disabled={certificateData.provost_status === "approved"}
+                            disabled={certificateData.examController_status === "approved"}
                         />
-
-
 
                         <input type="submit" value="Reject" id="reject"
                             onClick={rejectChairman}
                             style={{ width: '15%', marginLeft: '60px' }}
-                            disabled={certificateData.provost_status === "rejected"}
+                            disabled={certificateData.examController_status !== null}
                         />
 
                     </div>
@@ -193,4 +190,4 @@ const StudentDetailsforProvost = () => {
     )
 }
 
-export default StudentDetailsforProvost
+export default StudentDetailsforExamController

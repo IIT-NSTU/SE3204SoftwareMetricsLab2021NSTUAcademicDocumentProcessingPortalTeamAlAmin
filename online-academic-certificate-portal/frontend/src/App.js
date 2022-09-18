@@ -25,6 +25,13 @@ import CertificateType from "./components/CertificateType/CertificateType";
 import ChairmanApprovedDashboard from "./components/Dashboard/Chairman/Approved/ChairmanApprovedDashboard";
 import ProvisionalRejectChairman from "./components/Dashboard/Chairman/ProvisionalReject/ProvisionalRejectChairman";
 import StudentDetailsforChairman from "./components/Dashboard/Chairman/StudentDetails/StudentDetailsforChairman";
+import ExamControllerApprovedDashboard from "./components/Dashboard/ExamController/Approved/ExamControllerApprovedDashboard";
+
+import ProvisionalFinalAcceptExamController from "./components/Dashboard/ExamController/ProvisionalFinalAccept/ProvisionalFinalAcceptExamController";
+import ProvisionalRejectExamController from "./components/Dashboard/ExamController/ProvisionalReject/ProvisionalRejectExamController";
+import ExamControllerRejectedDashboard from "./components/Dashboard/ExamController/Rejected/ExamControllerRejectedDashboard";
+import ExamControllerRequestedDashboard from "./components/Dashboard/ExamController/Requested/ExamControllerRequestedDashboard";
+import StudentDetailsforExamController from "./components/Dashboard/ExamController/StudentDetails/StudentDetailsforExamController";
 import LibrarianApprovedDashboard from "./components/Dashboard/Librarian/Approved/LibrarianApprovedDashboard";
 import ProvisionalRejectLibrarian from "./components/Dashboard/Librarian/ProvisionalReject/ProvisionalRejectLibrarian";
 import LibrarianRejectedDashboard from "./components/Dashboard/Librarian/Rejected/LibrarianRejectedDashboard";
@@ -35,6 +42,8 @@ import ProvisionalRejectProvost from "./components/Dashboard/Provost/Provisional
 import ProvostRejectedDashboard from "./components/Dashboard/Provost/Rejected/ProvostRejectedDashboard";
 import ProvostRequestedDashboard from "./components/Dashboard/Provost/Requested/ProvostRequestedDashboard";
 import StudentDetailsforProvost from "./components/Dashboard/Provost/StudentDetails/StudentDetailsforProvost";
+import StudentProvisionalDetails from "./components/Dashboard/Student/ApplyDetails/StudentProvisionalDetails";
+import PayForProvisional from "./components/Dashboard/Student/PayForProvisional/PayForProvisional";
 import UploadImage from "./components/Dashboard/Student/UploadImage/UploadImage";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
@@ -52,21 +61,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
     <Layout>
       <div className="App">
         <Routes>
-          <Route exact path='/chairman/requested/dashboard' element={
-            <CPrivateRoute>
-              <ChairmanRequestedDashboard />
-            </CPrivateRoute>
-          } />
-          <Route exact path='/chairman/rejeted/dashboard' element={
-            <CPrivateRoute>
-              <ChairmanRejectedDashboard />
-            </CPrivateRoute>
-          } />
-          <Route exact path='/chairman/approved/dashboard' element={
-            <CPrivateRoute>
-              <ChairmanApprovedDashboard />
-            </CPrivateRoute>
-          } />
+          {/* student url start  */}
           <Route exact path='/student/dashboard' element={
             <SPrivateRoute>
               <StudentDashboard />
@@ -84,9 +79,32 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <StudentEmailChangeForm />
             </SPrivateRoute>
           } />
-          <Route exact path='/student/upload/ssc' element={<UploadImage />} />
+          <Route exact path='/student/provisional/upload' element={<UploadImage />} />
+          <Route exact path='/student/provisional/pay' element={<PayForProvisional />} />
+          <Route exact path='/student/provisional/details' element={<StudentProvisionalDetails />} />
+
+          {/* student url end  */}
+
+          {/* chairman url start */}
+          <Route exact path='/chairman/requested/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanRequestedDashboard />
+            </CPrivateRoute>
+          } />
+          <Route exact path='/chairman/rejeted/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanRejectedDashboard />
+            </CPrivateRoute>
+          } />
+          <Route exact path='/chairman/approved/dashboard' element={
+            <CPrivateRoute>
+              <ChairmanApprovedDashboard />
+            </CPrivateRoute>
+          } />
           <Route exact path='/chairman/student-details/:roll' element={<StudentDetailsforChairman />} />
           <Route exact path='/chairman/:roll/reject' element={<ProvisionalRejectChairman />} />
+          {/* chairman url end */}
+
 
           {/* provost url start */}
           <Route exact path='/provost/requested/dashboard' element={<ProvostRequestedDashboard />} />
@@ -104,6 +122,15 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/librarian/student-details/:roll' element={<StudentDetailsforLibrarian />} />
           <Route exact path='/librarian/:roll/reject' element={<ProvisionalRejectLibrarian />} />
           {/* librarian url end */}
+
+          {/* exam-controller url start */}
+          <Route exact path='/exam-controller/requested/dashboard' element={<ExamControllerRequestedDashboard />} />
+          <Route exact path='/exam-controller/approved/dashboard' element={<ExamControllerApprovedDashboard />} />
+          <Route exact path='/exam-controller/rejected/dashboard' element={<ExamControllerRejectedDashboard />} />
+          <Route exact path='/exam-controller/student-details/:roll' element={<StudentDetailsforExamController />} />
+          <Route exact path='/exam-controller/:roll/reject' element={<ProvisionalRejectExamController />} />
+          <Route exact path='/exam-controller/:roll/final-accept' element={<ProvisionalFinalAcceptExamController />} />
+          {/* exam-controller url end */}
 
           <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />

@@ -21,7 +21,7 @@ from .views import (GeneratePdf, LogoutView, VerifyEmail, applyProvisional,
                     getProvisionalRejectedListbyChairman,
                     getProvisionalRejectedListbyExamController,
                     getProvisionalRejectedListbyLibrarian,
-                    getProvisionalRejectedListbyProvost,
+                    getProvisionalRejectedListbyProvost, getStudentDetails,
                     librarianAcceptProvisional, librarianRejectProvisional,
                     payProvisional, provostAcceptProvisional,
                     provostRejectProvisional, studentOnlyView,
@@ -50,6 +50,8 @@ urlpatterns = [
     # <---- provisional certificate url ---->
     path('student-provisional-applied-list/',
          getProvisionalCertificateAppliedList, name="student_applied_list"),
+    path('student-details/',
+         getStudentDetails, name="student_details"),
     path('student-provisional-applied-details/<slug:roll>/',
          getProvisionalCertificateAppliedDetails, name="student_each_details"),
     # <---- Student actions for provisional certificate ---->

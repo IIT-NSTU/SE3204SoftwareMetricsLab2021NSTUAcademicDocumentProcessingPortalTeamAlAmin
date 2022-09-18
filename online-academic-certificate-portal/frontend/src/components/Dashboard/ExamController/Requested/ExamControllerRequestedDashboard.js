@@ -6,14 +6,14 @@ import { connect } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import tableIcons from "../../../../assets/js/MateralTableIcons";
-import ProvostHeader from '../Header/ExamControllerHeader';
+import ExamControllerHeader from '../Header/ExamControllerHeader';
 // import './ChairmanRequestedDashboard.css';
 
-const ProvostRejectedDashboard = () => {
+const ExamControllerRequestedDashboard = () => {
     let navigate = useNavigate();
     const [certificateData, setCertificateData] = useState([])
     const getData = async () => {
-        axios.get('http://localhost:8000/api/provisional-rejected-list-by-provost/')
+        axios.get('http://localhost:8000/api/provisional-applied-list-for-examController/')
             .then(res => {
                 console.log('hukka')
                 let newArr = []
@@ -29,16 +29,6 @@ const ProvostRejectedDashboard = () => {
     useEffect(() => {
         getData()
     }, [])
-
-
-    // const visualTable = (certificateDetails) => {
-    //     let newArr = []
-    //     provisional ? provisional.map((v, i) => (
-    //         newArr.push(provisional[i].student_details)
-    //     )) : console.log('nothing')
-    //     console.log('new', newArr)
-    // }
-
 
     const columns = [
         { title: "Name", field: "name", sorting: true, filtering: true, filterPlaceholder: "Filter by name" },
@@ -57,15 +47,15 @@ const ProvostRejectedDashboard = () => {
 
     const userDetails = (data) => {
         console.log("in details", data.roll)
-        navigate(`/provost/student-details/${data.roll}`)
+        navigate(`/exam-controller/student-details/${data.roll}`)
     }
 
     return (
         <React.Fragment>
             <div>
-                <ProvostHeader />
+                <ExamControllerHeader />
 
-                <MaterialTable title="Rejected list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
+                <MaterialTable title="Applicant list for Provisional Certificate" icons={tableIcons} columns={columns} data={certificateData}
                     options={{
                         sorting: true, search: true,
                         searchFieldAlignment: "right", searchAutoFocus: true, searchFieldVariant: "standard",
@@ -95,16 +85,7 @@ const ProvostRejectedDashboard = () => {
                             tooltip: "details",
                             onClick: (e, data) => userDetails(data),
                         },
-                        // {
-                        //     icon: () => <CheckIcon htmlColor='green' />,
-                        //     tooltip: "accept",
-                        //     onClick: (e, data) => userDetails(data),
-                        // },
-                        // {
-                        //     icon: () => <ClearIcon htmlColor='red' />,
-                        //     tooltip: "reject",
-                        //     onClick: (e, data) => console.log(data),
-                        // }
+
                     ]}
 
                 />
@@ -121,4 +102,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {})(ProvostRejectedDashboard)
+export default connect(mapStateToProps, {})(ExamControllerRequestedDashboard)

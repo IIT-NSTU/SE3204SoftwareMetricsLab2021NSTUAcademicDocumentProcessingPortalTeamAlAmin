@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { provost_reject_provisional } from "../../../../actions/auth";
+import { examController_reject_provisional } from "../../../../actions/auth";
 
-const ProvisionalRejectProvost = () => {
+const ProvisionalRejectExamController = () => {
     const data = useParams()
     let navigate = useNavigate();
     const dispatch = useDispatch()
@@ -29,9 +29,9 @@ const ProvisionalRejectProvost = () => {
 
 
 
-    const rejectProvost = (email, message) => {
-        dispatch(provost_reject_provisional(email, message))
-        navigate(`/provost/student-details/${data.roll}`)
+    const rejectExamController = (email, message) => {
+        dispatch(examController_reject_provisional(email, message))
+        navigate(`/exam-controller/student-details/${data.roll}`)
 
     }
     const messageChange = (e) => {
@@ -115,9 +115,9 @@ const ProvisionalRejectProvost = () => {
                             <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
                                 <input type="submit" value="Reject" id="reject"
-                                    onClick={() => rejectProvost(certificateData.student_details.email, message)}
+                                    onClick={() => rejectExamController(certificateData.student_details.email, message)}
                                     style={{ width: '60%', marginLeft: '60px' }}
-                                    disabled={certificateData.provost_status === "rejected"}
+                                    disabled={certificateData.examController_status === "rejected"}
                                 />
 
                             </div>
@@ -131,4 +131,4 @@ const ProvisionalRejectProvost = () => {
     )
 }
 
-export default ProvisionalRejectProvost
+export default ProvisionalRejectExamController

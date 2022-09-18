@@ -261,14 +261,24 @@ def getProvisionalCertificateAppliedDetails(request, roll):
     return Response(serializedStudents.data)
 
 
+@api_view(["POST"])
+def getStudentDetails(request):
+    applied_email = request.data['email']
+    studentInfo = Student.objects.get(email=applied_email)
+    student = ProvisionalCertificate.objects.get(student_details=studentInfo)
+    serializedStudents = ProvisionalCertificateSerializer(student, many=False)
+    return Response(serializedStudents.data)
+
+
 # <---- Student Applying for Provisional certifiate ---->
 
 @api_view(["POST"])
 def applyProvisional(request):
     applied_email = request.data['email']
     student = Student.objects.get(email=applied_email)
-    provisionalCertificateDetails = ProvisionalCertificate.objects.get(
-        student_details=student)
+    student_result = StudentResult.objects.get(student_details=student)
+    provisionalCertificateDetails, created = ProvisionalCertificate.objects.get_or_create(
+        student_details=student, result=student_result)
     if provisionalCertificateDetails.is_applied == False:
         provisionalCertificateDetails.is_applied = True
         provisionalCertificateDetails.save()
@@ -296,15 +306,17 @@ def payProvisional(request):
 # <---- Student uploading image for Provisional certifiate ---->
 
 
-@api_view(["GET"])
+@api_view(["POST"])
 def uploadSscCertificate(request):
     try:
         applied_email = request.data['email']
         ssc_certificate = request.data['ssc_certificate']
+        way = request.data['way']
         student = Student.objects.get(email=applied_email)
         provisionalCertificateDetails = ProvisionalCertificate.objects.get(
             student_details=student)
         provisionalCertificateDetails.ssc_certificate = ssc_certificate
+        provisionalCertificateDetails.takeBy = way
         provisionalCertificateDetails.save()
         return Response({'message': 'successfully uploaded'}, status=status.HTTP_200_OK)
     except:
@@ -610,11 +622,20 @@ def examControllerAcceptProvisional(request):
         provisionalCertificateDetails.issued_date = issued_date
         provisionalCertificateDetails.serial_number = serial_number
         provisionalCertificateDetails.examController_action_date = date.today()
-        provisionalCertificateDetails.save()
         response = requests.post(
-            'http://localhost:3000/create', json=blockchain_data)
+            'http://localhost:3001/create', json=blockchain_data)
         print(response.json())
-        return Response({'message': 'successfully accepted provitional'}, status=status.HTTP_200_OK)
+        params = {
+            'hello': 'hello'
+        }
+        file_name, test_status = save_pdf(params)
+        if not test_status:
+            return Response({'status': 400})
+        url = "127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
+
+        provisionalCertificateDetails.provisional_certificate_url = url
+        provisionalCertificateDetails.save()
+        return Response({'message': 'successfully accepted provitional'})
     else:
         return Response({'message': 'already accepted this student'}, status=status.HTTP_400_BAD_REQUEST)
 
