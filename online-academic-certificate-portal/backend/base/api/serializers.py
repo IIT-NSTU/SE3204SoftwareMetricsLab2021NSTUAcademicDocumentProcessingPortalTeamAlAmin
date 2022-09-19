@@ -1,7 +1,7 @@
 import email
 
-from base.models import (ProvisionalCertificate, Student, StudentResult, User,
-                         chairman, testTable)
+from base.models import (Chairman, ProvisionalCertificate, Student,
+                         StudentResult, User, testTable)
 from django.contrib.auth import authenticate
 from pyexpat import model
 from rest_framework import serializers
@@ -56,7 +56,7 @@ class chairmanSignupSerializer(serializers.ModelSerializer):
         user.is_chairman = True
         user.save()
 
-        chairman.objects.create(user=user)
+        Chairman.objects.create(user=user)
         return user
 
 

@@ -23,6 +23,7 @@ admin.site.site_header = 'NSTU ODPP SUPER ADMIN'
 admin.site.index_title = 'All Data'
 admin.site.site_title = 'HTML title from adminsitration'
 
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("base.api.urls")),

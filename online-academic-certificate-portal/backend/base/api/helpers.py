@@ -7,7 +7,7 @@ from django.template.loader import get_template
 
 
 def save_pdf(params: dict):
-    template = get_template("provisional/certificate.html")
+    template = get_template("provisional/certificate1.html")
     html = template.render(params)
     response = BytesIO()
     pdf = pisa.pisaDocument(BytesIO(html.encode('UTF-8')), response)

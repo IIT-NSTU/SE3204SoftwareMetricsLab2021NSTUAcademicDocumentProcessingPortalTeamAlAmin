@@ -44,6 +44,7 @@ import ProvostRequestedDashboard from "./components/Dashboard/Provost/Requested/
 import StudentDetailsforProvost from "./components/Dashboard/Provost/StudentDetails/StudentDetailsforProvost";
 import StudentProvisionalDetails from "./components/Dashboard/Student/ApplyDetails/StudentProvisionalDetails";
 import PayForProvisional from "./components/Dashboard/Student/PayForProvisional/PayForProvisional";
+import ProvisionalWarning from "./components/Dashboard/Student/ProvisionalWarning/ProvisionalWarning";
 import UploadImage from "./components/Dashboard/Student/UploadImage/UploadImage";
 import ForgetPasswordConfirm from './components/ForgetPassword/ForgetPasswordConfirm/ForgetPasswordConfirm.js';
 import ForgetPasswordStart from './components/ForgetPassword/ForgetPasswordStart/ForgetPasswordStart';
@@ -82,7 +83,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/student/provisional/upload' element={<UploadImage />} />
           <Route exact path='/student/provisional/pay' element={<PayForProvisional />} />
           <Route exact path='/student/provisional/details' element={<StudentProvisionalDetails />} />
-
+          <Route exact path='/provisional/manipulate-warning/:roll' element={<ProvisionalWarning />} />
           {/* student url end  */}
 
           {/* chairman url start */}
@@ -91,7 +92,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <ChairmanRequestedDashboard />
             </CPrivateRoute>
           } />
-          <Route exact path='/chairman/rejeted/dashboard' element={
+          <Route exact path='/chairman/rejected/dashboard' element={
             <CPrivateRoute>
               <ChairmanRejectedDashboard />
             </CPrivateRoute>

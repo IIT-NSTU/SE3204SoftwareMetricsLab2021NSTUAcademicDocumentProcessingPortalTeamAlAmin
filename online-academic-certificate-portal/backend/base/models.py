@@ -134,7 +134,7 @@ class ProvisionalCertificate(models.Model):
         return self.student_details.user.email
 
 
-class chairman(models.Model):
+class Chairman(models.Model):
     user = models.OneToOneField(
         User, related_name="chairman", on_delete=models.CASCADE)
     chairman_id = models.CharField(max_length=50)
@@ -143,18 +143,33 @@ class chairman(models.Model):
         return self.user.email
 
 
-class provost(models.Model):
+class Provost(models.Model):
     user = models.OneToOneField(
         User, related_name="provost", on_delete=models.CASCADE)
 
     provost_id = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.user.email
 
-class librarian(models.Model):
+
+class Librarian(models.Model):
     user = models.OneToOneField(
         User, related_name="librarian", on_delete=models.CASCADE)
 
     librarian_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.email
+
+
+class Exam_Controller(models.Model):
+    user = models.OneToOneField(
+        User, related_name="exam_controller", on_delete=models.CASCADE)
+    exam_controller_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.email
 
 
 class testTable(models.Model):

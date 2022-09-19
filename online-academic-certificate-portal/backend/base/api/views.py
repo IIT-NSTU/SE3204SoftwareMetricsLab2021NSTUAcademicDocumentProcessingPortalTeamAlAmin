@@ -1,4 +1,6 @@
+from ast import Try
 from datetime import date
+from multiprocessing import context
 
 import requests
 from base.models import (ProvisionalCertificate, Student, StudentResult, User,
@@ -6,15 +8,16 @@ from base.models import (ProvisionalCertificate, Student, StudentResult, User,
 from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.shortcuts import redirect
-from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template.loader import get_template, render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
 from jwt import ExpiredSignatureError, decode, encode, exceptions
 from rest_framework import generics, permissions, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -631,7 +634,7 @@ def examControllerAcceptProvisional(request):
         file_name, test_status = save_pdf(params)
         if not test_status:
             return Response({'status': 400})
-        url = "127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
+        url = "http://127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
 
         provisionalCertificateDetails.provisional_certificate_url = url
         provisionalCertificateDetails.save()
@@ -702,3 +705,29 @@ def testApi(request, pk):
     testData.save()
     serializedData = testSerializer(testData, many=False)
     return Response(serializedData.data)
+
+# <---- pdf download api ---->
+
+
+@api_view(["GET"])
+def testpdfApi(request, roll):
+    try:
+        student = Student.objects.get(roll=roll)
+        provisonalCertificate = ProvisionalCertificate.objects.get(
+            student_details=student)
+        serial_number = provisonalCertificate.serial_number
+        roll = student.roll
+        name = student.name
+        hall = student.hall
+        if hall == "ASH":
+            hall = "Bhasha Shahid Abdus Salam Hall"
+        cgpa = provisonalCertificate.result.cgpa
+        checkedBy = provisonalCertificate.checkedBy
+        examController_action_date = provisonalCertificate.examController_action_date
+        passing_year = student.passing_year
+        template = get_template('provisional/certificate1.html')
+        if provisonalCertificate.examController_status == 'approved':
+            return HttpResponse(template.render(context={'serial_number': serial_number, 'roll': roll, 'name': name, 'hall': hall, 'cgpa': cgpa, 'checkedBy': checkedBy, 'examController_action_date': examController_action_date, 'passing_year': passing_year}))
+    except:
+        template = get_template('provisional/error.html')
+        return HttpResponse(template.render())

@@ -25,7 +25,8 @@ from .views import (GeneratePdf, LogoutView, VerifyEmail, applyProvisional,
                     librarianAcceptProvisional, librarianRejectProvisional,
                     payProvisional, provostAcceptProvisional,
                     provostRejectProvisional, studentOnlyView,
-                    studentSignupView, testApi, uploadSscCertificate)
+                    studentSignupView, testApi, testpdfApi,
+                    uploadSscCertificate)
 
 urlpatterns = [
     path("signup/chairman/", chairmanSignupView.as_view(), name="chairman"),
@@ -130,6 +131,7 @@ urlpatterns = [
 
     # <---- test api ---->
     path("pdf/", GeneratePdf.as_view(), name='pdf'),
+    path("testPdf/<slug:roll>", testpdfApi, name='pdf2'),
 
     path('test/<int:pk>/', testApi, name='test')
 ]

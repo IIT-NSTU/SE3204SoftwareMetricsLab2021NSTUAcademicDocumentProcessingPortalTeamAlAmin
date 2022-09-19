@@ -1,34 +1,62 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './StudentDetails.css';
 // import { student_apply_provisional } from "../../../actions/auth";
 const StudentProvisionalDetails = () => {
+
     let navigate = useNavigate();
     const disptach = useDispatch();
-    const { email } = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.auth.user)
     const [certificateData, setCertificateData] = useState({})
+    const [blockChainData, setBlockChainData] = useState({})
     const getData = React.useCallback(async () => {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
+        if (user) {
+
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
             }
+            const body = JSON.stringify({ 'email': user.email })
+            console.log('student-details', user.email)
+            axios.post(`http://localhost:8000/api/student-details/`, body, config)
+                .then(res => {
+                    setCertificateData(res.data)
+                    if (res.data.examController_status === "approved") {
+                        axios.get(`http://localhost:3001/find/${res.data.result.roll}-provisional`, config)
+                            .then(res => {
+                                setBlockChainData(res.data)
+                                console.log('blockchain', res.data)
+                            })
+                            .catch(err => {
+                                toast.error("something went wrong")
+                            })
+                    }
+                })
+                .catch(err => {
+                    toast.error("something went wrong")
+                })
         }
-        const body = JSON.stringify({ 'email': email })
-        axios.post(`http://localhost:8000/api/student-details/`, body, config)
-            .then(res => {
-                setCertificateData(res.data)
-                console.log(res.data)
-            })
-            .catch(err => {
-                toast.error("something went wrong")
-            })
-    }, [email])
+    }, [user])
+
+
+
     useEffect(() => {
         getData()
+
     }, [getData])
+    const downloadStudentProvisional = url => {
+        window.open(`http://127.0.0.1:8000/api/testPdf/${certificateData.student_details.roll}`, '_blank', 'noopener,noreferrer');
+    }
+    if (Object.keys(certificateData).length > 0 && Object.keys(blockChainData).length > 0) {
+        if (certificateData.serial_number !== blockChainData.certificate_number || certificateData.result.cgpa !== blockChainData.cgpa) {
+            return <Navigate to={'/provisional/manipulate-warning/' + certificateData.student_details.roll} />
+        }
+    }
+    console.log('state', certificateData)
     return (
         <div>
             {certificateData.student_details &&
@@ -178,6 +206,7 @@ const StudentProvisionalDetails = () => {
                         <input type="submit" value="download" id="accept"
                             style={{ width: '15%', marginLeft: 'auto' }}
                             disabled={certificateData.examController_status !== "approved"}
+                            onClick={() => { downloadStudentProvisional(certificateData.provisional_certificate_url) }}
                         />
 
                         {/* <input type="submit" value="Reject" id="reject"
@@ -192,5 +221,6 @@ const StudentProvisionalDetails = () => {
         </div>
     )
 }
+
 
 export default StudentProvisionalDetails
