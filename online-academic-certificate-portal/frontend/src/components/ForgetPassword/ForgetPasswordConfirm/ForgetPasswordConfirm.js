@@ -38,43 +38,45 @@ const ForgetPasswordConfirm = ({ forget_password_confirm, isAuthenticated, isLoa
     else {
 
         return (
+            <>
+                <p style={{ height: '15px' }}></p>
+                <div className="form-container" style={{ height: '640px' }}>
+                    <div className="avatar"></div>
+                    <div className="title">IIT Certificate</div>
+                    <div className="sub-title">CR3W</div>
+                    <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
+                        <div className="username">
+                            <i className="fa fa-envelope"></i>
+                            <input type="text"
+                                className="name-input"
+                                onChange={e => loginChange(e)}
+                                placeholder="enter the token"
+                                name="token"
+                                value={token}
+                            />
+                        </div>
+                        <div className="password">
+                            <i className="fa fa-key"></i>
+                            <input
+                                className="password-input"
+                                type="password"
+                                onChange={e => loginChange(e)}
+                                placeholder="Password"
+                                name="password" value={password}
+                            />
+                        </div>
+                        <ul style={{ 'textAlign': 'left', 'marginTop': '1px', fontSize: '2px', textDecoration: 'none', marginLeft: '20px', marginBottom: '15px' }}>
+                            <li>
+                                password must be at least 8 characters
+                            </li>
+                            <li>contain at least one special ( ?=.*[!@#$%^&*] ) symbol</li>
+                        </ul>
+                        <input type="submit" value="submit" disabled={!re.test(password)} className="submit-input" />
 
-            <div className="form-container">
-                <div className="avatar"></div>
-                <div className="title">IIT Certificate</div>
-                <div className="sub-title">CR3W</div>
-                <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
-                    <div className="username">
-                        <i className="fa fa-envelope"></i>
-                        <input type="text"
-                            className="name-input"
-                            onChange={e => loginChange(e)}
-                            placeholder="enter the token"
-                            name="token"
-                            value={token}
-                        />
-                    </div>
-                    <div className="password">
-                        <i className="fa fa-key"></i>
-                        <input
-                            className="password-input"
-                            type="text"
-                            onChange={e => loginChange(e)}
-                            placeholder="Password"
-                            name="password" value={password}
-                        />
-                    </div>
-                    <ul style={{ 'textAlign': 'left', 'marginTop': '1px', fontSize: '2px', textDecoration: 'none', marginLeft: '20px', marginBottom: '15px' }}>
-                        <li>
-                            password must be at least 8 characters
-                        </li>
-                        <li>contain at least one special ( ?=.*[!@#$%^&*] ) symbol</li>
-                    </ul>
-                    <input type="submit" value="submit" disabled={!re.test(password)} className="submit-input" />
+                    </form>
 
-                </form>
-
-            </div>
+                </div>
+            </>
         )
     }
 }

@@ -49,89 +49,84 @@ const StudentDashboard = () => {
     console.log(email, Object.keys(certificateData).length)
     return (
         <React.Fragment>
-            {/* <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '30px', fontWeight: '700' }}>Select your certificate</p> */}
-            <div className="form-container" style={{ height: '200px', width: '600px', marginTop: '20px', background: '#efefef' }}>
-                <div className="title">NSTU Certificate</div>
-                <div class="certificate-type-container">
-                    <div class="certificate-type shadow-box" style={{ marginTop: '20px' }}>
-                        <p style={{ textAlign: 'center', marginTop: '5px', paddingTop: '10px', color: '#473d3d', fontWeight: '500' }}>provisional certificate</p>
-                    </div>
-                    {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied &&
-                        certificateData.takeBy && !certificateData.is_paid &&
-                        <input type="submit" value="pay" id="submit-registration"
-                            style={{ width: '120px', height: '50px', marginLeft: '20px' }}
-                            onClick={() => goToPaymentPage()}
-                        />
-                    }
-                    {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied && !certificateData.takeBy &&
-                        <input type="submit" value="upload info" id="submit-registration"
-                            style={{ width: '120px', height: '50px', marginLeft: '20px' }}
-                            onClick={() => goToUploadPage()}
-                        />
-                    }
-                    {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied && certificateData.takeBy && certificateData.is_paid &&
-                        <input type="submit" value="details" id="submit-registration"
-                            style={{ width: '120px', height: '50px', marginLeft: '20px' }}
-                            onClick={() => goToDetailsPage()}
-                        />
+            <section class="home container" id="home" style={{ padding: '4.5rem 0 3 rem' }}>
+                <div class="home-text">
+                    <h1>Apply for <br /> Academic Document<br /> to Withdraw</h1>
 
-                    }
-                    {Object.keys(certificateData).length > 0 && certificateData && !certificateData.is_applied &&
-                        <input type="submit" value="details" id="submit-registration"
-                            style={{ width: '120px', height: '50px', marginLeft: '20px' }}
-                            onClick={() => applyForProvisional()}
-                        />
-
-                    }
-                    {(Object.keys(certificateData).length === 0 || (certificateData && !certificateData.is_applied)) &&
-                        <input type="submit" value="apply" id="submit-registration"
-                            style={{ width: '120px', height: '50px', marginLeft: '20px' }}
-                            onClick={() => applyForProvisional()}
-                        />
-
-                    }
 
                 </div>
-            </div>
-
+            </section>
             <p style={{ height: '20px' }}></p>
+            <p style={{ color: '#f2cd00', fontSize: '24pt', textAlign: 'center' }}>1</p>
             <h2 style={{ textAlign: 'center' }}>WHAT YOU NEED TO DO</h2>
+            <p style={{ height: '30px' }}></p>
             <div style={{ display: 'flex', textAlign: 'center' }}>
                 <div className="key__dates" style={{ borderRight: '3px dotted #231f20' }}>
                     <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
                         <img alt="Key Dates &amp; Deadlines" height="373" src={apply} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
                     </h2>
-                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>Apply for Documents</h3>
-                    <p style={{ "marginTop": "0", "marginBottom": "1rem", textAlign: 'justify' }}>View a summary of dates and deadlines for Fall 2023 undergraduate admissions.</p>
-                    <p><a href="dates-and-deadlines.html">View Key Dates &amp; Deadlines</a></p>
+                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", marginRight: '35px' }}>Apply for Documents</h3>
+                    <p style={{ "marginTop": "0", "marginBottom": "1rem", textAlign: 'justify', paddingRight: '15px' }}>Apply for the document you want to withdraw. Just click for apply for the document.</p>
+
                 </div>
                 <div className="key__dates" style={{ borderRight: '3px dotted #231f20', marginLeft: '10px' }}>
                     <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
                         <img alt="Key Dates &amp; Deadlines" height="373" src={upload} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
                     </h2>
-                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>Upload Information</h3>
-                    <p style={{ "marginTop": "0", "marginBottom": "1rem" }}>View a summary of dates and deadlines for Fall 2023 undergraduate admissions.</p>
-                    <p><a href="dates-and-deadlines.html">View Key Dates &amp; Deadlines</a></p>
+                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", paddingLeft: '10px' }}>Upload Information</h3>
+                    <p style={{ "marginTop": "0", "marginBottom": "1rem", marginRight: '15px', textAlign: 'justify' }}>Upload the material for the document that you applied to withdraw.</p>
+
                 </div>
-                <div className="key__dates" style={{ borderRight: '3px dotted #231f20' }}>
+                <div className="key__dates" style={{ borderRight: '3px dotted #231f20', marginLeft: '10px' }}>
                     <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
                         <img alt="Key Dates &amp; Deadlines" height="373" src={pay} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
                     </h2>
-                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>Pay for Certificate</h3>
-                    <p style={{ "marginTop": "0", "marginBottom": "1rem" }}>View a summary of dates and deadlines for Fall 2023 undergraduate admissions.</p>
-                    <p><a href="dates-and-deadlines.html">View Key Dates &amp; Deadlines</a></p>
+                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", paddingLeft: '10px', marginRight: '15px', }}>Pay for Certificates</h3>
+                    <p style={{ "marginTop": "0", "marginBottom": "1rem", marginRight: '15px', textAlign: 'justify' }}>The next step is to pay for the document that you applied to withdraw.</p>
+
                 </div>
                 <div className="key__dates">
                     <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
                         <img alt="Key Dates &amp; Deadlines" height="373" src={key_image} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
                     </h2>
-                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>Collect Document</h3>
-                    <p style={{ "marginTop": "0", "marginBottom": "1rem" }}>View a summary of dates and deadlines for Fall 2023 undergraduate admissions.</p>
-                    <p><a href="dates-and-deadlines.html">View Key Dates &amp; Deadlines</a></p>
+                    <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>Collect Applied Document</h3>
+                    <p style={{ "marginTop": "0", "marginBottom": "1rem" }}>Your final step is to collect the document that you applied for.</p>
+
+
                 </div>
 
             </div>
+            <p style={{ height: '20px' }}></p>
+            {/* <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '30px', fontWeight: '700' }}>Select your certificate</p> */}
 
+            <p style={{ color: '#f2cd00', fontSize: '24pt', textAlign: 'center' }}>2</p>
+            <div style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-around', marginTop: '10px' }}>
+
+                <h1 style={{ "fontWeight": "300", "fontSize": "calc(1.5813rem + 3.9756vw)", "lineHeight": "calc(1.625rem + 4.5vw)", "letterSpacing": "-0.007em", "color": "#275d38" }}>Provisional Certificate</h1>
+                <p style={{ marginLeft: '15%', marginRight: '15%', marginTop: '10px', marginBottom: '10px' }}>A provisional certificate is a type of certificate issued for a temporary period of time. If you want your admissions to be done but you are yet to receive your original degree certificate, then you can provide your provisional certificate and get yourself admitted to your college.</p>
+                {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied &&
+                    certificateData.takeBy && !certificateData.is_paid &&
+                    <p><input value="pay" class="applyBtn applyBtn-apply" onClick={() => goToPaymentPage()} /></p>
+
+                }
+                {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied && !certificateData.takeBy &&
+                    <p><input value="upload info" class="applyBtn applyBtn-apply" onClick={() => goToUploadPage()} /></p>
+
+                }
+                {Object.keys(certificateData).length > 0 && certificateData && certificateData.is_applied && certificateData.takeBy && certificateData.is_paid &&
+                    <p><input value="details" class="applyBtn applyBtn-apply" onClick={() => goToDetailsPage()} /></p>
+
+
+                }
+                {Object.keys(certificateData).length > 0 && certificateData && !certificateData.is_applied &&
+                    <p><input value="Apply Now" class="applyBtn applyBtn-apply" onClick={() => applyForProvisional()} /></p>
+
+                }
+                {(Object.keys(certificateData).length === 0 || (certificateData && !certificateData.is_applied)) &&
+                    <p><input value="Apply Now" class="applyBtn applyBtn-apply" onClick={() => applyForProvisional()} /></p>
+                }
+            </div>
+            <p style={{ height: '10px' }}></p>
         </React.Fragment >
     )
 }

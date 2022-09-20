@@ -105,13 +105,13 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                                 </Link>
                                 <span class="tooltip">Log in</span>
                             </li>
-                            <li>
+                            {/* <li>
                                 <Link to="/registration">
                                     <i class='bx bxs-user-plus' ></i>
                                     <span class="links_name" onClick={closeModal}>Registration</span>
                                 </Link>
                                 <span class="tooltip">Registration</span>
-                            </li>
+                            </li> */}
                         </>
                         : null}
 
@@ -163,6 +163,12 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
             <section class="home-section" onClick={closeModal}>
                 {isLoading ? <HashLoader speedMultiplier={1.5} color={'#262626'} style={{ marginLeft: "50%" }} size={100} /> : children}
             </section>
+            <footer style={{ height: '80px', textAlign: 'center' }}>
+                <hr />
+                <hr />
+                <p style={{ "position": "relative", "top": "50%", "WebkitTransform": "translateY(-50%)", "MsTransform": "translateY(-50%)", "transform": "translateY(-50%)" }}>All rights reserved by <b>&copy;CR3W</b></p>
+                {/* <p style={{ height: '10px' }}></p> */}
+            </footer>
         </div >
     )
 }

@@ -6,7 +6,6 @@ const Layout = ({ children }) => {
         <SideBar >
             <Header />
             {children}
-
         </SideBar>
     )
 }

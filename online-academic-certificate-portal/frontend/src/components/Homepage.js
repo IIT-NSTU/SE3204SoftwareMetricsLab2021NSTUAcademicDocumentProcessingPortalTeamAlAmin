@@ -1,45 +1,83 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import bongobondhuNSTU from '../assets/images/bongobondhuNSTU.jpg'
+import pay from '../assets/images/calculator.png'
+import apply from '../assets/images/evaluation.png'
+import key_image from '../assets/images/key-dates.png'
+import upload from '../assets/images/transcripts-documents.png'
 import './Homepage.css'
 const HomePage = () => {
     return (
         <React.Fragment>
-            <p style={{ height: "20px" }}></p>
-            <div className='homeDiv'>
-                <div style={{ textAlign: 'justify' }}>
-                    Presently, Noakhali Science & Technology University accommodates more than 5000 students and more than 1000 students graduates each session. Each graduate needs academic documents for future work.
-                    Our university provides a graduate/post graduate student four to seven documents based on his department/Institute and needs. They are namely- Provisional certificate, Transcript, Date of result publication certificate, Grade to mark conversion, migration, medium of instruction and CSE equivalent certificate. To collect his certificate a student first goes to Exam controller office or Registrar office to collect required form. Then he needs to fill the form where he has to provide his information. His form needs to be forwarded by adhering department/Institute with authorized member signature on it. Also, he needs to ensure clearance from seminar library, central library, hall provost and cyber center. Finally, he needs to pay for the certificate and for that purpose he needs to go to the bank. Thus, just to get one certificate a student is going around place to place which seems inconvenient.
-                    To mitigate this hassle, “NSTU Academic Certificate Processing Portal” is proposed. It will automate the whole process of certificate withdrawal. A student will be able to request for certificates easily from anywhere in the world and collect the documents physically or via currier. It is not essential for him to be present in the university.
-                    A student can also have digitally signed copy of his academic document if needed.
-                    A student will request for his desired certificate through our system and our system will help as a coordinator in the whole process. Using the system not only students but also related authority’s workload will be minimized.
-                    Academic documents have some confidential information that should not be known by unauthorized person. To maintain confidentiality, we will be using “Block-Chain”. In general data storing and retrieving procedure, there is a high chance of confidential information being leaked. Also, admin has the ability to manipulate confidential data. Whereas “Block-Chain” is considered as a system of recording information in a distributed way that makes it difficult or impossible to change, hack or manipulate.
+
+            <React.Fragment>
+                <section class="home container" id="home" style={{ padding: '4.5rem 0 3 rem' }}>
+                    <div class="home-text">
+                        <h1>Welcome to NSTU <br /> Academic Document<br /> Processing Portal</h1>
+
+
+                    </div>
+                </section>
+                <p style={{ height: '20px' }}></p>
+                {/* <p style={{ color: '#f2cd00', fontSize: '24pt', textAlign: 'center' }}>1</p> */}
+                <h2 style={{ textAlign: 'center' }}>About Noakhali Science & Technology University</h2>
+                <p style={{ height: '30px' }}></p>
+                <div style={{ display: 'flex', textAlign: 'center' }}>
+                    <div className="key__dates" style={{ borderRight: '3px dotted #231f20' }}>
+                        <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
+                            <img alt="Key Dates &amp; Deadlines" height="373" src={apply} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
+                        </h2>
+                        <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", marginRight: '35px' }}>About our <br />Teachers</h3>
+                        <p style={{ "marginTop": "0", "marginBottom": "1rem", textAlign: 'justify', paddingRight: '15px' }}>A teacher is one who proves himself/ herself very much useful and ideal to the students. Actually, a good teacher possesses a number of good qualities.</p>
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>see more</a></p>
+
+                    </div>
+                    <div className="key__dates" style={{ borderRight: '3px dotted #231f20', marginLeft: '10px' }}>
+                        <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
+                            <img alt="Key Dates &amp; Deadlines" height="373" src={upload} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
+                        </h2>
+                        <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", paddingLeft: '10px' }}>About our<br /> Departments</h3>
+                        <p style={{ "marginTop": "0", "marginBottom": "1rem", marginRight: '15px', textAlign: 'justify' }}>An academic department is a division of a university or school faculty devoted to a particular academic discipline.</p>
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>see more</a></p>
+                    </div>
+                    <div className="key__dates" style={{ borderRight: '3px dotted #231f20', marginLeft: '10px' }}>
+                        <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
+                            <img alt="Key Dates &amp; Deadlines" height="373" src={pay} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
+                        </h2>
+                        <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a", paddingLeft: '10px', marginRight: '15px', }}>About our<br /> Alumni</h3>
+                        <p style={{ "marginTop": "0", "marginBottom": "1rem", marginRight: '15px', textAlign: 'justify' }}>An alumnus or an alumna of a college, university, or other school is a former student who has either attended or graduated in some fashion from the institution.</p>
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>see more</a></p>
+                    </div>
+                    <div className="key__dates">
+                        <h2 style={{ "color": "#3d4a43", "marginBottom": "5px", "textTransform": "capitalize" }}>
+                            <img alt="Key Dates &amp; Deadlines" height="373" src={key_image} width="372" style={{ "width": "60px", 'height': '60px', "marginBottom": "5px" }} />
+                        </h2>
+                        <h3 style={{ "fontSize": "calc(1.3125rem + 0.75vw)", "lineHeight": "calc(1.3625rem + 1.35vw)", "letterSpacing": "-0.005em", "color": "#2b292a" }}>About our <br /> Programs</h3>
+                        <p style={{ "marginTop": "0", "marginBottom": "1rem", textAlign: 'justify', marginLeft: '10px' }}>An academic program is a combination of courses and related activities organized for the achievement of specific learning outcomes as defined by the University.</p>
+
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>see more</a></p>
+                    </div>
 
                 </div>
-                <div style={{ marginLeft: '15px', }}>
-                    <img src={bongobondhuNSTU} alt="" style={{ height: '450px', width: '530px', borderRadius: '8px', boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)' }} />
-                    <Link to="/registration">
-                        <input type="submit" value="Create Account" id="submit-registration"
-                            style={{ width: '60%', marginLeft: 'auto' }}
-                        />
-                    </Link>
-                    <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Already have an account?</p>
-                    <Link to="/login">
-                        <input type="submit" value="Login" id="submit-registration"
-                            style={{ width: '60%', marginLeft: 'auto' }}
-                        />
-                    </Link>
+                <p style={{ height: '20px' }}></p>
+                {/* <p style={{ textAlign: 'center', fontFamily: 'monospace', fontSize: '30px', fontWeight: '700' }}>Select your certificate</p> */}
+
+                <h2 style={{ textAlign: 'center', marginTop: '15px', marginBottom: '15px' }}>Choose your Program</h2>
+                <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-around', marginTop: '10px', borderRight: '3px dotted #231f20' }}>
+
+                        <h1 style={{ "fontWeight": "500", "fontSize": "calc(1.5813rem + 1.9756vw)", "lineHeight": "calc(1.625rem + 4.5vw)", "letterSpacing": "-0.007em", "color": "#275d38" }}>Undergraduate <br /> Studies</h1>
+                        <p style={{ marginLeft: '15%', marginRight: '15%', marginTop: '10px', marginBottom: '10px', textAlign: 'justify' }}>Your journey starts here. Choose from more than 200 program options, check the admission requirements and apply online.</p>
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>Apply Now</a></p>
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', textAlign: 'center', justifyContent: 'space-around', marginTop: '10px' }}>
+
+                        <h1 style={{ "fontWeight": "500", "fontSize": "calc(1.5813rem + 1.9756vw)", "lineHeight": "calc(1.625rem + 4.5vw)", "letterSpacing": "-0.007em", "color": "#275d38" }}>Graduate <br /> Studies</h1>
+                        <p style={{ marginLeft: '15%', marginRight: '15%', marginTop: '10px', marginBottom: '10px', textAlign: 'justify' }}>More than 500 graduate programs, 250 specializations and 300 research areas — find out how to take your education to the next level.</p>
+                        <p><a value="pay" class="applyBtn applyBtn-apply" href='https://nstu.edu.bd/'>Apply Now</a></p>
+                    </div>
                 </div>
-                {/* <div className='flex-fill'>
-                    <h3>signup as a Student</h3>
-                    <Link to="/student/signup" className='btn btn-warning'>Signup</Link>
-                </div>
-                <div className='flex-fill'>
-                    <h3>signup as a Chairman</h3>
-                    <Link to="/chairman/signup" className='btn btn-warning'>Signup</Link>
-                </div> */}
-            </div>
-        </React.Fragment>
+                <p style={{ height: '10px' }}></p>
+            </React.Fragment >
+        </React.Fragment >
     )
 }
 

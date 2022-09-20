@@ -142,6 +142,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/registration' element={<Registration />} />
           <Route exact path='/' element={<Homepage />} />
         </Routes>
+
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -154,6 +155,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           pauseOnHover
         />
       </div>
+
     </Layout>
   );
 

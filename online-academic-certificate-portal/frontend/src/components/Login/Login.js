@@ -45,7 +45,7 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
             <React.Fragment>
                 <p style={{ height: '20px' }}></p>
 
-                <div className="form-container" style={{ height: '690px' }}>
+                <div className="form-container" style={{ height: '620px' }}>
                     <div className="avatar"></div>
                     <div className="title">IIT Certificate</div>
                     <div className="sub-title">CR3W</div>
@@ -72,11 +72,11 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
                         </div>
                         <input type="submit" value="Login" className="submit-input" />
                         <Link to="/forget-password">
-                            <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Forgotten Password?</p>
+                            <p style={{ 'textAlign': 'center', 'marginTop': '15px' }}>Forgotten Password / First time?</p>
                         </Link>
-                        <Link to="/registration">
+                        {/* <Link to="/registration">
                             <input type="submit" value="Create Account" id="submit-registration" />
-                        </Link>
+                        </Link> */}
 
                     </form>
                 </div>
