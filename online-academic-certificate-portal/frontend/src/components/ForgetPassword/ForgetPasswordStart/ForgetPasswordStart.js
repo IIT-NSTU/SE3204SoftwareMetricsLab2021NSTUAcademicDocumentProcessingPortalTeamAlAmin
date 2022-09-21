@@ -41,7 +41,7 @@ const ForgetPasswordStart = ({ forget_password, isAuthenticated, isLoading, toke
                 <p style={{ height: '50px' }}></p>
                 <div className="form-container" style={{ height: '500px' }}>
                     <div className="avatar"></div>
-                    <div className="title">IIT Certificate</div>
+                    <div className="title">NSTU ADPP</div>
                     <div className="sub-title">CR3W</div>
                     <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
                         <div className="username">

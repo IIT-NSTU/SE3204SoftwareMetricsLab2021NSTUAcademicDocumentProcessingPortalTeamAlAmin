@@ -27,9 +27,9 @@ const StudentEmailChangeForm = ({ email_change, isAuthenticated, isLoading, toke
         return <Navigate to="/user/email-confirm" />
     }
     return (
-        <div className="form-container" style={{ height: '600px' }}>
+        <div className="form-container" style={{ height: '600px', marginTop: '20px', marginBottom: '20px' }}>
             <div className="avatar"></div>
-            <div className="title">IIT Certificate</div>
+            <div className="title">NSTU ADPP</div>
             <div className="sub-title">CR3W</div>
             <form onSubmit={(e) => handleLoginSubmit(e)}>
                 <div className="username">
@@ -47,12 +47,12 @@ const StudentEmailChangeForm = ({ email_change, isAuthenticated, isLoading, toke
                     <input type="text"
                         className="name-input"
                         onChange={e => loginChange(e)}
-                        placeholder="enter your new email"
+                        placeholder="Enter your new email"
                         name="newEmail"
                         value={newEmail}
                     />
                 </div>
-                <input type="submit" value="Login" className="submit-input" />
+                <input type="submit" value="Change email" className="submit-input" />
 
             </form>
         </div>

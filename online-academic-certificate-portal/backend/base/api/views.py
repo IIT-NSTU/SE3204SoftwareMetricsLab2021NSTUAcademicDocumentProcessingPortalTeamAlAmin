@@ -54,7 +54,7 @@ class chairmanSignupView(generics.GenericAPIView):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "email confirmation for NSTU ODPP",
+            "email confirmation for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             [user_data.email],
@@ -94,7 +94,7 @@ class studentSignupView(generics.GenericAPIView):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "email confirmation for NSTU ODPP",
+            "email confirmation for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             [user_data.email],
@@ -205,7 +205,7 @@ class emailChangeView(generics.GenericAPIView):
             print('absurl2')
             plain_message = strip_tags(html_message)
             send_mail(
-                "email confirmation for NSTU ODPP",
+                "email confirmation for NSTU ADPP",
                 plain_message,
                 "souravdebnath97@gmail.com",
                 [user.new_email],
@@ -407,7 +407,7 @@ def chairmanRejectProvisional(request):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "Chairman Rejection for NSTU ODPP",
+            "Chairman Rejection for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             ['souravdebnath10@gmail.com'],
@@ -487,7 +487,7 @@ def provostRejectProvisional(request):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "Provost Rejection for NSTU ODPP",
+            "Provost Rejection for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             ['souravdebnath10@gmail.com'],
@@ -569,7 +569,7 @@ def librarianRejectProvisional(request):
         plain_message = strip_tags(html_message)
         print('im in')
         send_mail(
-            "Librarian Rejection for NSTU ODPP",
+            "Librarian Rejection for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             ['souravdebnath10@gmail.com'],
@@ -676,7 +676,7 @@ def examControllerRejectProvisional(request):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "Exam Controller Rejection for NSTU ODPP",
+            "Exam Controller Rejection for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             ['souravdebnath10@gmail.com'],
@@ -757,7 +757,7 @@ def courierRejectProvisional(request):
         })
         plain_message = strip_tags(html_message)
         send_mail(
-            "Courier Rejection for NSTU ODPP",
+            "Courier Rejection for NSTU ADPP",
             plain_message,
             "souravdebnath97@gmail.com",
             ['souravdebnath10@gmail.com'],

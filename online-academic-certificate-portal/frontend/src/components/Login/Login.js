@@ -50,7 +50,7 @@ const Login = ({ login, isAuthenticated, isLoading, token, user }) => {
 
                 <div className="form-container" style={{ height: '620px' }}>
                     <div className="avatar"></div>
-                    <div className="title">IIT Certificate</div>
+                    <div className="title">NSTU ADPP</div>
                     <div className="sub-title">CR3W</div>
                     <form onSubmit={(e) => handleLoginSubmit(e)}>
                         <div className="username">

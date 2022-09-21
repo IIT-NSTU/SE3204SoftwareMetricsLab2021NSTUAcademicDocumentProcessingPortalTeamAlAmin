@@ -134,11 +134,11 @@ const StudentDashboard = () => {
 
                 }
                 {Object.keys(certificateData).length > 0 && certificateData && !certificateData.is_applied &&
-                    <p><input value="Apply Now" class="applyBtn applyBtn-apply" onClick={() => applyForProvisional()} /></p>
+                    <p><input value="Apply Now" id="applyBtn" disabled={!isApplied} class="applyBtn applyBtn-apply" onClick={() => applyForProvisional()} /></p>
 
                 }
                 {(Object.keys(certificateData).length === 0 || (certificateData && !certificateData.is_applied)) &&
-                    <p><input value="Apply Now" class="applyBtn applyBtn-apply" onClick={() => applyForProvisional()} /></p>
+                    <p><input value="Apply Now" id="applyBtn" class="applyBtn applyBtn-apply" disabled={!isApplied} onClick={() => applyForProvisional()} /></p>
                 }
             </div>
 

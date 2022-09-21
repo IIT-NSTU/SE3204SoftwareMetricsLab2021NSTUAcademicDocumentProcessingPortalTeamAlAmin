@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Quando&display=swap");
+/** @format */
+
+@import url('https://fonts.googleapis.com/css2?family=Quando&display=swap');
 :root {
     --shadow-1: 13px 13px 20px #cbced1;
     --shadow-2: -13px -13px 20px #fff;
@@ -38,7 +40,7 @@ body {
 }
 
 .avatar {
-    background: url("../../assets/images/iit.jfif");
+    background: url('../../assets/images/iit.jfif');
     width: var(--wh-100px);
     height: var(--wh-100px);
     background-size: cover;
@@ -99,7 +101,7 @@ form>p:hover {
     text-decoration: underline;
 }
 
-input[type="submit"] {
+input[type='submit'] {
     width: 100%;
     height: 60px;
     outline: none;
@@ -113,19 +115,19 @@ input[type="submit"] {
     border: none;
 }
 
-input[type="submit"]:hover {
+input[type='submit']:hover {
     background: rgb(54, 215, 183);
     cursor: pointer;
 }
 
-input[type="submit"]:disabled {
+input[type='submit']:disabled {
     background-color: #c7c6c6;
     cursor: not-allowed;
     border: 1px solid #ccc;
     color: #888888;
 }
 
-input[type="submit"]:not(:disabled) {
+input[type='submit']:not(:disabled) {
     animation: enable 0.3s linear;
 }
 
@@ -141,7 +143,7 @@ input[type="submit"]:not(:disabled) {
     }
 }
 
-input[type="button"] {
+input[type='button'] {
     width: 100%;
     height: 60px;
     outline: none;
@@ -155,7 +157,7 @@ input[type="button"] {
     opacity: 1;
 }
 
-input[type="button"]:hover {
+input[type='button']:hover {
     opacity: 1;
     background: rgb(54, 215, 183);
 }

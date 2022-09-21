@@ -86,14 +86,14 @@ const UploadImage = () => {
                 <h5 style={{ marginBottom: '10px' }}>SSC Certificate</h5>
                 <input type="file" onChange={(evt) => setImage(evt.target.files[0])} />
 
-                <h4 style={{ marginTop: '20px' }}>choose certificate deliverable way</h4>
+                <h4 style={{ marginTop: '20px' }}>Choose certificate deliverable way</h4>
                 <div>
                     <input
                         type="radio"
                         value="courier"
                         checked={way === 'courier'}
                         onChange={handleChange}
-                    /> courier
+                    /> Courier
                 </div>
                 <div>
                     <input
@@ -101,7 +101,7 @@ const UploadImage = () => {
                         value="physically"
                         checked={way === 'physically'}
                         onChange={handleChange}
-                    /> physically
+                    /> Physically
                 </div>
                 {way === 'courier' ?
                     <div style={{ marginTop: '10px' }}>
@@ -122,7 +122,7 @@ const UploadImage = () => {
                         </div>
                     </div> : null
                 }
-                <button disabled={(way === 'courier' && address.length === 0) || !image} style={{ marginTop: '10px', }} onClick={() => submit(email, way, image)}>submit</button>
+                <button disabled={(way === 'courier' && address.length === 0) || !image} style={{ marginTop: '10px', }} onClick={() => submit(email, way, image)}>Submit</button>
 
 
             </div>

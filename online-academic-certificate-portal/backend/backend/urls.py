@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path
 
-admin.site.site_header = 'NSTU ODPP SUPER ADMIN'
+admin.site.site_header = 'NSTU ADPP SUPER ADMIN'
 admin.site.index_title = 'All Data'
 admin.site.site_title = 'HTML title from adminsitration'
 
