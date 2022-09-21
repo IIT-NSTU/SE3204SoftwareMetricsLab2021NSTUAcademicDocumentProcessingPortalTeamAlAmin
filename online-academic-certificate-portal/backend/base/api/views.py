@@ -745,7 +745,7 @@ def courierRejectProvisional(request):
     provisionalCertificateDetails = ProvisionalCertificate.objects.get(
         student_details=student)
     if provisionalCertificateDetails.courier_status != 'rejected':
-        provisionalCertificateDetails.chairman_status = 'rejected'
+        provisionalCertificateDetails.courier_status = 'rejected'
         provisionalCertificateDetails.courier_action_date = date.today()
         provisionalCertificateDetails.save()
         html_message = render_to_string('certificate_reject.html', {

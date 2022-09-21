@@ -30,6 +30,7 @@ import ExamControllerApprovedDashboard from "./components/Dashboard/ExamControll
 import CourierApprovedDashboard from "./components/Dashboard/Courier/Approved/CourierApprovedDashboard";
 
 import ProvisionalFinalAcceptCourier from "./components/Dashboard/Courier/ProvisionalFinalAccept/ProvisionalFinalAcceptCourier";
+import ProvisionalRejectCourier from "./components/Dashboard/Courier/ProvisionalReject/ProvisionalRejectCourier";
 import CourierRejectedDashboard from "./components/Dashboard/Courier/Rejected/CourierRejectedDashboard";
 import CourierRequestedDashboard from "./components/Dashboard/Courier/Requested/CourierRequestedDashboard";
 import StudentDetailsforCourier from "./components/Dashboard/Courier/StudentDetails/StudentDetailsforCourier";
@@ -144,7 +145,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/courier/approved/dashboard' element={<CourierApprovedDashboard />} />
           <Route exact path='/courier/rejected/dashboard' element={<CourierRejectedDashboard />} />
           <Route exact path='/courier/student-details/:roll' element={<StudentDetailsforCourier />} />
-          <Route exact path='/courier/:roll/reject' element={<StudentDetailsforCourier />} />
+          <Route exact path='/courier/:roll/reject' element={<ProvisionalRejectCourier />} />
           <Route exact path='/courier/:roll/final-accept' element={<ProvisionalFinalAcceptCourier />} />
           {/* courier url end */}
 

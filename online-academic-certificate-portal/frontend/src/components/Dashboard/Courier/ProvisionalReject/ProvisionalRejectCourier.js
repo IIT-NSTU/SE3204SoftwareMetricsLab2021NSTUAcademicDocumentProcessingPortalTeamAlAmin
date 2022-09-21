@@ -3,19 +3,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { courier_accept_provisional } from "../../../../actions/auth";
+import { courier_reject_provisional } from "../../../../actions/auth";
 
-const ProvisionalFinalAcceptCourier = () => {
+const ProvisionalRejectCourier = () => {
     const data = useParams()
     let navigate = useNavigate();
     const dispatch = useDispatch()
     const [certificateData, setCertificateData] = useState({})
-
-    const [issueDate, setIssueDate] = useState({
-        date: ''
+    const [textMessage, setTextMessage] = useState({
+        message: ''
     })
-
-    const { date } = issueDate
+    const { message } = textMessage
     const getData = React.useCallback(async () => {
         axios.get(`http://localhost:8000/api/student-provisional-applied-details/${data.roll}/`)
             .then(res => {
@@ -29,23 +27,23 @@ const ProvisionalFinalAcceptCourier = () => {
         getData()
     }, [getData])
 
-    console.log(date)
 
-    const acceptCourier = (email, issued_date) => {
-        dispatch(courier_accept_provisional(email, issued_date))
-        navigate(`/courier/approved/dashboard`)
+
+    const rejectCourier = (email, message) => {
+        dispatch(courier_reject_provisional(email, message))
+        navigate(`/courier/rejected/dashboard`)
 
     }
-
-    const issueDateChange = (e) => {
-        setIssueDate(prevState => {
+    const messageChange = (e) => {
+        console.log(e.target.value)
+        setTextMessage(prevState => {
             return {
                 ...prevState,
-                date: e.target.value
+                message: e.target.value
             }
-
         })
     }
+
     return (
         <div>
             {certificateData.student_details &&
@@ -100,41 +98,35 @@ const ProvisionalFinalAcceptCourier = () => {
                         </div>
 
                         {/* authority details */}
-
-                    </div>
-                    <div className='student__whole__container'>
                         <div class="studnet__container">
-
-                            <div class="title" style={{ marginTop: '30px', fontSize: '24px' }}>Certificate Delivery Date</div>
-                            <div class="input-box" style={{ textAlign: 'center' }}>
-                                <input type="date"
+                            <div class="title" style={{ marginTop: '45px' }}>What is the reason?</div>
+                            <div class="input-box">
+                                <textarea
                                     style={{
 
-                                        "width": "80%", "height": "50px", "padding": "12px 20px", "boxSizing": "border-box", "border": "2px solid #ccc", "borderRadius": "4px", "backgroundColor": "#f8f8f8", "fontSize": "16px", "resize": "none",
+                                        "width": "100%", "height": "150px", "padding": "12px 20px", "boxSizing": "border-box", "border": "2px solid #ccc", "borderRadius": "4px", "backgroundColor": "#f8f8f8", "fontSize": "16px", "resize": "none",
                                         marginTop: '20px',
                                     }}
                                     rows="18"
                                     className="name-input"
-                                    onChange={e => issueDateChange(e)}
-                                    placeholder="yyyy-mm-dd"
-                                    name="date"
-
-                                    value={date}
-                                    min={new Date().toISOString().split('T')[0]}
+                                    onChange={e => messageChange(e)}
+                                    placeholder="E-mail"
+                                    name="email"
+                                    value={message}
                                 />
                             </div>
-                            <div style={{ textAlign: 'center', marginTop: '30px', marginBottom: '30px' }}>
+                            <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
-                                <input type="submit" value="Accept" id="accept"
-                                    onClick={() => acceptCourier(certificateData.student_details.email, date)}
-                                    style={{ width: '40%' }}
-                                    disabled={certificateData.courier_status === "approved"}
+                                <input type="submit" value="Reject" id="reject"
+                                    onClick={() => rejectCourier(certificateData.student_details.email, message)}
+                                    style={{ width: '60%', marginLeft: '60px' }}
+                                    disabled={certificateData.examController_status === "rejected"}
                                 />
 
                             </div>
                         </div>
                     </div>
-                    <p style={{ height: '20px' }}></p>
+
                 </React.Fragment >
             }
         </div>
@@ -142,4 +134,4 @@ const ProvisionalFinalAcceptCourier = () => {
     )
 }
 
-export default ProvisionalFinalAcceptCourier
+export default ProvisionalRejectCourier

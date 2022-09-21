@@ -108,7 +108,7 @@ const StudentProvisionalDetails = () => {
 
 
                         {/* authority details */}
-                        <div class="studnet__container" style={{ height: '650px' }}>
+                        <div class="studnet__container" style={{ height: '450px' }}>
                             <div class="title" style={{ marginTop: '10px' }}>Approval Details</div>
                             <table>
                                 <thead>
@@ -172,35 +172,43 @@ const StudentProvisionalDetails = () => {
                             </table>
 
                             {/* ------------------------- */}
-                            <div class="title" style={{ marginTop: '10px' }}>Courier Details</div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th> Authority </th>
-                                        <th> Action Date</th>
-                                        <th> Status</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th> Courier Team </th>
-                                        <td> {certificateData.chairman_action_date ? certificateData.chairman_action_date : <p>pending</p>}</td>
-                                        <td style={{ textAlign: 'center' }}>
-                                            {certificateData.chairman_status === 'approved' ?
-                                                <i class='bx bxs-check-circle' style={{ fontSize: '24px', color: 'green' }}></i> :
-                                                certificateData.chairman_status === 'rejected' ? <i class='bx bxs-x-circle' style={{ fontSize: '24px', color: 'red' }}></i> :
-                                                    <i class='bx bx-loader' style={{ fontSize: '24px', color: '#c8ab2c' }}></i>
-                                            }
-                                        </td>
-
-                                    </tr>
-
-                                </tbody>
-                            </table>
 
                         </div>
                     </div>
+                    {certificateData.takeBy === 'courier' ?
+                        <div className='student__whole__container'>
+                            <div class="studnet__container" style={{ height: '250px' }}>
+                                <div class="title" style={{ marginTop: '10px' }}>Courier Details</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th> Authority </th>
+                                            {certificateData.courier_status === 'rejected' ? <th>  Rejected Date</th> : <th>  Delivery Date</th>}
+                                            <th> Status</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th> Courier Team </th>
+                                            <td> {certificateData.courier_status === 'rejected' ? <p>{certificateData.courier_action_date}</p> : certificateData.courier_delivery_date ? <p>{certificateData.courier_delivery_date}</p> : <p>Pending</p>}</td>
+                                            <td style={{ textAlign: 'center' }}>
+                                                {certificateData.courier_status === 'approved' ?
+                                                    <i class='bx bxs-check-circle' style={{ fontSize: '24px', color: 'green' }}></i> :
+                                                    certificateData.courier_status === 'rejected' ? <i class='bx bxs-x-circle' style={{ fontSize: '24px', color: 'red' }}></i> :
+                                                        <i class='bx bx-loader' style={{ fontSize: '24px', color: '#c8ab2c' }}></i>
+                                                }
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        : null}
+
                     {/* {certificateData.ssc_certificate && <div className="certificate_container">
                         <img src={`http://localhost:8000${certificateData.ssc_certificate}`} alt="" />
                     </div>
