@@ -325,9 +325,12 @@ def uploadSscCertificate(request):
         applied_email = request.data['email']
         ssc_certificate = request.data['ssc_certificate']
         way = request.data['way']
+        address = request.data['address']
         student = Student.objects.get(email=applied_email)
         provisionalCertificateDetails = ProvisionalCertificate.objects.get(
             student_details=student)
+        if len(address) > 0:
+            provisionalCertificateDetails.courier_delivery_place = address
         provisionalCertificateDetails.ssc_certificate = ssc_certificate
         provisionalCertificateDetails.takeBy = way
         provisionalCertificateDetails.save()
@@ -639,15 +642,15 @@ def examControllerAcceptProvisional(request):
         response = requests.post(
             'http://localhost:3001/create', json=blockchain_data)
         print(response.json())
-        params = {
-            'hello': 'hello'
-        }
-        file_name, test_status = save_pdf(params)
-        if not test_status:
-            return Response({'status': 400})
-        url = "http://127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
+        # params = {
+        #     'hello': 'hello'
+        # }
+        # file_name, test_status = save_pdf(params)
+        # if not test_status:
+        #     return Response({'status': 400})
+        # url = "http://127.0.0.1:8000/media/certificate/"+str(file_name)+".pdf"
 
-        provisionalCertificateDetails.provisional_certificate_url = url
+        # provisionalCertificateDetails.provisional_certificate_url = url
         provisionalCertificateDetails.save()
         return Response({'message': 'successfully accepted provitional'})
     else:

@@ -216,7 +216,7 @@ const StudentProvisionalDetails = () => {
 
                     <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
-                        <input type="submit" value="download" id="accept"
+                        <input type="submit" value="Download" id="accept"
                             style={{ width: '15%', marginLeft: 'auto' }}
                             disabled={certificateData.examController_status !== "approved"}
                             onClick={() => { downloadStudentProvisional(certificateData.provisional_certificate_url) }}

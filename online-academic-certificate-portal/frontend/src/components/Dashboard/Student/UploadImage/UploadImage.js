@@ -23,6 +23,7 @@ const UploadImage = () => {
         uploadData.append('email', email)
         uploadData.append('ssc_certificate', image)
         uploadData.append('way', way)
+        uploadData.append('address', address)
         console.log(way)
         disptach(student_upload_ssc(uploadData))
         navigate('/student/provisional/pay')
