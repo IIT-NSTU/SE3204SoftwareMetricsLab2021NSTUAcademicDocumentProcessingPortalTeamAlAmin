@@ -54,6 +54,7 @@ class User(AbstractUser):
     is_provost = models.BooleanField(default=False)
     is_librarian = models.BooleanField(default=False)
     is_examController = models.BooleanField(default=False)
+    is_courier = models.BooleanField(default=False)
     email_validation = models.BooleanField(default=False)
     new_email = models.EmailField(null=True, blank=True, unique=True)
     new_email_validation = models.BooleanField(default=False)
@@ -67,7 +68,7 @@ class Student(models.Model):
         User, related_name="student_info", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     email = models.CharField(
-        max_length=20, unique=True)
+        max_length=50, unique=True)
     father_name = models.CharField(max_length=50)
     mother_name = models.CharField(max_length=50)
     date_of_birth = models.DateField()
@@ -125,6 +126,11 @@ class ProvisionalCertificate(models.Model):
     serial_number = models.CharField(max_length=50, null=True, blank=True)
     issued_date = models.DateField(null=True, blank=True)
     takeBy = models.CharField(max_length=10, null=True, blank=True)
+    courier_status = models.CharField(max_length=20, null=True, blank=True)
+    courier_action_date = models.DateField(null=True, blank=True)
+    courier_delivery_date = models.DateField(null=True, blank=True)
+    courier_delivery_place = models.CharField(
+        max_length=250, null=True, blank=True)
     ssc_certificate = models.ImageField(
         blank=True, null=True, upload_to=upload_path)
     provisional_certificate_url = models.CharField(
@@ -167,6 +173,15 @@ class Exam_Controller(models.Model):
     user = models.OneToOneField(
         User, related_name="exam_controller", on_delete=models.CASCADE)
     exam_controller_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.user.email
+
+
+class Courier(models.Model):
+    user = models.OneToOneField(
+        User, related_name="courier", on_delete=models.CASCADE)
+    Courier_id = models.CharField(max_length=50)
 
     def __str__(self):
         return self.user.email

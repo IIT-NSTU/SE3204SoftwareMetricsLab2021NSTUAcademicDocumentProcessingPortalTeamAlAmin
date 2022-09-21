@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (Chairman, Exam_Controller, Librarian,
+from .models import (Chairman, Courier, Exam_Controller, Librarian,
                      ProvisionalCertificate, Provost, Student, StudentResult,
                      User, testTable)
 
@@ -14,3 +14,4 @@ admin.site.register(Chairman)
 admin.site.register(Exam_Controller)
 admin.site.register(Librarian)
 admin.site.register(Provost)
+admin.site.register(Courier)

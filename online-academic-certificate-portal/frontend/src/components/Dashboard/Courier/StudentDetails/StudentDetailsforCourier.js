@@ -1,23 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { chairman_reject_provisional } from "../../../../actions/auth";
+import './StudentDetails.css';
 
-const ProvisionalRejectChairman = () => {
+const StudentDetailsforCourier = () => {
     const data = useParams()
     let navigate = useNavigate();
-    const dispatch = useDispatch()
+
     const [certificateData, setCertificateData] = useState({})
-    const [textMessage, setTextMessage] = useState({
-        message: ''
-    })
-    const { message } = textMessage
     const getData = React.useCallback(async () => {
         axios.get(`http://localhost:8000/api/student-provisional-applied-details/${data.roll}/`)
             .then(res => {
                 setCertificateData(res.data)
+                console.log(res.data)
             })
             .catch(err => {
                 toast.error("something went wrong")
@@ -27,21 +23,19 @@ const ProvisionalRejectChairman = () => {
         getData()
     }, [getData])
 
-
-
-    const rejectChairman = (email, message) => {
-        dispatch(chairman_reject_provisional(email, message))
-        navigate(`/chairman/student-details/${data.roll}`)
-
+    const acceptCourier = () => {
+        if (certificateData.student_details) {
+            navigate(`/courier/${data.roll}/final-accept`)
+        }
     }
-    const messageChange = (e) => {
-        console.log(e.target.value)
-        setTextMessage(prevState => {
-            return {
-                ...prevState,
-                message: e.target.value
-            }
-        })
+
+    const rejectCourier = () => {
+        if (certificateData.student_details) {
+            navigate(`/courier/${data.roll}/reject`)
+        }
+    }
+    const openInNewTab = url => {
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     return (
@@ -60,7 +54,7 @@ const ProvisionalRejectChairman = () => {
                                 <form action="#" style={{ paddingTop: '25px' }}>
 
                                     <div class="user-details">
-                                        <div class="input-box">
+                                        <div class="input-box" >
                                             <span class="details">Name</span>
                                             <input type="text" placeholder={certificateData.student_details.name} disabled />
                                         </div>
@@ -80,14 +74,17 @@ const ProvisionalRejectChairman = () => {
                                             <span class="details">Passing Year</span>
                                             <input type="text" placeholder={certificateData.student_details.passing_year} disabled />
                                         </div>
+
                                         <div class="input-box">
-                                            <span class="details">CGPA</span>
-                                            <input type="text" placeholder={certificateData.result.cgpa} disabled />
+                                            <span class="details">Phone Number</span>
+                                            <input type="text" placeholder={certificateData.student_details.phone} disabled />
                                         </div>
-                                        <div class="input-box">
-                                            <span class="details">Total Credits Completed</span>
-                                            <input type="text" placeholder={certificateData.result.total_credit_completed} disabled />
-                                        </div>
+
+                                    </div>
+
+                                    <div class="input-box" style={{ marginBottom: '20px', textAlign: 'center' }}>
+                                        <span class="details" style={{ cursor: "default", }} id="delivery">Delivery Address</span>
+                                        <input style={{ border: '1px solid #ccc', borderRadius: '10px' }} type="text" placeholder={certificateData.courier_delivery_place} disabled />
                                     </div>
 
                                 </form>
@@ -95,35 +92,27 @@ const ProvisionalRejectChairman = () => {
                         </div>
 
                         {/* authority details */}
-                        <div class="studnet__container">
-                            <div class="title" style={{ marginTop: '45px' }}>What is the reason?</div>
-                            <div class="input-box">
-                                <textarea
-                                    style={{
 
-                                        "width": "100%", "height": "150px", "padding": "12px 20px", "boxSizing": "border-box", "border": "2px solid #ccc", "borderRadius": "4px", "backgroundColor": "#f8f8f8", "fontSize": "16px", "resize": "none",
-                                        marginTop: '20px',
-                                    }}
-                                    rows="18"
-                                    className="name-input"
-                                    onChange={e => messageChange(e)}
-                                    placeholder="E-mail"
-                                    name="email"
-                                    value={message}
-                                />
-                            </div>
-                            <div style={{ textAlign: 'center', marginTop: '30px' }}>
-
-                                <input type="submit" value="Reject" id="reject"
-                                    onClick={() => rejectChairman(certificateData.student_details.email, message)}
-                                    style={{ width: '60%', marginLeft: '60px' }}
-                                    disabled={certificateData.chairman_status === "rejected"}
-                                />
-
-                            </div>
-                        </div>
                     </div>
+                    {/* {certificateData.ssc_certificate && <div className="certificate_container">
+                        <img src={`http://localhost:8000${certificateData.ssc_certificate}`} alt="" />
+                    </div>
+                    } */}
+                    <p style={{ height: '40px' }}></p>
+                    <div style={{ textAlign: 'center' }}>
 
+                        <input type="submit" value="Accept" id="accept" onClick={() => acceptCourier()}
+                            style={{ width: '15%', marginLeft: 'auto' }}
+                            disabled={certificateData.courier_status === "approved"}
+                        />
+
+                        <input type="submit" value="Reject" id="reject"
+                            onClick={() => rejectCourier()}
+                            style={{ width: '15%', marginLeft: '60px' }}
+                            disabled={certificateData.courier_status !== null}
+                        />
+
+                    </div>
                 </React.Fragment >
             }
         </div>
@@ -131,4 +120,4 @@ const ProvisionalRejectChairman = () => {
     )
 }
 
-export default ProvisionalRejectChairman
+export default StudentDetailsforCourier

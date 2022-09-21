@@ -1,3 +1,5 @@
+/** @format */
+
 .certificate-type {
     height: 50px;
     width: 350px;
@@ -16,7 +18,7 @@
 
 .home {
     margin-top: 1rem;
-    background: url("../../../assets/images/home2.jpg");
+    background: url('../../../assets/images/home2.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -43,8 +45,13 @@
     border-color: #f2cd00 !important;
 }
 
+#applyBtn:disabled {
+    background-color: #9f8f50 !important;
+    cursor: not-allowed;
+}
+
 .applyBtn-apply:hover {
-    background-color: #e5ca33 !important;
+    background-color: #cfbf63 !important;
 }
 
 .applyBtn {

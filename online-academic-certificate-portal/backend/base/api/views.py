@@ -185,30 +185,30 @@ class emailChangeView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         try:
-            serializer = self.get_serializer(data=request.data)
-            serializer.is_valid(raise_exception=True)
-            user = serializer.save()
+            user = User.objects.get(email=request.data['oldEmail'])
 
-            user_data = User.objects.get(email=serializer.data['oldEmail'])
+            user.new_email = request.data['newEmail']
+            user.new_email_validation = False
+            user.save()
 
-            token = encode({'id': user_data.id},
+            token = encode({'id': user.id},
                            settings.SECRET_KEY, algorithm='HS256')
 
             current_site = get_current_site(request).domain
             relative_link = reverse('emailchange-verify')
             absurl = 'http://' + current_site + \
                 relative_link + "?token=" + str(token)
-
             html_message = render_to_string('registration_confirm.html', {
-                'fullname': user_data.fullname,
+                'fullname': user.student_info.name,
                 'confirmationUrl': absurl
             })
+            print('absurl2')
             plain_message = strip_tags(html_message)
             send_mail(
                 "email confirmation for NSTU ODPP",
                 plain_message,
                 "souravdebnath97@gmail.com",
-                [user_data.new_email],
+                [user.new_email],
                 html_message=html_message
             )
 
@@ -228,8 +228,11 @@ class emailChangeVerifyView(generics.GenericAPIView):
         try:
             payload = decode(token, settings.SECRET_KEY, algorithms='HS256')
             user = User.objects.get(id=payload['id'])
+            student = Student.objects.get(user=user)
             user.email = user.new_email
-
+            student.email = user.new_email
+            user.save()
+            student.save()
             if user.new_email_validation is False:
                 user.new_email_validation = True
                 user.save()
@@ -273,7 +276,14 @@ def getStudentDetails(request):
     return Response(serializedStudents.data)
 
 
+@api_view(["POST"])
+def isEmailChanged(request):
+    applied_email = request.data['email']
+    user = User.objects.get(email=applied_email)
+    serializedUser = UserSerializer(user, many=False)
+    return Response(serializedUser.data['new_email_validation'])
 # <---- Student Applying for Provisional certifiate ---->
+
 
 @api_view(["POST"])
 def applyProvisional(request):
@@ -554,6 +564,7 @@ def librarianRejectProvisional(request):
             'message': message
         })
         plain_message = strip_tags(html_message)
+        print('im in')
         send_mail(
             "Librarian Rejection for NSTU ODPP",
             plain_message,
@@ -671,6 +682,89 @@ def examControllerRejectProvisional(request):
         return Response({'message': 'successfully rejected provitional'}, status=status.HTTP_200_OK)
     else:
         return Response({'message': 'already rejected this student'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# <---- Provisional certifiate applied all list for courier ---->
+
+
+@api_view(["GET"])
+def getProvisionalAppliedListforCourier(request):
+    students = ProvisionalCertificate.objects.filter(
+        is_applied=True, is_paid=True, examController_status="approved", takeBy="courier", courier_status__isnull=True)
+    serializedStudents = ProvisionalCertificateSerializer(students, many=True)
+    return Response(serializedStudents.data)
+
+
+# <---- Provisional certifiate accepted list by courier ---->
+
+@api_view(["GET"])
+def getProvisionalAcceptedListbyCourier(request):
+    students = ProvisionalCertificate.objects.filter(
+        is_applied=True, is_paid=True, courier_status="approved")
+    serializedStudents = ProvisionalCertificateSerializer(students, many=True)
+    return Response(serializedStudents.data)
+
+# <---- Provisional certifiate rejected list by courier ---->
+
+
+@api_view(["GET"])
+def getProvisionalRejectedListbyCourier(request):
+    students = ProvisionalCertificate.objects.filter(
+        is_applied=True, is_paid=True, courier_status="rejected")
+    serializedStudents = ProvisionalCertificateSerializer(students, many=True)
+    return Response(serializedStudents.data)
+
+
+# <---- Chairman accepting for Provisional certifiate ---->
+
+
+@api_view(["POST"])
+def courierAcceptProvisional(request):
+    student_email = request.data['student_email']
+    delivery_date = request.data['delivery_date']
+    student = Student.objects.get(email=student_email)
+    provisionalCertificateDetails = ProvisionalCertificate.objects.get(
+        student_details=student)
+    if provisionalCertificateDetails.courier_status != 'approved':
+        provisionalCertificateDetails.courier_status = 'approved'
+        provisionalCertificateDetails.courier_action_date = date.today()
+        provisionalCertificateDetails.courier_delivery_date = delivery_date
+        provisionalCertificateDetails.save()
+        return Response({'message': 'successfully accepted courier'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'already accepted this courier'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# <---- Chairman Rejecting for Provisional certifiate ---->
+
+@api_view(["POST"])
+def courierRejectProvisional(request):
+    student_email = request.data['student_email']
+    message = request.data['message']
+    student = Student.objects.get(email=student_email)
+    provisionalCertificateDetails = ProvisionalCertificate.objects.get(
+        student_details=student)
+    if provisionalCertificateDetails.courier_status != 'rejected':
+        provisionalCertificateDetails.chairman_status = 'rejected'
+        provisionalCertificateDetails.courier_action_date = date.today()
+        provisionalCertificateDetails.save()
+        html_message = render_to_string('certificate_reject.html', {
+            'fullname': student.name,
+            'message': message
+        })
+        plain_message = strip_tags(html_message)
+        send_mail(
+            "Courier Rejection for NSTU ODPP",
+            plain_message,
+            "souravdebnath97@gmail.com",
+            ['souravdebnath10@gmail.com'],
+            html_message=html_message
+        )
+        return Response({'message': 'successfully rejected provitional'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'already rejected this student'}, status=status.HTTP_400_BAD_REQUEST)
+
+# ---------------!-------------------
 
 
 # <---- pdf test api ---->

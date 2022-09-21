@@ -67,7 +67,11 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
             dashboardLink = "/exam-controller/requested/dashboard"
             approvedDashboardLink = "/exam-controller/approved/dashboard"
             rejectedDashboardLink = "/exam-controller/rejected/dashboard"
-
+        }
+        else if (user.is_courier) {
+            dashboardLink = "/courier/requested/dashboard"
+            approvedDashboardLink = "/courier/approved/dashboard"
+            rejectedDashboardLink = "/courier/rejected/dashboard"
         }
     }
     return (
@@ -115,7 +119,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                         </>
                         : null}
 
-                    {token && isAuthenticated && (user.is_student || user.is_chairman || user.is_provost || user.is_librarian || user.is_examController) ?
+                    {token && isAuthenticated && (user.is_student || user.is_chairman || user.is_provost || user.is_librarian || user.is_examController || user.is_courier) ?
                         <>
                             <li>
                                 <Link to={dashboardLink}>
@@ -139,7 +143,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                         </> : null
                     }
                     {
-                        token && isAuthenticated && (user.is_chairman || user.is_provost || user.is_librarian || user.is_examController) ?
+                        token && isAuthenticated && (user.is_chairman || user.is_provost || user.is_librarian || user.is_examController || user.is_courier) ?
                             <>
                                 <li>
                                     <Link to={rejectedDashboardLink}>

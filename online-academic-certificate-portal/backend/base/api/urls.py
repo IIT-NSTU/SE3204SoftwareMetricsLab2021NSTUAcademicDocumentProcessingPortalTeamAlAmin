@@ -4,28 +4,32 @@ from wkhtmltopdf.views import PDFTemplateView
 from .views import (GeneratePdf, LogoutView, VerifyEmail, applyProvisional,
                     chairmanAcceptProvisional, chairmanOnlyView,
                     chairmanRejectProvisional, chairmanSignupView,
-                    continuousVerificationView, customAuthToken,
+                    continuousVerificationView, courierAcceptProvisional,
+                    courierRejectProvisional, customAuthToken,
                     emailChangeVerifyView, emailChangeView,
                     examControllerAcceptProvisional,
                     examControllerRejectProvisional,
                     getProvisionalAcceptedListbyChairman,
+                    getProvisionalAcceptedListbyCourier,
                     getProvisionalAcceptedListbyExamController,
                     getProvisionalAcceptedListbyLibrarian,
                     getProvisionalAcceptedListbyProvost,
                     getProvisionalAppliedListforChairman,
+                    getProvisionalAppliedListforCourier,
                     getProvisionalAppliedListforExamController,
                     getProvisionalAppliedListforLibrarian,
                     getProvisionalAppliedListforProvost,
                     getProvisionalCertificateAppliedDetails,
                     getProvisionalCertificateAppliedList,
                     getProvisionalRejectedListbyChairman,
+                    getProvisionalRejectedListbyCourier,
                     getProvisionalRejectedListbyExamController,
                     getProvisionalRejectedListbyLibrarian,
                     getProvisionalRejectedListbyProvost, getStudentDetails,
-                    librarianAcceptProvisional, librarianRejectProvisional,
-                    payProvisional, provostAcceptProvisional,
-                    provostRejectProvisional, studentOnlyView,
-                    studentSignupView, testApi, testpdfApi,
+                    isEmailChanged, librarianAcceptProvisional,
+                    librarianRejectProvisional, payProvisional,
+                    provostAcceptProvisional, provostRejectProvisional,
+                    studentOnlyView, studentSignupView, testApi, testpdfApi,
                     uploadSscCertificate)
 
 urlpatterns = [
@@ -62,6 +66,7 @@ urlpatterns = [
          name='student_apply_provisional'),
     path('student-provisional-sscCertificate/', uploadSscCertificate,
          name='student_upload_ssscCertificate'),
+    path('is-email-chanaged/', isEmailChanged, name="isEmailChanged"),
     # <---- Chairman actions for provisional certificate ---->
     path("provisional-applied-list-for-chairman/", getProvisionalAppliedListforChairman,
          name="provisional_applied_list_for_chairman"),
@@ -128,6 +133,22 @@ urlpatterns = [
 
     path("examController-reject-provisional/", examControllerRejectProvisional,
          name="examController_reject_provisional"),
+
+    # <---- Courier actions for provisional certificate ---->
+    path("provisional-applied-list-for-courier/", getProvisionalAppliedListforCourier,
+         name="provisional_applied_list_for_courier"),
+
+    path("provisional-accepted-list-by-courier/", getProvisionalAcceptedListbyCourier,
+         name="provisional_accepted_list_by_courier"),
+
+    path("provisional-rejected-list-by-courier/", getProvisionalRejectedListbyCourier,
+         name="provisional_rejected_list_by_courier"),
+
+    path("courier-accept-provisional/", courierAcceptProvisional,
+         name="examController_accept_provisional"),
+
+    path("courier-reject-provisional/", courierRejectProvisional,
+         name="courier_reject_provisional"),
 
     # <---- test api ---->
     path("pdf/", GeneratePdf.as_view(), name='pdf'),

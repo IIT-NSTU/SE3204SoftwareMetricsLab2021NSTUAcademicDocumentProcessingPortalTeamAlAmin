@@ -27,6 +27,12 @@ import ProvisionalRejectChairman from "./components/Dashboard/Chairman/Provision
 import StudentDetailsforChairman from "./components/Dashboard/Chairman/StudentDetails/StudentDetailsforChairman";
 import ExamControllerApprovedDashboard from "./components/Dashboard/ExamController/Approved/ExamControllerApprovedDashboard";
 
+import CourierApprovedDashboard from "./components/Dashboard/Courier/Approved/CourierApprovedDashboard";
+
+import ProvisionalFinalAcceptCourier from "./components/Dashboard/Courier/ProvisionalFinalAccept/ProvisionalFinalAcceptCourier";
+import CourierRejectedDashboard from "./components/Dashboard/Courier/Rejected/CourierRejectedDashboard";
+import CourierRequestedDashboard from "./components/Dashboard/Courier/Requested/CourierRequestedDashboard";
+import StudentDetailsforCourier from "./components/Dashboard/Courier/StudentDetails/StudentDetailsforCourier";
 import ProvisionalFinalAcceptExamController from "./components/Dashboard/ExamController/ProvisionalFinalAccept/ProvisionalFinalAcceptExamController";
 import ProvisionalRejectExamController from "./components/Dashboard/ExamController/ProvisionalReject/ProvisionalRejectExamController";
 import ExamControllerRejectedDashboard from "./components/Dashboard/ExamController/Rejected/ExamControllerRejectedDashboard";
@@ -132,6 +138,16 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/exam-controller/:roll/reject' element={<ProvisionalRejectExamController />} />
           <Route exact path='/exam-controller/:roll/final-accept' element={<ProvisionalFinalAcceptExamController />} />
           {/* exam-controller url end */}
+
+          {/* courier url start */}
+          <Route exact path='/courier/requested/dashboard' element={<CourierRequestedDashboard />} />
+          <Route exact path='/courier/approved/dashboard' element={<CourierApprovedDashboard />} />
+          <Route exact path='/courier/rejected/dashboard' element={<CourierRejectedDashboard />} />
+          <Route exact path='/courier/student-details/:roll' element={<StudentDetailsforCourier />} />
+          <Route exact path='/courier/:roll/reject' element={<StudentDetailsforCourier />} />
+          <Route exact path='/courier/:roll/final-accept' element={<ProvisionalFinalAcceptCourier />} />
+          {/* courier url end */}
+
 
           <Route exact path='/chairman/signup' element={<ChairmanRegistration />} />
           <Route exact path='/student/signup' element={<StudentRegistration />} />

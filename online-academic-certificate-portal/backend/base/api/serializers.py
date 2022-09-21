@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "email", "is_student",
-                  "is_chairman", "email_validation", "new_email_validation", 'is_provost', 'is_librarian', 'is_examController']
+                  "is_chairman", "email_validation", "new_email_validation", 'is_provost', 'is_librarian', 'is_courier', 'is_examController']
 
 
 class emailChangeSerializer(serializers.ModelSerializer):

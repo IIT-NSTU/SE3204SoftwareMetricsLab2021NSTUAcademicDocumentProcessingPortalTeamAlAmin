@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+/** @format */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 .studnet__container {
     margin-top: 20px;
     max-width: 600px;
@@ -101,7 +103,7 @@ form .category label .dot {
     border-color: #d9d9d9;
 }
 
-form input[type="radio"] {
+form input[type='radio'] {
     display: none;
 }
 
@@ -254,7 +256,7 @@ tbody tr:nth-child(odd) {
 }
 
 .status:before {
-    content: "";
+    content: '';
     width: 25px;
     height: 25px;
     background-color: white;
