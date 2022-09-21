@@ -121,17 +121,17 @@ const ProvisionalFinalAcceptExamController = () => {
                                     rows="18"
                                     className="name-input"
                                     onChange={e => checkerChange(e)}
-                                    placeholder="enter checker name"
+                                    placeholder="Checked By"
                                     name="email"
                                     value={checkedBy}
                                 />
                             </div>
                             <div class="title" style={{ marginTop: '20px' }}>In which date certificate can be taken?</div>
-                            <div class="input-box">
-                                <textarea
+                            <div class="input-box" style={{ textAlign: 'center' }}>
+                                <input type="date"
                                     style={{
 
-                                        "width": "100%", "height": "50px", "padding": "12px 20px", "boxSizing": "border-box", "border": "2px solid #ccc", "borderRadius": "4px", "backgroundColor": "#f8f8f8", "fontSize": "16px", "resize": "none",
+                                        "width": "80%", "height": "50px", "padding": "12px 20px", "boxSizing": "border-box", "border": "2px solid #ccc", "borderRadius": "4px", "backgroundColor": "#f8f8f8", "fontSize": "16px", "resize": "none",
                                         marginTop: '20px',
                                     }}
                                     rows="18"
@@ -139,15 +139,17 @@ const ProvisionalFinalAcceptExamController = () => {
                                     onChange={e => issueDateChange(e)}
                                     placeholder="yyyy-mm-dd"
                                     name="date"
+
                                     value={date}
+                                    min={new Date().toISOString().split('T')[0]}
                                 />
                             </div>
                             <div style={{ textAlign: 'center', marginTop: '30px' }}>
 
                                 <input type="submit" value="Accept" id="accept"
                                     onClick={() => acceptExamController(certificateData.student_details.email, checkedBy, date)}
-                                    style={{ width: '60%', marginLeft: '60px' }}
-                                    disabled={certificateData.examController_status === "approved"}
+                                    style={{ width: '40%', marginLeft: '60px' }}
+                                    disabled={certificateData.examController_status === "approved" || (date.length === 0 || checkedBy.length === 0)}
                                 />
 
                             </div>

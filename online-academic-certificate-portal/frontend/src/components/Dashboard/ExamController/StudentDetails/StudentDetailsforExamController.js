@@ -89,7 +89,7 @@ const StudentDetailsforExamController = () => {
 
                                                     style={{ "width": "60%", "height": "45px", "outline": "none", "background": "rgb(6, 28, 46)", "borderRadius": "30px", "fontSize": "20px", "fontWeight": "700p", "boxShadow": "3px 3px 8px #b1b1b1, -3px -3px 8px #fff", "transition": "hover 1s ease-out", "color": "#fff", "border": "none" }}
                                                     onClick={() => openInNewTab(`http://127.0.0.1:8000${certificateData.ssc_certificate}`)}
-                                                >check</button>
+                                                >View</button>
                                             </div>
                                         }
                                     </div>
