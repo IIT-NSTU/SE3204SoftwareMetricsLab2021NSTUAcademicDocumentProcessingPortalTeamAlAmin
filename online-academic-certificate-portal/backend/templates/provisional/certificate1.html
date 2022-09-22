@@ -39,7 +39,9 @@
                 src: url(../../static/base/fonts/arial-black.ttf');
             }
 
-
+            .printme {
+                display: none;
+            }
         }
 
         button:hover {
@@ -52,10 +54,11 @@
 <body style="margin: 0; padding: 0;" oncontextmenu="return false">
 
     <div style="text-align: center;
-    height: 60px;" class="no-printme">
-        <button style="height: 40px;
+    height: 400px;" class="no-printme">
+        <p style="text-align:center">Your certificate is ready to download</p>
+        <button style="height: 90px;
         border-radius: 15px;
-        margin-top: 10px;
+   
         background-color: gray;
         color: white;" class="no-printme" style="" onclick={window.print()}>Download</button>
     </div>
@@ -181,6 +184,9 @@
 
     </table>
     <script>
+        window.onload = function () {
+            window.print()
+        };
         document.onkeydown = function (e) {
             if (event.keyCode == 123) {
                 return false;
