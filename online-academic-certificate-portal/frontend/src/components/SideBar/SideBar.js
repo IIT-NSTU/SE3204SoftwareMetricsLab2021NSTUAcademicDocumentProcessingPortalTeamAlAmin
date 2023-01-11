@@ -83,7 +83,7 @@ const SideBar = ({ children, logout, isAuthenticated, isLoading, token, user }) 
                     <Link to="/" onClick={closeModal}>
                         <i class='bx bx-receipt icon'></i>
                     </Link>
-                    <Link to="/" onClick={closeModal}><div class="logo_name">NSTU ODPP</div>
+                    <Link to="/" onClick={closeModal}><div class="logo_name">NSTU ADPP</div>
                     </Link>
 
                     <i class='bx bx-menu' id="btn" onClick={menuBtnChange} ></i>

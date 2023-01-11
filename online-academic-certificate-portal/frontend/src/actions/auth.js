@@ -60,14 +60,14 @@ export const forget_password = ({ email }) => (dispatch) => {
         }
     }
     const body = JSON.stringify({ email })
-    axios.post('http://localhost:8000/api/password_reset/', body, config)
+    axios.post('http://localhost:8000/api/password-change-request/', body, config)
         .then(response => {
 
             dispatch({
                 type: actionTypes.PASSWORD_CHANGE_REQUEST_SUCCESS,
                 payload: response.data
             })
-
+            localStorage.setItem('forgetEmail', email)
             toast.success("enter the code sent to your email")
 
         }).catch(err => {
@@ -80,20 +80,23 @@ export const forget_password = ({ email }) => (dispatch) => {
         })
 }
 
-export const forget_password_confirm = ({ token, password }) => (dispatch) => {
+export const forget_password_confirm = ({ token, password1, password2 }) => (dispatch) => {
+    // email,token,password1,password2
     dispatch({ type: actionTypes.LOADING_START })
+    const email = localStorage.getItem('forgetEmail')
     const config = {
         headers: {
             'Content-Type': 'application/json',
         }
     }
-    const body = JSON.stringify({ token, password })
-    axios.post('http://localhost:8000/api/password_reset/confirm/', body, config)
+    const body = JSON.stringify({ "email": email, token, password1, password2 })
+    axios.post('http://localhost:8000/api/password-change-confirm/', body, config)
         .then(response => {
             dispatch({
                 type: actionTypes.PASSWORD_CHANGE_CONFIRM_REQUEST_SUCCESS,
                 payload: response.data
             })
+            localStorage.removeItem('forgetEmail')
             toast.success("successfully changed the password")
         }).catch(err => {
             dispatch({

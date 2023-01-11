@@ -27,6 +27,7 @@ admin.site.site_title = 'HTML title from adminsitration'
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("base.api.urls")),
+    path("chat/", include("chat.urls", namespace='chat')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

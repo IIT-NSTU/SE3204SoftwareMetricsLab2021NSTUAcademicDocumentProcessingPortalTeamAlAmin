@@ -37,12 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "drf_yasg",
     "base",
-    'wkhtmltopdf',
+    # "channels",
+    "chat",
     "rest_framework",
     "rest_framework.authtoken",
-    'django_rest_passwordreset',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +82,15 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 WSGI_APPLICATION = "backend.wsgi.application"
-
+ASGI_APPLICATION = "backend.routing.application"
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -156,6 +163,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'souravdebnath97@gmail.com'
-EMAIL_HOST_PASSWORD = 'gtgxpeyvlznzqpdu'
+EMAIL_HOST_PASSWORD = 'hhiyplsdrexpmoip'
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True

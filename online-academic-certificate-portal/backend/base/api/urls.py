@@ -27,7 +27,8 @@ from .views import (GeneratePdf, LogoutView, VerifyEmail, applyProvisional,
                     getProvisionalRejectedListbyLibrarian,
                     getProvisionalRejectedListbyProvost, getStudentDetails,
                     isEmailChanged, librarianAcceptProvisional,
-                    librarianRejectProvisional, payProvisional,
+                    librarianRejectProvisional, passwordChangeConfirm,
+                    passwordChangeRequest, payProvisional,
                     provostAcceptProvisional, provostRejectProvisional,
                     studentOnlyView, studentSignupView, testApi, testpdfApi,
                     uploadSscCertificate)
@@ -50,8 +51,10 @@ urlpatterns = [
     path("checkauth/", continuousVerificationView.as_view(),
          name="continuous-verification"),
 
-    path('password_reset/',
-         include('django_rest_passwordreset.urls', namespace='password_reset')),
+    path('password-change-request/',
+         passwordChangeRequest, name="password_change"),
+    path('password-change-confirm/',
+         passwordChangeConfirm, name="password_change"),
     # <---- provisional certificate url ---->
     path('student-provisional-applied-list/',
          getProvisionalCertificateAppliedList, name="student_applied_list"),

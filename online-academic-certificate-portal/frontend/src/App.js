@@ -87,10 +87,32 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
               <StudentEmailChangeForm />
             </SPrivateRoute>
           } />
-          <Route exact path='/student/provisional/upload' element={<UploadImage />} />
-          <Route exact path='/student/provisional/pay' element={<PayForProvisional />} />
-          <Route exact path='/student/provisional/details' element={<StudentProvisionalDetails />} />
-          <Route exact path='/provisional/manipulate-warning/:roll' element={<ProvisionalWarning />} />
+
+          <Route exact path='/student/provisional/upload' element={
+            <SPrivateRoute>
+              <UploadImage />
+            </SPrivateRoute>
+          } />
+          <Route exact path='/student/provisional/pay' element={
+            <SPrivateRoute>
+              <PayForProvisional />
+            </SPrivateRoute>
+          } />
+
+          <Route exact path='/student/provisional/details' element={
+            <SPrivateRoute>
+              <StudentProvisionalDetails />
+            </SPrivateRoute>
+          } />
+          <Route exact path='/provisional/manipulate-warning/:roll' element={
+            <SPrivateRoute>
+              <ProvisionalWarning />
+            </SPrivateRoute>
+          } />
+          {/* <Route exact path='/student/provisional/upload' element={<UploadImage />} /> */}
+          {/* <Route exact path='/student/provisional/pay' element={<PayForProvisional />} /> */}
+          {/* <Route exact path='/student/provisional/details' element={<StudentProvisionalDetails />} /> */}
+          {/* <Route exact path='/provisional/manipulate-warning/:roll' element={<ProvisionalWarning />} /> */}
           {/* student url end  */}
 
           {/* chairman url start */}
@@ -158,6 +180,7 @@ const App = ({ check_continuous_auth, isAuthenticated, token, isLoading }) => {
           <Route exact path='/forget-password' element={<ForgetPasswordStart />} />
           <Route exact path='/registration' element={<Registration />} />
           <Route exact path='/' element={<Homepage />} />
+          <Route exact path='*' element={<Homepage />} />
         </Routes>
 
         <ToastContainer

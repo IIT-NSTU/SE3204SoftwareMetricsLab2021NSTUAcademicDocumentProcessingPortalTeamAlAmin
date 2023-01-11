@@ -45,6 +45,8 @@ class CustomUserManager(BaseUserManager):
 
 class User(AbstractUser):
     username = None
+    first_name = None
+    last_name = None
     email = models.EmailField(_('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -58,6 +60,7 @@ class User(AbstractUser):
     email_validation = models.BooleanField(default=False)
     new_email = models.EmailField(null=True, blank=True, unique=True)
     new_email_validation = models.BooleanField(default=False)
+    otp = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.email
@@ -198,24 +201,3 @@ class testTable(models.Model):
 
     def __str__(self):
         return self.name
-
-
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
-
-
-@receiver(reset_password_token_created)
-def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-    password_reset_key = reset_password_token.key
-    html_message = render_to_string(
-        'password_reset_template.html', {'context': password_reset_key})
-    plain_message = strip_tags(html_message)
-    send_mail(
-        "Password Reset for {title}".format(title="NSTU ODPP"),
-        plain_message,
-        "souravdebnath97@gmail.com",
-        [reset_password_token.user.email],
-        html_message=html_message
-    )

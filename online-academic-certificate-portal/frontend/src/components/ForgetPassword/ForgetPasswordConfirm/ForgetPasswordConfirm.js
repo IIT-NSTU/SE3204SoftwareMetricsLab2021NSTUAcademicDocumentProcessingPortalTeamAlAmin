@@ -9,10 +9,10 @@ import '../../../assets/css/NeumorphismForm.css'
 const ForgetPasswordConfirm = ({ forget_password_confirm, isAuthenticated, isLoading, user, passwordResetRequest }) => {
     const [userFormDetails, setUserFormDetails] = useState({
         token: "",
-        password: ""
+        password1: "",
+        password2: ""
     })
-    const { token, password } = userFormDetails
-    const re = /^(?=.*[!@#$%^&*]).{8,}$/;
+    const { token, password1, password2 } = userFormDetails
     const loginChange = (e) => {
         setUserFormDetails({
             ...userFormDetails,
@@ -22,7 +22,7 @@ const ForgetPasswordConfirm = ({ forget_password_confirm, isAuthenticated, isLoa
     const handlePasswordResetSubmit = (e) => {
         e.preventDefault();
         console.log('hello')
-        forget_password_confirm({ token, password })
+        forget_password_confirm({ token, password1, password2 })
     }
     if (isAuthenticated && user.is_chairman && user.email_validation) {
         return <Navigate to="/chairman/dashboard" />
@@ -40,17 +40,17 @@ const ForgetPasswordConfirm = ({ forget_password_confirm, isAuthenticated, isLoa
         return (
             <>
                 <p style={{ height: '15px' }}></p>
-                <div className="form-container" style={{ height: '640px' }}>
+                <div className="form-container" style={{ height: '670px' }}>
                     <div className="avatar"></div>
                     <div className="title">NSTU ADPP</div>
                     <div className="sub-title">CR3W</div>
                     <form onSubmit={(e) => handlePasswordResetSubmit(e)}>
                         <div className="username">
                             <i className="fa fa-envelope"></i>
-                            <input type="text"
+                            <input type="number"
                                 className="name-input"
                                 onChange={e => loginChange(e)}
-                                placeholder="enter the token"
+                                placeholder="Enter OTP"
                                 name="token"
                                 value={token}
                             />
@@ -62,16 +62,22 @@ const ForgetPasswordConfirm = ({ forget_password_confirm, isAuthenticated, isLoa
                                 type="password"
                                 onChange={e => loginChange(e)}
                                 placeholder="Password"
-                                name="password" value={password}
+                                name="password1" value={password1}
                             />
                         </div>
-                        <ul style={{ 'textAlign': 'left', 'marginTop': '1px', fontSize: '2px', textDecoration: 'none', marginLeft: '20px', marginBottom: '15px' }}>
-                            <li>
-                                password must be at least 8 characters
-                            </li>
-                            <li>contain at least one special ( ?=.*[!@#$%^&*] ) symbol</li>
-                        </ul>
-                        <input type="submit" value="submit" disabled={!re.test(password)} className="submit-input" />
+
+                        <div className="password">
+                            <i className="fa fa-key"></i>
+                            <input
+                                className="password-input"
+                                type="password"
+                                onChange={e => loginChange(e)}
+                                placeholder="Confirm password"
+                                name="password2" value={password2}
+                            />
+                        </div>
+
+                        <input type="submit" value="submit" className="submit-input" />
 
                     </form>
 

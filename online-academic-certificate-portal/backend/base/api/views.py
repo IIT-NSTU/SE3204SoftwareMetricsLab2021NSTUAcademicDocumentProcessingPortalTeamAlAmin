@@ -1,3 +1,4 @@
+import random
 from ast import Try
 from datetime import date
 from multiprocessing import context
@@ -29,6 +30,46 @@ from .serializers import (LoginSerializer, ProvisionalCertificateSerializer,
                           testSerializer)
 
 # from .utils import Util
+
+
+@api_view(["POST"])
+def passwordChangeRequest(request):
+    given_mail = request.data['email']
+    user = User.objects.get(email=given_mail)
+    generatedOtp = random.randint(100000, 999999)
+    user.otp = generatedOtp
+    user.save()
+    html_message = render_to_string(
+        'password_reset_template.html', {'context': generatedOtp})
+    plain_message = strip_tags(html_message)
+    send_mail(
+        "Password Reset for {title}".format(title="NSTU ADPP"),
+        plain_message,
+        "souravdebnath97@gmail.com",
+        [given_mail],
+        html_message=html_message
+    )
+    return Response({'message': "check your email for otp"}, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+def passwordChangeConfirm(request):
+    given_mail = request.data['email']
+    given_otp = int(request.data['token'])
+    pass1 = request.data['password1']
+    pass2 = request.data['password2']
+    print(given_mail, given_otp, pass1, pass2)
+    user = User.objects.get(email=given_mail)
+
+    if user.otp != given_otp:
+        return Response({'message': "OTP doesn't match"}, status=status.HTTP_400_BAD_REQUEST)
+    if pass1 != pass2:
+        return Response({'message': "Password doesn't match"}, status=status.HTTP_401_BAD_REQUEST)
+    if user.otp is not None and user.otp == given_otp and pass1 == pass2:
+        user.set_password(pass1)
+        user.otp = None
+        user.save()
+        return Response({'message': "Successfully changed the password"}, status=status.HTTP_200_OK)
 
 
 class chairmanSignupView(generics.GenericAPIView):
@@ -818,6 +859,8 @@ def testpdfApi(request, roll):
         hall = student.hall
         if hall == "ASH":
             hall = "Bhasha Shahid Abdus Salam Hall"
+        if hall == "BKH":
+            hall = "Begum Khadija Hall"
         cgpa = provisonalCertificate.result.cgpa
         checkedBy = provisonalCertificate.checkedBy
         examController_action_date = provisonalCertificate.examController_action_date
